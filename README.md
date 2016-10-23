@@ -1,11 +1,13 @@
 # Ariku
 
-Ariku is a online program for those who need to get or modify information related to shooting competitions.
+Ariku is a program for those who are interested about shooting competitions.
 
 Ariku focus on three different user groups: competition holders, competitors and viewers.
 
-Example competition holders use Ariku to produce scoresheets, competitors can attend to competition via Ariku
-and reporters (as viewer) can get scoresheets from Ariku.
+As an example 
+a) competition holder may use Ariku to produce scoresheets
+b) competitor can attend to competition via Ariku
+c) reporter (as viewer) can get scoresheets from Ariku.
 
 ## History
 
@@ -34,5 +36,6 @@ Ariku software licence can be found from [here](LICENSE).
 
 ## Development
 
-I develope Ariku as my side project. 
+I develope Ariku as my side project.
+
 Please contact to sammontakoja@protonmail.com if you want to participate to Ariku project.
