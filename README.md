@@ -22,6 +22,19 @@ there's no reason why other than Finnish clubs or individuals cannot use this pr
 Example [Olympic skeet](https://en.wikipedia.org/wiki/Olympic_skeet) is international sport
 and sport's competitions are hold in over 30 countries.
 
+## Architecture
+
+Architecture is divided into two categories: **internal** and **external** architecture.
+
+External architecture contains use cases and describe what parts are under focus.
+
+Internal architecture describe way to implement use cases.
+
+At the moment internal architecture is built upon four modules: verification module, 
+competition holder module, participant module and viewer module.
+
+More about architecture can be found from [here](architecture.md).
+
 ## Licence
 
 Competitions holder can use Ariku without licence for non-commercial competitions.
