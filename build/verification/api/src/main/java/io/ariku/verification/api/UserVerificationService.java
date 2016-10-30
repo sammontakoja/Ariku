@@ -32,4 +32,9 @@ public class UserVerificationService {
     public boolean isUserSignedIn(User user) {
         return userVerificationStore.findUserVerification(user).isSignedIn;
     }
+
+
+    public boolean isUserSignedInConfirmed(User user) {
+        return userVerificationStore.findUserVerification(user).isSignedInConfirmed;
+    }
 }

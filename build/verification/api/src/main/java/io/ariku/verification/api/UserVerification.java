@@ -9,4 +9,5 @@ public class UserVerification {
     public User user;
     public boolean isLoggedIn;
     public boolean isSignedIn;
+    public boolean isSignedInConfirmed;
 }
