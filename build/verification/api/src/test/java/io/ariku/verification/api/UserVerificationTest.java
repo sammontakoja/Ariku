@@ -12,6 +12,11 @@ import org.junit.runner.RunWith;
 public class UserVerificationTest {
 
     @Test
+    public void system_can_ask_is_used_logged_in() {
+        new UserVerification().isUserLoggedIn(new User());
+    }
+
+    @Test
     public void user_can_signUp() {
         new UserVerification().signUp(new User());
     }
