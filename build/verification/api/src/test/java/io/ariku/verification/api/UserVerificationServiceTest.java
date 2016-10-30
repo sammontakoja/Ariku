@@ -48,6 +48,36 @@ public class UserVerificationServiceTest {
     }
 
     @Test
+    public void user_is_signed_in_if_stored_UserVerification_says_so() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isSignedIn = true;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(any(User.class))).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        assertThat(userVerificationService.isUserSignedIn(new User()), is(true));
+    }
+
+    @Test
+    public void user_is_not_signed_in_if_stored_UserVerification_says_so() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isSignedIn = false;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(any(User.class))).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        assertThat(userVerificationService.isUserSignedIn(new User()), is(false));
+    }
+
+    @Test
     public void user_can_signUp() {
         new UserVerificationService().signUp(new User());
     }

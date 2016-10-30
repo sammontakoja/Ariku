@@ -28,4 +28,8 @@ public class UserVerificationService {
     public boolean isUserLoggedIn(User user) {
         return userVerificationStore.findUserVerification(user).isLoggedIn;
     }
+
+    public boolean isUserSignedIn(User user) {
+        return userVerificationStore.findUserVerification(user).isSignedIn;
+    }
 }

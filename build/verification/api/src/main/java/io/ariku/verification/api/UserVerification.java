@@ -8,4 +8,5 @@ import io.ariku.util.data.User;
 public class UserVerification {
     public User user;
     public boolean isLoggedIn;
+    public boolean isSignedIn;
 }
