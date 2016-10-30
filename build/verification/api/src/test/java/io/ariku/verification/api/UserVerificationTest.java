@@ -22,7 +22,7 @@ public class UserVerificationTest {
     }
 
     @Test
-    public void user_can_ogin() {
+    public void user_can_login() {
         new UserVerification().login();
     }
 
