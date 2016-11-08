@@ -242,11 +242,6 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_can_signUp() {
-        new UserVerificationService().signUp(new User());
-    }
-
-    @Test
     public void user_can_verifySignUp() {
         new UserVerificationService().verifySignUp();
     }
