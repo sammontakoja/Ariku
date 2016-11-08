@@ -30,9 +30,9 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        boolean loginOk = userVerificationService.logout(new LogoutRequest());
+        boolean successful = userVerificationService.logout(new LogoutRequest());
 
-        assertThat(loginOk, is(false));
+        assertThat(successful, is(false));
     }
 
     @Test
@@ -48,9 +48,9 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        boolean loginOk = userVerificationService.logout(new LogoutRequest());
+        boolean successful = userVerificationService.logout(new LogoutRequest());
 
-        assertThat(loginOk, is(false));
+        assertThat(successful, is(false));
     }
 
     @Test
@@ -66,9 +66,9 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        boolean loginOk = userVerificationService.logout(new LogoutRequest());
+        boolean successful = userVerificationService.logout(new LogoutRequest());
 
-        assertThat(loginOk, is(true));
+        assertThat(successful, is(true));
     }
 
     @Test
@@ -86,9 +86,9 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationStore = userVerificationStore;
 
         LoginRequest loginRequest = new LoginRequest();
-        boolean loginOk = userVerificationService.login(loginRequest);
+        boolean successful = userVerificationService.login(loginRequest);
 
-        assertThat(loginOk, is(false));
+        assertThat(successful, is(false));
     }
 
     @Test
@@ -106,9 +106,9 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationStore = userVerificationStore;
 
         LoginRequest loginRequest = new LoginRequest();
-        boolean loginOk = userVerificationService.login(loginRequest);
+        boolean successful = userVerificationService.login(loginRequest);
 
-        assertThat(loginOk, is(false));
+        assertThat(successful, is(false));
     }
 
     @Test
@@ -126,9 +126,9 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationStore = userVerificationStore;
 
         LoginRequest loginRequest = new LoginRequest();
-        boolean loginOk = userVerificationService.login(loginRequest);
+        boolean successful = userVerificationService.login(loginRequest);
 
-        assertThat(loginOk, is(false));
+        assertThat(successful, is(false));
     }
 
     @Test
@@ -146,9 +146,9 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationStore = userVerificationStore;
 
         LoginRequest loginRequest = new LoginRequest();
-        boolean loginOk = userVerificationService.login(loginRequest);
+        boolean successful = userVerificationService.login(loginRequest);
 
-        assertThat(loginOk, is(true));
+        assertThat(successful, is(true));
     }
 
     @Test
