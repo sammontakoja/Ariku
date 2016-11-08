@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -18,18 +19,98 @@ import static org.mockito.Mockito.when;
 public class UserVerificationServiceTest {
 
     @Test
+    public void user_login_is_failed_when_user_found_but_Signed_in_not_confirmed() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = true;
+        storedUserVerification.isSignedIn = true;
+        storedUserVerification.isSignedInConfirmed = false;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        LoginRequest loginRequest = new LoginRequest();
+        boolean loginOk = userVerificationService.login(loginRequest);
+
+        assertThat(loginOk, is(false));
+    }
+
+    @Test
+    public void user_login_is_failed_when_user_found_but_not_SignedIn() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = true;
+        storedUserVerification.isSignedIn = false;
+        storedUserVerification.isSignedInConfirmed = true;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        LoginRequest loginRequest = new LoginRequest();
+        boolean loginOk = userVerificationService.login(loginRequest);
+
+        assertThat(loginOk, is(false));
+    }
+
+    @Test
+    public void user_login_is_failed_when_user_is_not_found() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = false;
+        storedUserVerification.isSignedIn = true;
+        storedUserVerification.isSignedInConfirmed = true;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        LoginRequest loginRequest = new LoginRequest();
+        boolean loginOk = userVerificationService.login(loginRequest);
+
+        assertThat(loginOk, is(false));
+    }
+
+    @Test
+    public void user_login_is_successful_when_user_is_found_and_signed_in() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = true;
+        storedUserVerification.isSignedIn = true;
+        storedUserVerification.isSignedInConfirmed = true;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        LoginRequest loginRequest = new LoginRequest();
+        boolean loginOk = userVerificationService.login(loginRequest);
+
+        assertThat(loginOk, is(true));
+    }
+
+    @Test
     public void user_is_logged_in_if_stored_UserVerification_says_so() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isLoggedIn = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(any(User.class))).thenReturn(storedUserVerification);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        assertThat(userVerificationService.isUserLoggedIn(new User()), is(true));
+        assertThat(userVerificationService.isUserLoggedIn(""), is(true));
     }
 
     @Test
@@ -39,12 +120,12 @@ public class UserVerificationServiceTest {
         storedUserVerification.isLoggedIn = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(any(User.class))).thenReturn(storedUserVerification);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        assertThat(userVerificationService.isUserLoggedIn(new User()), is(false));
+        assertThat(userVerificationService.isUserLoggedIn(""), is(false));
     }
 
     @Test
@@ -54,12 +135,12 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(any(User.class))).thenReturn(storedUserVerification);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        assertThat(userVerificationService.isUserSignedIn(new User()), is(true));
+        assertThat(userVerificationService.isUserSignedIn(""), is(true));
     }
 
     @Test
@@ -69,27 +150,27 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(any(User.class))).thenReturn(storedUserVerification);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        assertThat(userVerificationService.isUserSignedIn(new User()), is(false));
+        assertThat(userVerificationService.isUserSignedIn(""), is(false));
     }
 
     @Test
-    public void user_is_signed_in_and_confirmed_if_UserVerification_says_so() {
+    public void user_is_signed_in_and_confirmed_if_User_found_by_UserVerification() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedInConfirmed = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(any(User.class))).thenReturn(storedUserVerification);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        assertThat(userVerificationService.isUserSignedInConfirmed(new User()), is(true));
+        assertThat(userVerificationService.isUserSignedInConfirmed(""), is(true));
     }
 
     @Test
@@ -99,12 +180,12 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedInConfirmed = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(any(User.class))).thenReturn(storedUserVerification);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
 
-        assertThat(userVerificationService.isUserSignedInConfirmed(new User()), is(false));
+        assertThat(userVerificationService.isUserSignedInConfirmed(""), is(false));
     }
 
     @Test
@@ -115,11 +196,6 @@ public class UserVerificationServiceTest {
     @Test
     public void user_can_verifySignUp() {
         new UserVerificationService().verifySignUp();
-    }
-
-    @Test
-    public void user_can_login() {
-        new UserVerificationService().login(new User());
     }
 
     @Test

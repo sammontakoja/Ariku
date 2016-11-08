@@ -17,24 +17,28 @@ public class UserVerificationService {
 
     }
 
-    public void login(User user) {
-
+    public boolean login(LoginRequest loginRequest) {
+        UserVerification userVerification = userVerificationStore.findUserVerification(loginRequest.userId);
+        return userVerification.isFound && userVerification.isSignedIn && userVerification.isSignedInConfirmed;
     }
 
     public void logout() {
 
     }
 
-    public boolean isUserLoggedIn(User user) {
-        return userVerificationStore.findUserVerification(user).isLoggedIn;
+    public boolean isUserLoggedIn(String userId) {
+        return userVerificationStore.findUserVerification(userId).isLoggedIn;
     }
 
-    public boolean isUserSignedIn(User user) {
-        return userVerificationStore.findUserVerification(user).isSignedIn;
+    public boolean isUserSignedIn(String userId) {
+        return userVerificationStore.findUserVerification(userId).isSignedIn;
     }
 
+    public boolean isUserSignedInConfirmed(String userId) {
+        return userVerificationStore.findUserVerification(userId).isSignedInConfirmed;
+    }
 
-    public boolean isUserSignedInConfirmed(User user) {
-        return userVerificationStore.findUserVerification(user).isSignedInConfirmed;
+    public boolean login(String userId) {
+        return false;
     }
 }
