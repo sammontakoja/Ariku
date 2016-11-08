@@ -1,7 +1,6 @@
 package io.ariku.verification.api;
 
 import com.googlecode.junittoolbox.ParallelRunner;
-import io.ariku.util.data.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,6 +15,40 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(ParallelRunner.class)
 public class UserVerificationServiceTest {
+
+    @Test
+    public void user_sign_up_fail_when_user_is_found() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = true;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        boolean successful = userVerificationService.signUp(new SignUpRequest());
+
+        assertThat(successful, is(false));
+    }
+
+    @Test
+    public void user_sign_up_is_successful_when_user_is_not_found() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = false;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        boolean successful = userVerificationService.signUp(new SignUpRequest());
+
+        assertThat(successful, is(true));
+    }
 
     @Test
     public void user_logout_is_successful_when_user_is_found_but_not_logged_in() {

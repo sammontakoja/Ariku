@@ -7,8 +7,9 @@ public class UserVerificationService {
 
     public UserVerificationStore userVerificationStore;
 
-    public void signUp(SignUpRequest signUpRequest) {
-
+    public boolean signUp(SignUpRequest signUpRequest) {
+        UserVerification userVerification = userVerificationStore.findUserVerification(signUpRequest.userId);
+        return !userVerification.isFound;
     }
 
     public void verifySignUp() {
