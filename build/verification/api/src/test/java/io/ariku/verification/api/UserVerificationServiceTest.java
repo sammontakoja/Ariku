@@ -17,6 +17,59 @@ import static org.mockito.Mockito.when;
 public class UserVerificationServiceTest {
 
     @Test
+    public void verify_sign_up_fail_when_user_is_found_but_not_signed_in() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = true;
+        storedUserVerification.isSignedIn = false;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        boolean successful = userVerificationService.verifySignUp(new VerifySignUpRequest());
+
+        assertThat(successful, is(false));
+    }
+
+    @Test
+    public void verify_sign_up_fail_when_user_is_not_found() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = false;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        boolean successful = userVerificationService.verifySignUp(new VerifySignUpRequest());
+
+        assertThat(successful, is(false));
+    }
+
+    @Test
+    public void verify_sign_up_successful_when_user_is_found_and_signed_in() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = true;
+        storedUserVerification.isSignedIn = true;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        boolean successful = userVerificationService.verifySignUp(new VerifySignUpRequest());
+
+        assertThat(successful, is(true));
+    }
+
+    @Test
     public void user_sign_up_fail_when_user_is_found() {
 
         UserVerification storedUserVerification = new UserVerification();
@@ -272,11 +325,6 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationStore = userVerificationStore;
 
         assertThat(userVerificationService.isUserSignedInConfirmed(""), is(false));
-    }
-
-    @Test
-    public void user_can_verifySignUp() {
-        new UserVerificationService().verifySignUp();
     }
 
 }

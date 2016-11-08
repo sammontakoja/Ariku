@@ -12,8 +12,9 @@ public class UserVerificationService {
         return !userVerification.isFound;
     }
 
-    public void verifySignUp() {
-
+    public boolean verifySignUp(VerifySignUpRequest verifySignUpRequest) {
+        UserVerification userVerification = userVerificationStore.findUserVerification(verifySignUpRequest.userId);
+        return userVerification.isFound && userVerification.isSignedIn;
     }
 
     public boolean login(LoginRequest loginRequest) {
