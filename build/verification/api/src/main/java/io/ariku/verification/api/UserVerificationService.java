@@ -39,7 +39,4 @@ public class UserVerificationService {
         return userVerificationStore.findUserVerification(userId).isSignedInConfirmed;
     }
 
-    public boolean login(String userId) {
-        return false;
-    }
 }
