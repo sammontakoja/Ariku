@@ -70,7 +70,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_sign_up_fail_when_user_is_found() {
+    public void sign_up_fail_when_user_is_found() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = true;
@@ -87,7 +87,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_sign_up_is_successful_when_user_is_not_found() {
+    public void sign_up_is_successful_when_user_is_not_found() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = false;
@@ -104,7 +104,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_logout_is_successful_when_user_is_found_but_not_logged_in() {
+    public void logout_is_successful_when_user_is_found_but_not_logged_in() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = true;
@@ -122,7 +122,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_logout_is_successful_when_user_is_not_found() {
+    public void logout_is_successful_when_user_is_not_found() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = false;
@@ -140,7 +140,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_logout_is_successful_when_user_is_found_and_logged_in() {
+    public void logout_is_successful_when_user_is_found_and_logged_in() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = true;
@@ -158,7 +158,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_login_is_failed_when_user_found_but_Signed_in_not_confirmed() {
+    public void login_is_failed_when_user_found_but_Signed_in_not_confirmed() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = true;
@@ -178,7 +178,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_login_is_failed_when_user_found_but_not_SignedIn() {
+    public void login_is_failed_when_user_found_but_not_SignedIn() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = true;
@@ -198,7 +198,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_login_is_failed_when_user_is_not_found() {
+    public void login_is_failed_when_user_is_not_found() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = false;
@@ -218,7 +218,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_login_is_successful_when_user_is_found_and_signed_in() {
+    public void login_is_successful_when_user_is_found_and_signed_in() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = true;
@@ -238,7 +238,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_is_logged_in_if_stored_UserVerification_says_so() {
+    public void is_logged_in_if_stored_UserVerification_says_so() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isLoggedIn = true;
@@ -253,7 +253,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_is_logged_out_if_stored_UserVerification_says_so() {
+    public void is_logged_out_if_stored_UserVerification_says_so() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isLoggedIn = false;
@@ -268,7 +268,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_is_signed_in_if_stored_UserVerification_says_so() {
+    public void is_signed_in_if_stored_UserVerification_says_so() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedIn = true;
@@ -283,7 +283,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_is_not_signed_in_if_stored_UserVerification_says_so() {
+    public void is_not_signed_in_if_stored_UserVerification_says_so() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedIn = false;
@@ -298,7 +298,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_is_signed_in_and_confirmed_if_User_found_by_UserVerification() {
+    public void is_signed_in_and_confirmed_if_User_found_by_UserVerification() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedInConfirmed = true;
@@ -313,7 +313,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_is_signed_in_but_not_confirmed_if_UserVerification_says_so() {
+    public void is_signed_in_but_not_confirmed_if_UserVerification_says_so() {
 
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedInConfirmed = false;
