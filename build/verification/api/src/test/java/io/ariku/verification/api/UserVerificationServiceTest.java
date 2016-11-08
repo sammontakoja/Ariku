@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,6 +16,60 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(ParallelRunner.class)
 public class UserVerificationServiceTest {
+
+    @Test
+    public void user_logout_is_successful_when_user_is_found_but_not_logged_in() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = true;
+        storedUserVerification.isLoggedIn = false;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        boolean loginOk = userVerificationService.logout(new LogoutRequest());
+
+        assertThat(loginOk, is(false));
+    }
+
+    @Test
+    public void user_logout_is_successful_when_user_is_not_found() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = false;
+        storedUserVerification.isLoggedIn = true;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        boolean loginOk = userVerificationService.logout(new LogoutRequest());
+
+        assertThat(loginOk, is(false));
+    }
+
+    @Test
+    public void user_logout_is_successful_when_user_is_found_and_logged_in() {
+
+        UserVerification storedUserVerification = new UserVerification();
+        storedUserVerification.isFound = true;
+        storedUserVerification.isLoggedIn = true;
+
+        UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
+        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationStore = userVerificationStore;
+
+        boolean loginOk = userVerificationService.logout(new LogoutRequest());
+
+        assertThat(loginOk, is(true));
+    }
 
     @Test
     public void user_login_is_failed_when_user_found_but_Signed_in_not_confirmed() {
@@ -196,11 +249,6 @@ public class UserVerificationServiceTest {
     @Test
     public void user_can_verifySignUp() {
         new UserVerificationService().verifySignUp();
-    }
-
-    @Test
-    public void user_can_logout() {
-        new UserVerificationService().logout();
     }
 
 }

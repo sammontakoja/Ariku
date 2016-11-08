@@ -22,8 +22,9 @@ public class UserVerificationService {
         return userVerification.isFound && userVerification.isSignedIn && userVerification.isSignedInConfirmed;
     }
 
-    public void logout() {
-
+    public boolean logout(LogoutRequest logoutRequest) {
+        UserVerification userVerification = userVerificationStore.findUserVerification(logoutRequest.userId);
+        return userVerification.isFound && userVerification.isLoggedIn;
     }
 
     public boolean isUserLoggedIn(String userId) {
