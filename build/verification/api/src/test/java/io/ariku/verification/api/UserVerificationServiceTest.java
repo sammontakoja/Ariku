@@ -24,7 +24,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -41,7 +41,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isFound = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -59,7 +59,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -76,7 +76,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isFound = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -93,7 +93,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isFound = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -111,7 +111,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isLoggedIn = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -129,7 +129,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isLoggedIn = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -147,7 +147,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isLoggedIn = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -166,7 +166,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedInConfirmed = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -186,7 +186,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedInConfirmed = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -206,7 +206,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedInConfirmed = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -226,7 +226,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedInConfirmed = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -244,7 +244,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isLoggedIn = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -259,7 +259,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isLoggedIn = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -274,7 +274,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -289,7 +289,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -304,7 +304,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedInConfirmed = true;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;
@@ -319,7 +319,7 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedInConfirmed = false;
 
         UserVerificationStore userVerificationStore = mock(UserVerificationStore.class);
-        when(userVerificationStore.findUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationStore.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationStore = userVerificationStore;

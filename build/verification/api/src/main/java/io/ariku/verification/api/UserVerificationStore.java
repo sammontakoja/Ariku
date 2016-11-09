@@ -4,5 +4,13 @@ package io.ariku.verification.api;
  * @author Ari Aaltonen
  */
 public interface UserVerificationStore {
-    UserVerification findUserVerification(String userId);
+
+    void createUserVerification(String userId);
+
+    UserVerification readUserVerification(String userId);
+
+    void deleteUserVerification(String userId);
+
+    void updateUserVerification(String userId, UserVerification userVerification);
+
 }
