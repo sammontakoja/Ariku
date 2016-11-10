@@ -5,38 +5,38 @@ package io.ariku.verification.api;
  */
 public class UserVerificationService {
 
-    public UserVerificationStore userVerificationStore;
+    public UserVerificationCRUD userVerificationCRUD;
 
     public boolean signUp(SignUpRequest signUpRequest) {
-        UserVerification userVerification = userVerificationStore.readUserVerification(signUpRequest.userId);
+        UserVerification userVerification = userVerificationCRUD.readUserVerification(signUpRequest.userId);
         return !userVerification.isFound;
     }
 
     public boolean verifySignUp(VerifySignUpRequest verifySignUpRequest) {
-        UserVerification userVerification = userVerificationStore.readUserVerification(verifySignUpRequest.userId);
+        UserVerification userVerification = userVerificationCRUD.readUserVerification(verifySignUpRequest.userId);
         return userVerification.isFound && userVerification.isSignedIn;
     }
 
     public boolean login(LoginRequest loginRequest) {
-        UserVerification userVerification = userVerificationStore.readUserVerification(loginRequest.userId);
+        UserVerification userVerification = userVerificationCRUD.readUserVerification(loginRequest.userId);
         return userVerification.isFound && userVerification.isSignedIn && userVerification.isSignedInConfirmed;
     }
 
     public boolean logout(LogoutRequest logoutRequest) {
-        UserVerification userVerification = userVerificationStore.readUserVerification(logoutRequest.userId);
+        UserVerification userVerification = userVerificationCRUD.readUserVerification(logoutRequest.userId);
         return userVerification.isFound && userVerification.isLoggedIn;
     }
 
     public boolean isUserLoggedIn(String userId) {
-        return userVerificationStore.readUserVerification(userId).isLoggedIn;
+        return userVerificationCRUD.readUserVerification(userId).isLoggedIn;
     }
 
     public boolean isUserSignedIn(String userId) {
-        return userVerificationStore.readUserVerification(userId).isSignedIn;
+        return userVerificationCRUD.readUserVerification(userId).isSignedIn;
     }
 
     public boolean isUserSignedInConfirmed(String userId) {
-        return userVerificationStore.readUserVerification(userId).isSignedInConfirmed;
+        return userVerificationCRUD.readUserVerification(userId).isSignedInConfirmed;
     }
 
 }

@@ -2,14 +2,14 @@ package io.ariku.verification.simple;
 
 
 import io.ariku.verification.api.UserVerification;
-import io.ariku.verification.api.UserVerificationStore;
+import io.ariku.verification.api.UserVerificationCRUD;
 
 import java.util.HashMap;
 
 /**
  * @author Ari Aaltonen
  */
-public class UserVerificationStoreSimpleImpl implements UserVerificationStore {
+public class UserVerificationCRUDSimpleImpl implements UserVerificationCRUD {
 
     private HashMap<String, UserVerification> userVerifications = new HashMap<>();
 
