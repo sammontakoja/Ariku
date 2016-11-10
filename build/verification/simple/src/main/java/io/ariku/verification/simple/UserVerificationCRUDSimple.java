@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * @author Ari Aaltonen
  */
-public class UserVerificationCRUDSimpleImpl implements UserVerificationCRUD {
+public class UserVerificationCRUDSimple implements UserVerificationCRUD {
 
     private HashMap<String, UserVerification> userVerifications = new HashMap<>();
 

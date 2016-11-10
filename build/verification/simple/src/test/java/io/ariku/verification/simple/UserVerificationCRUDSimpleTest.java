@@ -14,17 +14,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Ari Aaltonen
  */
 @RunWith(ParallelRunner.class)
-public class UserVerificationCRUDSimpleImplTest {
+public class UserVerificationCRUDSimpleTest {
 
     @Test
     public void userVerification_is_not_null() {
-        UserVerificationCRUDSimpleImpl userVerificationServiceSimple = new UserVerificationCRUDSimpleImpl();
+        UserVerificationCRUDSimple userVerificationServiceSimple = new UserVerificationCRUDSimple();
         assertThat(userVerificationServiceSimple.readUserVerification(""), not(nullValue()));
     }
 
     @Test
     public void created_UserVerification_can_be_found_when_using_same_userId() {
-        UserVerificationCRUDSimpleImpl userVerificationServiceSimple = new UserVerificationCRUDSimpleImpl();
+        UserVerificationCRUDSimple userVerificationServiceSimple = new UserVerificationCRUDSimple();
         userVerificationServiceSimple.createUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
         assertThat(readUserVerification.isFound, is(true));
@@ -32,7 +32,7 @@ public class UserVerificationCRUDSimpleImplTest {
 
     @Test
     public void deleted_UserVerification_cannot_be_found_when_using_same_userId() {
-        UserVerificationCRUDSimpleImpl userVerificationServiceSimple = new UserVerificationCRUDSimpleImpl();
+        UserVerificationCRUDSimple userVerificationServiceSimple = new UserVerificationCRUDSimple();
         userVerificationServiceSimple.createUserVerification("123");
         userVerificationServiceSimple.deleteUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
@@ -41,7 +41,7 @@ public class UserVerificationCRUDSimpleImplTest {
 
     @Test
     public void UserVerification_values_change_when_using_update_with_same_userId() {
-        UserVerificationCRUDSimpleImpl userVerificationServiceSimple = new UserVerificationCRUDSimpleImpl();
+        UserVerificationCRUDSimple userVerificationServiceSimple = new UserVerificationCRUDSimple();
 
         UserVerification userVerification = new UserVerification();
         userVerification.isFound = true;
