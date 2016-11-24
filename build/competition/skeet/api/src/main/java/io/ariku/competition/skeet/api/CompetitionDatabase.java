@@ -1,4 +1,4 @@
-package io.ariku.competition.skeet;
+package io.ariku.competition.skeet.api;
 
 import java.util.List;
 

@@ -1,16 +1,13 @@
-package io.ariku.competition.skeet;
+package io.ariku.competition.skeet.api;
 
 import com.googlecode.junittoolbox.ParallelRunner;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -38,7 +35,7 @@ public class SkeetCompetitionServiceTest {
 
         when(competitionDatabase.competitionsByUser("userId")).thenReturn(Arrays.asList(nastaGB));
 
-        assertThat(skeetCompetitionService.listCompetitions("userId"), hasItem(nastaGB));
+        assertThat(skeetCompetitionService.listCompetitions("userId"), CoreMatchers.hasItem(nastaGB));
     }
 
 }
