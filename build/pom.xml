@@ -12,6 +12,7 @@
     <modules>
         <module>util</module>
         <module>verification</module>
+        <module>competition</module>
     </modules>
 
     <properties>
