@@ -3,7 +3,7 @@ package io.ariku.verification.api;
 /**
  * @author Ari Aaltonen
  */
-public interface UserVerificationCRUD {
+public interface UserVerificationDatabase {
 
     void createUserVerification(String userId);
 

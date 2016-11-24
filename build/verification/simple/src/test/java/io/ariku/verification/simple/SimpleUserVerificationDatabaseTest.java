@@ -14,17 +14,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Ari Aaltonen
  */
 @RunWith(ParallelRunner.class)
-public class UserVerificationCRUDSimpleTest {
+public class SimpleUserVerificationDatabaseTest {
 
     @Test
     public void userVerification_is_not_null() {
-        UserVerificationCRUDSimple userVerificationServiceSimple = new UserVerificationCRUDSimple();
+        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
         assertThat(userVerificationServiceSimple.readUserVerification(""), not(nullValue()));
     }
 
     @Test
     public void created_UserVerification_can_be_found_when_using_same_userId() {
-        UserVerificationCRUDSimple userVerificationServiceSimple = new UserVerificationCRUDSimple();
+        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
         userVerificationServiceSimple.createUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
         assertThat(readUserVerification.isFound, is(true));
@@ -32,7 +32,7 @@ public class UserVerificationCRUDSimpleTest {
 
     @Test
     public void deleted_UserVerification_cannot_be_found_when_using_same_userId() {
-        UserVerificationCRUDSimple userVerificationServiceSimple = new UserVerificationCRUDSimple();
+        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
         userVerificationServiceSimple.createUserVerification("123");
         userVerificationServiceSimple.deleteUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
@@ -41,7 +41,7 @@ public class UserVerificationCRUDSimpleTest {
 
     @Test
     public void UserVerification_values_change_when_using_update_with_same_userId() {
-        UserVerificationCRUDSimple userVerificationServiceSimple = new UserVerificationCRUDSimple();
+        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
 
         UserVerification userVerification = new UserVerification();
         userVerification.isFound = true;

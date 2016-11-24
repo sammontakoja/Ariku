@@ -23,11 +23,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isFound = true;
         storedUserVerification.isSignedIn = false;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         boolean successful = userVerificationService.verifySignUp(new VerifySignUpRequest());
 
@@ -40,11 +40,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = false;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         boolean successful = userVerificationService.verifySignUp(new VerifySignUpRequest());
 
@@ -58,11 +58,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isFound = true;
         storedUserVerification.isSignedIn = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         boolean successful = userVerificationService.verifySignUp(new VerifySignUpRequest());
 
@@ -75,11 +75,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         boolean successful = userVerificationService.signUp(new SignUpRequest());
 
@@ -92,11 +92,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isFound = false;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         boolean successful = userVerificationService.signUp(new SignUpRequest());
 
@@ -110,11 +110,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isFound = true;
         storedUserVerification.isLoggedIn = false;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         boolean successful = userVerificationService.logout(new LogoutRequest());
 
@@ -128,11 +128,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isFound = false;
         storedUserVerification.isLoggedIn = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         boolean successful = userVerificationService.logout(new LogoutRequest());
 
@@ -146,11 +146,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isFound = true;
         storedUserVerification.isLoggedIn = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         boolean successful = userVerificationService.logout(new LogoutRequest());
 
@@ -165,11 +165,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = true;
         storedUserVerification.isSignedInConfirmed = false;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         LoginRequest loginRequest = new LoginRequest();
         boolean successful = userVerificationService.login(loginRequest);
@@ -185,11 +185,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = false;
         storedUserVerification.isSignedInConfirmed = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         LoginRequest loginRequest = new LoginRequest();
         boolean successful = userVerificationService.login(loginRequest);
@@ -205,11 +205,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = true;
         storedUserVerification.isSignedInConfirmed = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         LoginRequest loginRequest = new LoginRequest();
         boolean successful = userVerificationService.login(loginRequest);
@@ -225,11 +225,11 @@ public class UserVerificationServiceTest {
         storedUserVerification.isSignedIn = true;
         storedUserVerification.isSignedInConfirmed = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         LoginRequest loginRequest = new LoginRequest();
         boolean successful = userVerificationService.login(loginRequest);
@@ -243,11 +243,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isLoggedIn = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         assertThat(userVerificationService.isUserLoggedIn(""), is(true));
     }
@@ -258,11 +258,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isLoggedIn = false;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         assertThat(userVerificationService.isUserLoggedIn(""), is(false));
     }
@@ -273,11 +273,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedIn = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         assertThat(userVerificationService.isUserSignedIn(""), is(true));
     }
@@ -288,11 +288,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedIn = false;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         assertThat(userVerificationService.isUserSignedIn(""), is(false));
     }
@@ -303,11 +303,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedInConfirmed = true;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         assertThat(userVerificationService.isUserSignedInConfirmed(""), is(true));
     }
@@ -318,11 +318,11 @@ public class UserVerificationServiceTest {
         UserVerification storedUserVerification = new UserVerification();
         storedUserVerification.isSignedInConfirmed = false;
 
-        UserVerificationCRUD userVerificationCRUD = mock(UserVerificationCRUD.class);
-        when(userVerificationCRUD.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationCRUD = userVerificationCRUD;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         assertThat(userVerificationService.isUserSignedInConfirmed(""), is(false));
     }
