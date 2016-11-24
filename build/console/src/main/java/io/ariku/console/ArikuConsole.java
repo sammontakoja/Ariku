@@ -11,12 +11,25 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import io.ariku.competition.skeet.api.SkeetCompetitionService;
+import io.ariku.competition.skeet.simple.SkeetComposer;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class ArikuConsole {
     public static void main(String[] args) throws IOException {
+
+        SkeetComposer skeetComposer = new SkeetComposer();
+
+        SkeetCompetitionService skeetCompetitionService = skeetComposer.simpleSkeetCompetitionService();
+
+        if (Arrays.asList(args).contains("-v")) {
+            System.out.println(skeetComposer.version);
+            System.exit(0);
+        }
+
         // Setup terminal and screen layers
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         Screen screen = new TerminalScreen(terminal);

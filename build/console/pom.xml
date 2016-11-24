@@ -13,6 +13,7 @@
     <artifactId>console</artifactId>
 
     <build>
+        <finalName>ArikuConsole</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -33,6 +34,11 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>io.ariku.competition.skeet</groupId>
+            <artifactId>composer</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.lanterna</groupId>
             <artifactId>lanterna</artifactId>
