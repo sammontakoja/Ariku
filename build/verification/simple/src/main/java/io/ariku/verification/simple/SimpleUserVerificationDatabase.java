@@ -34,8 +34,8 @@ public class SimpleUserVerificationDatabase implements UserVerificationDatabase 
     }
 
     @Override
-    public void updateUserVerification(String userId, UserVerification userVerification) {
-        UserVerification foundVerification = userVerifications.get(userId);
+    public void updateUserVerification(UserVerification userVerification) {
+        UserVerification foundVerification = userVerifications.get(userVerification.userId);
         if (foundVerification != null) {
             foundVerification.isSignedInConfirmed = userVerification.isSignedInConfirmed;
             foundVerification.isSignedIn = userVerification.isSignedIn;

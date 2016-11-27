@@ -50,7 +50,7 @@ public class SimpleUserVerificationDatabaseTest {
         userVerification.isSignedInConfirmed = true;
 
         userVerificationServiceSimple.createUserVerification("123");
-        userVerificationServiceSimple.updateUserVerification("123", userVerification);
+        userVerificationServiceSimple.updateUserVerification(userVerification);
 
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
 

@@ -11,6 +11,6 @@ public interface UserVerificationDatabase {
 
     void deleteUserVerification(String userId);
 
-    void updateUserVerification(String userId, UserVerification userVerification);
+    void updateUserVerification(UserVerification userVerification);
 
 }

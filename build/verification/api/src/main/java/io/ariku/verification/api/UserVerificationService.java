@@ -18,7 +18,11 @@ public class UserVerificationService {
 
     public boolean verifySignUp(VerifySignUpRequest verifySignUpRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(verifySignUpRequest.userId);
-        return !userVerification.userId.isEmpty() && userVerification.isSignedIn;
+        if (!userVerification.userId.isEmpty() && userVerification.isSignedIn) {
+            userVerificationDatabase.updateUserVerification(userVerification);
+            return true;
+        }
+        return false;
     }
 
     public boolean login(LoginRequest loginRequest) {
