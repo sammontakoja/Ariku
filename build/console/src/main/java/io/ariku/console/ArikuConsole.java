@@ -12,7 +12,9 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import io.ariku.competition.skeet.api.SkeetCompetitionService;
-import io.ariku.competition.skeet.simple.SkeetComposer;
+import io.ariku.composer.SkeetComposer;
+import io.ariku.composer.VerificationComposer;
+import io.ariku.verification.api.UserVerificationService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,12 +23,15 @@ import java.util.regex.Pattern;
 public class ArikuConsole {
     public static void main(String[] args) throws IOException {
 
+        VerificationComposer verificationComposer = new VerificationComposer();
         SkeetComposer skeetComposer = new SkeetComposer();
 
         SkeetCompetitionService skeetCompetitionService = skeetComposer.simpleSkeetCompetitionService();
+        UserVerificationService userVerificationService = verificationComposer.userVerificationService();
 
         if (Arrays.asList(args).contains("-v")) {
             System.out.println(skeetComposer.version);
+            System.out.println(verificationComposer.version);
             System.exit(0);
         }
 
@@ -54,17 +59,19 @@ public class ArikuConsole {
         panel.addComponent(operations);
 
         panel.addComponent(new EmptySpace(new TerminalSize(0, 0)));
-        new Button("Calculate!", new Runnable() {
-            @Override
-            public void run() {
-                int num1 = Integer.parseInt(txtNum1.getText());
-                int num2 = Integer.parseInt(txtNum2.getText());
-                if (operations.getSelectedIndex() == 0) {
-                    lblOutput.setText(Integer.toString(num1 + num2));
-                } else if (operations.getSelectedIndex() == 1) {
-                    lblOutput.setText(Integer.toString(num1 - num2));
-                }
+
+        new Button("Calculate!", () -> {
+            int num1 = Integer.parseInt(txtNum1.getText());
+            int num2 = Integer.parseInt(txtNum2.getText());
+            if (operations.getSelectedIndex() == 0) {
+                lblOutput.setText(Integer.toString(num1 + num2));
+            } else if (operations.getSelectedIndex() == 1) {
+                lblOutput.setText(Integer.toString(num1 - num2));
             }
+        }).addTo(panel);
+
+        new Button("Exit", () -> {
+            System.exit(0);
         }).addTo(panel);
 
         panel.addComponent(new EmptySpace(new TerminalSize(0, 0)));

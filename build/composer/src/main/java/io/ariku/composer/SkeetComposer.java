@@ -1,6 +1,7 @@
-package io.ariku.competition.skeet.simple;
+package io.ariku.composer;
 
 import io.ariku.competition.skeet.api.SkeetCompetitionService;
+import io.ariku.competition.skeet.simple.SimpleCompetitionDatabase;
 
 /**
  * @author Ari Aaltonen

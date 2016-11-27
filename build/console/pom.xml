@@ -35,7 +35,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.ariku.competition.skeet</groupId>
+            <groupId>io.ariku</groupId>
             <artifactId>composer</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
