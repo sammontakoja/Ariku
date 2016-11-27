@@ -4,6 +4,7 @@ package io.ariku.console;
  * @author Ari Aaltonen
  */
 
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.*;
@@ -14,9 +15,11 @@ import com.googlecode.lanterna.terminal.Terminal;
 import io.ariku.competition.skeet.api.SkeetCompetitionService;
 import io.ariku.composer.SkeetComposer;
 import io.ariku.composer.VerificationComposer;
+import io.ariku.verification.api.SignUpRequest;
 import io.ariku.verification.api.UserVerificationService;
 
 import java.io.IOException;
+import java.time.temporal.Temporal;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -46,33 +49,43 @@ public class ArikuConsole {
 
         final Label lblOutput = new Label("");
 
-        panel.addComponent(new Label("Num 1"));
-        final TextBox txtNum1 = new TextBox().setValidationPattern(Pattern.compile("[0-9]*")).addTo(panel);
-
-        panel.addComponent(new Label("Num 2"));
-        final TextBox txtNum2 = new TextBox().setValidationPattern(Pattern.compile("[0-9]*")).addTo(panel);
+        panel.addComponent(new Label("User id"));
+        final TextBox userIdTextBox = new TextBox().addTo(panel);
 
         panel.addComponent(new Label("Operation"));
         final ComboBox<String> operations = new ComboBox<String>();
-        operations.addItem("Add");
-        operations.addItem("Subtract");
+        operations.addItem("SignUp");
+        operations.addItem("VerifySignUp");
+        operations.addItem("Login");
+        operations.addItem("Logout");
         panel.addComponent(operations);
 
         panel.addComponent(new EmptySpace(new TerminalSize(0, 0)));
 
-        new Button("Calculate!", () -> {
-            int num1 = Integer.parseInt(txtNum1.getText());
-            int num2 = Integer.parseInt(txtNum2.getText());
-            if (operations.getSelectedIndex() == 0) {
-                lblOutput.setText(Integer.toString(num1 + num2));
-            } else if (operations.getSelectedIndex() == 1) {
-                lblOutput.setText(Integer.toString(num1 - num2));
+        new Button("Operate!", () -> {
+            String userId = userIdTextBox.getText();
+            if (userId.isEmpty())
+                return;
+
+            if (operations.getSelectedItem().equals("SignUp")) {
+                lblOutput.setText("SignUp");
             }
+
+            if (operations.getSelectedItem().equals("VerifySignUp")) {
+                lblOutput.setText("VerifySignUp");
+            }
+
+            if (operations.getSelectedItem().equals("Login")) {
+                lblOutput.setText("Login");
+            }
+
+            if (operations.getSelectedItem().equals("Logout")) {
+                lblOutput.setText("Logout");
+            }
+
         }).addTo(panel);
 
-        new Button("Exit", () -> {
-            System.exit(0);
-        }).addTo(panel);
+        new Button("Exit", () -> System.exit(0)).addTo(panel);
 
         panel.addComponent(new EmptySpace(new TerminalSize(0, 0)));
         panel.addComponent(lblOutput);
@@ -82,7 +95,7 @@ public class ArikuConsole {
         window.setComponent(panel);
 
         // Create gui and start gui
-        MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLUE));
+        MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLACK));
         gui.addWindowAndWait(window);
     }
 }
