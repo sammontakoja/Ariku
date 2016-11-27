@@ -27,7 +27,7 @@ public class SimpleUserVerificationDatabaseTest {
         SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
         userVerificationServiceSimple.createUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
-        assertThat(readUserVerification.isFound, is(true));
+        assertThat(readUserVerification.userId, is("123"));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class SimpleUserVerificationDatabaseTest {
         userVerificationServiceSimple.createUserVerification("123");
         userVerificationServiceSimple.deleteUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
-        assertThat(readUserVerification.isFound, is(false));
+        assertThat(readUserVerification.userId, not("123"));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class SimpleUserVerificationDatabaseTest {
         SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
 
         UserVerification userVerification = new UserVerification();
-        userVerification.isFound = true;
+        userVerification.userId = "123";
         userVerification.isSignedIn = true;
         userVerification.isLoggedIn = true;
         userVerification.isSignedInConfirmed = true;
@@ -54,7 +54,7 @@ public class SimpleUserVerificationDatabaseTest {
 
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
 
-        assertThat(readUserVerification.isFound, is(true));
+        assertThat(readUserVerification.userId, is("123"));
         assertThat(readUserVerification.isLoggedIn, is(true));
         assertThat(readUserVerification.isSignedIn, is(true));
         assertThat(readUserVerification.isSignedInConfirmed, is(true));

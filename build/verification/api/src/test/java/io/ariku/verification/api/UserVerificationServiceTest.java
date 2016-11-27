@@ -20,7 +20,6 @@ public class UserVerificationServiceTest {
     public void verify_sign_up_fail_when_user_is_found_but_not_signed_in() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = true;
         storedUserVerification.isSignedIn = false;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
@@ -35,10 +34,10 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void verify_sign_up_fail_when_user_is_not_found() {
+    public void verify_sign_up_fail_when_UserVerification_lack_userId() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = false;
+        storedUserVerification.userId = "";
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
         when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
@@ -54,12 +53,12 @@ public class UserVerificationServiceTest {
     @Test
     public void verify_sign_up_successful_when_user_is_found_and_signed_in() {
 
-        UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = true;
-        storedUserVerification.isSignedIn = true;
+        UserVerification userVerification = new UserVerification();
+        userVerification.userId = "X";
+        userVerification.isSignedIn = true;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
@@ -70,18 +69,18 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void sign_up_fail_when_user_is_found() {
+    public void sign_up_fail_when_userId_already_taken() {
 
-        UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = true;
+        UserVerification userVerification = new UserVerification();
+        userVerification.userId = "x";
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean successful = userVerificationService.signUp(new SignUpRequest());
+        boolean successful = userVerificationService.signUp(new SignUpRequest("x"));
 
         assertThat(successful, is(false));
     }
@@ -90,7 +89,6 @@ public class UserVerificationServiceTest {
     public void sign_up_is_successful_when_user_is_not_found() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = false;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
         when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
@@ -107,7 +105,6 @@ public class UserVerificationServiceTest {
     public void logout_is_successful_when_user_is_found_but_not_logged_in() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = true;
         storedUserVerification.isLoggedIn = false;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
@@ -116,7 +113,7 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean successful = userVerificationService.logout(new LogoutRequest());
+        boolean successful = userVerificationService.logout(new LogoutRequest("a"));
 
         assertThat(successful, is(false));
     }
@@ -125,7 +122,6 @@ public class UserVerificationServiceTest {
     public void logout_is_successful_when_user_is_not_found() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = false;
         storedUserVerification.isLoggedIn = true;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
@@ -142,17 +138,17 @@ public class UserVerificationServiceTest {
     @Test
     public void logout_is_successful_when_user_is_found_and_logged_in() {
 
-        UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = true;
-        storedUserVerification.isLoggedIn = true;
+        UserVerification userVerification = new UserVerification();
+        userVerification.userId = "a";
+        userVerification.isLoggedIn = true;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean successful = userVerificationService.logout(new LogoutRequest());
+        boolean successful = userVerificationService.logout(new LogoutRequest("a"));
 
         assertThat(successful, is(true));
     }
@@ -161,7 +157,6 @@ public class UserVerificationServiceTest {
     public void login_is_failed_when_user_found_but_Signed_in_not_confirmed() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = true;
         storedUserVerification.isSignedIn = true;
         storedUserVerification.isSignedInConfirmed = false;
 
@@ -181,7 +176,6 @@ public class UserVerificationServiceTest {
     public void login_is_failed_when_user_found_but_not_SignedIn() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = true;
         storedUserVerification.isSignedIn = false;
         storedUserVerification.isSignedInConfirmed = true;
 
@@ -201,7 +195,6 @@ public class UserVerificationServiceTest {
     public void login_is_failed_when_user_is_not_found() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = false;
         storedUserVerification.isSignedIn = true;
         storedUserVerification.isSignedInConfirmed = true;
 
@@ -218,10 +211,10 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void login_is_successful_when_user_is_found_and_signed_in() {
+    public void login_is_successful_when_user_found_and_signed_in_and_signed_in_confirmed() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isFound = true;
+        storedUserVerification.userId = "a";
         storedUserVerification.isSignedIn = true;
         storedUserVerification.isSignedInConfirmed = true;
 
@@ -231,8 +224,7 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        LoginRequest loginRequest = new LoginRequest();
-        boolean successful = userVerificationService.login(loginRequest);
+        boolean successful = userVerificationService.login(new LoginRequest("a"));
 
         assertThat(successful, is(true));
     }

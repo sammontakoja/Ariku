@@ -9,22 +9,26 @@ public class UserVerificationService {
 
     public boolean signUp(SignUpRequest signUpRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(signUpRequest.userId);
-        return !userVerification.isFound;
+        if (userVerification.userId.isEmpty()) {
+            userVerificationDatabase.createUserVerification(signUpRequest.userId);
+            return true;
+        } else
+            return false;
     }
 
     public boolean verifySignUp(VerifySignUpRequest verifySignUpRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(verifySignUpRequest.userId);
-        return userVerification.isFound && userVerification.isSignedIn;
+        return !userVerification.userId.isEmpty() && userVerification.isSignedIn;
     }
 
     public boolean login(LoginRequest loginRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(loginRequest.userId);
-        return userVerification.isFound && userVerification.isSignedIn && userVerification.isSignedInConfirmed;
+        return !userVerification.userId.isEmpty() && userVerification.isSignedIn && userVerification.isSignedInConfirmed;
     }
 
     public boolean logout(LogoutRequest logoutRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(logoutRequest.userId);
-        return userVerification.isFound && userVerification.isLoggedIn;
+        return !userVerification.userId.isEmpty() && userVerification.isLoggedIn;
     }
 
     public boolean isUserLoggedIn(String userId) {

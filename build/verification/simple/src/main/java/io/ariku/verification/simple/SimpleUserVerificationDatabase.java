@@ -15,8 +15,7 @@ public class SimpleUserVerificationDatabase implements UserVerificationDatabase 
 
     @Override
     public void createUserVerification(String userId) {
-        UserVerification userVerification = new UserVerification();
-        userVerification.isFound = true;
+        UserVerification userVerification = new UserVerification(userId);
         userVerifications.put(userId, userVerification);
     }
 
@@ -41,7 +40,6 @@ public class SimpleUserVerificationDatabase implements UserVerificationDatabase 
             foundVerification.isSignedInConfirmed = userVerification.isSignedInConfirmed;
             foundVerification.isSignedIn = userVerification.isSignedIn;
             foundVerification.isLoggedIn = userVerification.isLoggedIn;
-            foundVerification.isFound = userVerification.isFound;
         }
     }
 
