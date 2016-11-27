@@ -141,6 +141,8 @@ public class UserVerificationServiceTest {
         UserVerification userVerification = new UserVerification();
         userVerification.userId = "a";
         userVerification.isLoggedIn = true;
+        userVerification.isSignedInConfirmed = true;
+        userVerification.isSignedIn = true;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
         when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);

@@ -19,6 +19,7 @@ public class UserVerificationService {
     public boolean verifySignUp(VerifySignUpRequest verifySignUpRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(verifySignUpRequest.userId);
         if (!userVerification.userId.isEmpty() && userVerification.isSignedIn) {
+            userVerification.isSignedInConfirmed = true;
             userVerificationDatabase.updateUserVerification(userVerification);
             return true;
         }
@@ -27,12 +28,31 @@ public class UserVerificationService {
 
     public boolean login(LoginRequest loginRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(loginRequest.userId);
-        return !userVerification.userId.isEmpty() && userVerification.isSignedIn && userVerification.isSignedInConfirmed;
+
+        boolean canLogin = !userVerification.userId.isEmpty() && userVerification.isSignedIn
+                && userVerification.isSignedInConfirmed;
+
+        if (canLogin) {
+            userVerification.isLoggedIn = true;
+            userVerificationDatabase.updateUserVerification(userVerification);
+        }
+
+        return canLogin;
     }
 
     public boolean logout(LogoutRequest logoutRequest) {
+
         UserVerification userVerification = userVerificationDatabase.readUserVerification(logoutRequest.userId);
-        return !userVerification.userId.isEmpty() && userVerification.isLoggedIn;
+
+        boolean canLogout = !userVerification.userId.isEmpty() && userVerification.isSignedIn
+                && userVerification.isSignedInConfirmed && userVerification.isLoggedIn;
+
+        if (canLogout) {
+            userVerification.isLoggedIn = false;
+            userVerificationDatabase.updateUserVerification(userVerification);
+        }
+
+        return canLogout;
     }
 
     public boolean isUserLoggedIn(String userId) {

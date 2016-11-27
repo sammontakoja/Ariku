@@ -16,6 +16,7 @@ public class SimpleUserVerificationDatabase implements UserVerificationDatabase 
     @Override
     public void createUserVerification(String userId) {
         UserVerification userVerification = new UserVerification(userId);
+        userVerification.isSignedIn = true;
         userVerifications.put(userId, userVerification);
     }
 

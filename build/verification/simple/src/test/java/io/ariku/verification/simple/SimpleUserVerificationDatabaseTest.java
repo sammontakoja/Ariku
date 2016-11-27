@@ -23,6 +23,14 @@ public class SimpleUserVerificationDatabaseTest {
     }
 
     @Test
+    public void created_UserVerification_is_signedIn() {
+        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
+        userVerificationServiceSimple.createUserVerification("123");
+        UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
+        assertThat(readUserVerification.isSignedIn, is(true));
+    }
+
+    @Test
     public void created_UserVerification_can_be_found_when_using_same_userId() {
         SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
         userVerificationServiceSimple.createUserVerification("123");
