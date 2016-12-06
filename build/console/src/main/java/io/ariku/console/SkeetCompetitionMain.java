@@ -2,14 +2,15 @@ package io.ariku.console;
 
 import com.googlecode.lanterna.gui2.*;
 
-import static io.ariku.console.SkeetNewCompetition.skeetNewCompetitionPanel;
+import static io.ariku.console.SkeetCompetitionContent.listCompetitionPanel;
+import static io.ariku.console.SkeetCompetitionContent.skeetNewCompetitionPanel;
 
 /**
  * @author Ari Aaltonen
  */
 public class SkeetCompetitionMain {
 
-    public static void skeetCompetitionContent(Panel rootPanel) {
+    public static void skeetCompetitionMain(Panel rootPanel) {
 
         rootPanel.removeAllComponents();
         rootPanel.setLayoutManager(new GridLayout(1));
@@ -25,7 +26,6 @@ public class SkeetCompetitionMain {
         rootPanel.addComponent(contentPanel);
 
         menuPanel.addComponent(new Button("New skeet competitions", () -> skeetNewCompetitionPanel(contentPanel)));
-
-        menuPanel.addComponent(new Button("List current skeet competitions", () -> System.out.println("Pushed list skeet competitions")));
+        menuPanel.addComponent(new Button("My competitions", () -> listCompetitionPanel(contentPanel)));
     }
 }

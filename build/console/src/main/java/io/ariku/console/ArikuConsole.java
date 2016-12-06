@@ -14,8 +14,8 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static io.ariku.composer.Composer.COMPOSER;
-import static io.ariku.console.SkeetCompetitionMain.skeetCompetitionContent;
+import static io.ariku.composer.Composer.COMPOSER_MEMORY;
+import static io.ariku.console.SkeetCompetitionMain.skeetCompetitionMain;
 import static io.ariku.console.UserVerificationContent.userVerificationContent;
 
 public class ArikuConsole {
@@ -23,7 +23,7 @@ public class ArikuConsole {
     public static void main(String[] args) throws IOException {
 
         if (Arrays.asList(args).contains("-v")) {
-            System.out.println(COMPOSER.arikuVersion);
+            System.out.println(COMPOSER_MEMORY.arikuVersion);
             System.exit(0);
         }
 
@@ -54,7 +54,7 @@ public class ArikuConsole {
 
         competitions.addListener((selectedIndex, previousSelection) -> {
             if (competitions.getText().equals("Skeet"))
-                skeetCompetitionContent(contentPanel);
+                skeetCompetitionMain(contentPanel);
         });
 
         menuPanel.addComponent(new Button("Exit", () -> System.exit(0)));

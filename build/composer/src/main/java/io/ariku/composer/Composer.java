@@ -2,7 +2,10 @@ package io.ariku.composer;
 
 import io.ariku.competition.skeet.api.SkeetCompetitionService;
 import io.ariku.competition.skeet.simple.SimpleCompetitionDatabase;
+import io.ariku.verification.api.LoginRequest;
+import io.ariku.verification.api.SignUpRequest;
 import io.ariku.verification.api.UserVerificationService;
+import io.ariku.verification.api.VerifySignUpRequest;
 import io.ariku.verification.simple.SimpleUserVerificationDatabase;
 
 /**
@@ -10,7 +13,7 @@ import io.ariku.verification.simple.SimpleUserVerificationDatabase;
  */
 public enum Composer {
 
-    COMPOSER;
+    COMPOSER_MEMORY;
 
     public final String arikuVersion;
     public final UserVerificationService userVerificationService;
@@ -30,6 +33,10 @@ public enum Composer {
 
         skeetCompetitionService.competitionDatabase = new SimpleCompetitionDatabase();
         sb.append("\nSimpleCompetitionDatabase version 1.0-SNAPSHOT (Competition data will be lost after program is closed)");
+
+        System.out.println("User with userId 'user' verified signed up");
+        userVerificationService.signUp(new SignUpRequest("user"));
+        userVerificationService.verifySignUp(new VerifySignUpRequest("user"));
 
         this.userVerificationService = userVerificationService;
         this.skeetCompetitionService = skeetCompetitionService;

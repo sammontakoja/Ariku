@@ -4,7 +4,7 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.gui2.*;
 import io.ariku.verification.api.*;
 
-import static io.ariku.composer.Composer.COMPOSER;
+import static io.ariku.composer.Composer.COMPOSER_MEMORY;
 import static io.ariku.console.ConsoleUser.CONSOLE_USER;
 
 /**
@@ -38,7 +38,7 @@ public class UserVerificationContent {
 
     private static void operate(ComboBox<String> operations, String value) {
 
-        UserVerificationService userVerificationService = COMPOSER.userVerificationService;
+        UserVerificationService userVerificationService = COMPOSER_MEMORY.userVerificationService;
 
         if (value.isEmpty())
             return;
