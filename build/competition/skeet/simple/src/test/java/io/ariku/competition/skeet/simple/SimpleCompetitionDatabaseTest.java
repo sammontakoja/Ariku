@@ -55,6 +55,13 @@ public class SimpleCompetitionDatabaseTest {
     }
 
     @Test
+    public void when_userid_not_created_any_competition_then_empty_list_returned() {
+        SimpleCompetitionDatabase db = new SimpleCompetitionDatabase();
+        List<Competition> competitions = db.competitionsByUser("user");
+        assertThat(competitions.size(), is(0));
+    }
+
+    @Test
     public void when_user_create_two_competitions_they_are_found_from_competition_by_user_list() {
         SimpleCompetitionDatabase db = new SimpleCompetitionDatabase();
         db.create("userId1", new Competition("competition1"));

@@ -1,7 +1,5 @@
 package io.ariku.competition.skeet.api;
 
-import java.util.Comparator;
-
 /**
  * @author Ari Aaltonen
  */

@@ -23,7 +23,12 @@ public class SimpleCompetitionDatabase implements CompetitionDatabase {
 
     @Override
     public List<Competition> competitionsByUser(String user) {
-        return new ArrayList(database.get(user));
+        ArrayList<Competition> competitions = database.get(user);
+
+        if (competitions == null)
+            return new ArrayList<>();
+
+        return new ArrayList(competitions);
     }
 
     @Override
