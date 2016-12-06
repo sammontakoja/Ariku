@@ -4,7 +4,8 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.gui2.*;
 import io.ariku.verification.api.*;
 
-import static io.ariku.composer.Composer.composer;
+import static io.ariku.composer.Composer.COMPOSER;
+import static io.ariku.console.ConsoleUser.CONSOLE_USER;
 
 /**
  * @author Ari Aaltonen
@@ -37,10 +38,12 @@ public class UserVerificationContent {
 
     private static void operate(ComboBox<String> operations, String value) {
 
-        UserVerificationService userVerificationService = composer.userVerificationService;
+        UserVerificationService userVerificationService = COMPOSER.userVerificationService;
 
         if (value.isEmpty())
             return;
+
+        CONSOLE_USER.userId(value);
 
         if (operations.getSelectedItem().equals("SignUp")) {
             boolean signUp = userVerificationService.signUp(new SignUpRequest(value));

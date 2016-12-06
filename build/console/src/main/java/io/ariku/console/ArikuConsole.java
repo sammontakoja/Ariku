@@ -14,7 +14,8 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static io.ariku.composer.Composer.composer;
+import static io.ariku.composer.Composer.COMPOSER;
+import static io.ariku.console.SkeetCompetitionMain.skeetCompetitionContent;
 import static io.ariku.console.UserVerificationContent.userVerificationContent;
 
 public class ArikuConsole {
@@ -22,7 +23,7 @@ public class ArikuConsole {
     public static void main(String[] args) throws IOException {
 
         if (Arrays.asList(args).contains("-v")) {
-            System.out.println(composer.arikuVersion);
+            System.out.println(COMPOSER.arikuVersion);
             System.exit(0);
         }
 
@@ -34,7 +35,7 @@ public class ArikuConsole {
         rootPanel.setLayoutManager(new GridLayout(1));
 
         Panel menuPanel = new Panel();
-        menuPanel.setLayoutManager(new GridLayout(2));
+        menuPanel.setLayoutManager(new GridLayout(3));
         rootPanel.addComponent(menuPanel);
 
         rootPanel.addComponent(new Label(""));
@@ -45,6 +46,17 @@ public class ArikuConsole {
         rootPanel.addComponent(contentPanel);
 
         menuPanel.addComponent(new Button("User verification", () -> userVerificationContent(contentPanel)));
+
+        final ComboBox<String> competitions = new ComboBox<String>();
+        competitions.addItem("Please select competition");
+        competitions.addItem("Skeet");
+        menuPanel.addComponent(competitions);
+
+        competitions.addListener((selectedIndex, previousSelection) -> {
+            if (competitions.getText().equals("Skeet"))
+                skeetCompetitionContent(contentPanel);
+        });
+
         menuPanel.addComponent(new Button("Exit", () -> System.exit(0)));
 
         BasicWindow window = new BasicWindow();
