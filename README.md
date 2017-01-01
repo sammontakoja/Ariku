@@ -1,16 +1,10 @@
 # Ariku
 
-Ariku is a program for those who are interested about shooting competitions.
-
-## Path to create/open/remove a competition
-
-![](states1.png)
-
-Tested paths...
+Ariku is an application for running shooting competitions.
 
 ## History
 
-Finnish shooting clubs run shooting competitions with old programs which are full of bugs
+Finnish shooting clubs run shooting competitions with old program(s) which are full of bugs
 and hard to change.
 
 Ariku project's main idea is to create new program which really works and is simpler to use.
@@ -20,6 +14,20 @@ there's no reason why other than Finnish clubs or individuals cannot use this pr
 
 Example [Olympic skeet](https://en.wikipedia.org/wiki/Olympic_skeet) is international sport
 and sport's competitions are hold in over 30 countries.
+
+## Implementation
+
+### Identification phase
+
+![](states1.png)
+
+|Use case   | Test command | Test result |
+|---|---|---|
+|User can sign up when given username is unique | TODO | TODO |
+|User can verify sign up when given username is signed up | TODO | TODO |
+|User can verify sign up when given username is signed up | TODO | TODO |
+|User can login when username is verified | TODO | TODO |
+|User can logout when logged in | TODO | TODO |
 
 ## Licence
 
@@ -32,9 +40,3 @@ please contact sammontakoja@protonmail.com for more information.
 Competitors and viewers can always use Ariku free of charge.
 
 Ariku software licence can be found from [here](LICENSE).
-
-## Development
-
-I develope Ariku as my side project.
-
-Please contact to sammontakoja@protonmail.com if you want to participate to Ariku project.
