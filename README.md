@@ -2,7 +2,7 @@
 
 Ariku is a program for those who are interested about shooting competitions.
 
-## User verification
+## Path to create/open/remove a competition
 
 ![](states1.png)
 
