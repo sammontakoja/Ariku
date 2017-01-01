@@ -25,9 +25,8 @@ and sport's competitions are hold in over 30 countries.
 |---|---|---|
 |User can sign up when given username is unique | TODO | TODO |
 |User can verify sign up when given username is signed up | TODO | TODO |
-|User can verify sign up when given username is signed up | TODO | TODO |
-|User can login when username is verified | TODO | TODO |
-|User can logout when logged in | TODO | TODO |
+|User can login when given username is verified | TODO | TODO |
+|User can logout when given username is logged in | TODO | TODO |
 
 ## Licence
 
