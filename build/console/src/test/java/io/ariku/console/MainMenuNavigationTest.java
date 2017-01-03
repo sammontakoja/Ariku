@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class MainMenuNavigationTests {
+public class MainMenuNavigationTest {
 
     @Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
