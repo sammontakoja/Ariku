@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import static io.ariku.composer.Composer.COMPOSER_MEMORY;
-import static io.ariku.console.SkeetCompetitionMain.skeetCompetitionMain;
-import static io.ariku.console.UserVerificationContent.userVerificationContent;
 
 public class ArikuConsole {
+
+    public static final BasicWindow window = new BasicWindow();
 
     public static void main(String[] args) throws IOException {
 
@@ -31,38 +31,11 @@ public class ArikuConsole {
         Screen screen = new TerminalScreen(terminal);
         screen.startScreen();
 
-        Panel rootPanel = new Panel();
-        rootPanel.setLayoutManager(new GridLayout(1));
+        BaseMenu.draw(window);
 
-        Panel menuPanel = new Panel();
-        menuPanel.setLayoutManager(new GridLayout(3));
-        rootPanel.addComponent(menuPanel);
-
-        rootPanel.addComponent(new Label(""));
-        rootPanel.addComponent(new Label(""));
-
-        Panel contentPanel = new Panel();
-        contentPanel.addComponent(new Label("Welcome to Ariku!"));
-        rootPanel.addComponent(contentPanel);
-
-        menuPanel.addComponent(new Button("User verification", () -> userVerificationContent(contentPanel)));
-
-        final ComboBox<String> competitions = new ComboBox<String>();
-        competitions.addItem("Please select competition");
-        competitions.addItem("Skeet");
-        menuPanel.addComponent(competitions);
-
-        competitions.addListener((selectedIndex, previousSelection) -> {
-            if (competitions.getText().equals("Skeet"))
-                skeetCompetitionMain(contentPanel);
-        });
-
-        menuPanel.addComponent(new Button("Exit", () -> System.exit(0)));
-
-        BasicWindow window = new BasicWindow();
-        window.setComponent(rootPanel);
         MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLACK));
         gui.addWindowAndWait(window);
     }
+
 }
 

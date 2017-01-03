@@ -1,8 +1,13 @@
 package io.ariku.console;
 
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.gui2.*;
+import com.googlecode.lanterna.gui2.BasicWindow;
+import com.googlecode.lanterna.gui2.Button;
+import com.googlecode.lanterna.gui2.ComboBox;
+import com.googlecode.lanterna.gui2.Panel;
 import io.ariku.verification.api.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static io.ariku.composer.Composer.COMPOSER_MEMORY;
 import static io.ariku.console.ConsoleUser.CONSOLE_USER;
@@ -10,30 +15,21 @@ import static io.ariku.console.ConsoleUser.CONSOLE_USER;
 /**
  * @author Ari Aaltonen
  */
-public class UserVerificationContent {
+public class UserVerificationMenu {
 
-    public static void userVerificationContent(Panel contentPanel) {
+    public static void draw(BasicWindow window) {
 
-        contentPanel.removeAllComponents();
+        List<Button> buttons = Arrays.asList(
+                new Button("SignUp", () -> System.out.println("Pressed SignUp")),
+                new Button("VerifySignUp", () -> System.out.println("Pressed verifySignUp")),
+                new Button("Login", () -> System.out.println("Pressed login")),
+                new Button("Logout", () -> System.out.println("Pressed logout")),
+                new Button("Menu", () -> BaseMenu.draw(window)));
 
-        contentPanel.setLayoutManager(new GridLayout(2));
+        Panel panel = new Panel();
+        buttons.forEach(button -> button.addTo(panel));
 
-        contentPanel.addComponent(new Label(""));
-        final TextBox userIdTextBox = new TextBox().addTo(contentPanel);
-
-        contentPanel.addComponent(new Label("Operation"));
-        final ComboBox<String> operations = new ComboBox<String>();
-        operations.addItem("SignUp");
-        operations.addItem("VerifySignUp");
-        operations.addItem("Login");
-        operations.addItem("Logout");
-        contentPanel.addComponent(operations);
-
-        contentPanel.addComponent(new EmptySpace(new TerminalSize(0, 0)));
-
-        new Button("Operate!", () -> operate(operations, userIdTextBox.getText())).addTo(contentPanel);
-
-        contentPanel.addComponent(new EmptySpace(new TerminalSize(0, 0)));
+        window.setComponent(panel);
     }
 
     private static void operate(ComboBox<String> operations, String value) {
