@@ -5,7 +5,10 @@ package io.ariku.console;
  */
 
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.gui2.*;
+import com.googlecode.lanterna.gui2.BasicWindow;
+import com.googlecode.lanterna.gui2.DefaultWindowManager;
+import com.googlecode.lanterna.gui2.EmptySpace;
+import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -20,16 +23,21 @@ public class ArikuConsole {
 
     public static final BasicWindow window = new BasicWindow();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         if (Arrays.asList(args).contains("-v")) {
             System.out.println(COMPOSER_MEMORY.arikuVersion);
             System.exit(0);
         }
 
-        Terminal terminal = new DefaultTerminalFactory().createTerminal();
-        Screen screen = new TerminalScreen(terminal);
-        screen.startScreen();
+        Screen screen;
+        try {
+            Terminal terminal = new DefaultTerminalFactory().createTerminal();
+            screen = new TerminalScreen(terminal);
+            screen.startScreen();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         BaseMenu.draw(window);
 
