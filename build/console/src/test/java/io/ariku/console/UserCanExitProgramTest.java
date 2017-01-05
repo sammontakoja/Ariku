@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class MainMenuNavigationTest {
+public class UserCanExitProgramTest {
 
     @Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
@@ -29,6 +29,31 @@ public class MainMenuNavigationTest {
 
     @Test
     public void program_terminates_after_pressing_exit_button() throws InterruptedException {
+
+        exit.expectSystemExit();
+
+        Executors.newScheduledThreadPool(1).schedule(() -> {
+
+            try {
+                Robot robot = new Robot();
+
+                pressOnce(robot, KeyEvent.VK_DOWN);
+                pressOnce(robot, KeyEvent.VK_ENTER);
+
+            } catch (AWTException e) {
+                throw new RuntimeException(e);
+            }
+
+        }, 2, TimeUnit.SECONDS);
+
+        ArikuConsole.main(new String[0]);
+
+        // Give program 4 seconds to call System.exit()
+        Thread.sleep(4000);
+    }
+
+    @Test
+    public void user_can_sign_in() throws InterruptedException {
 
         exit.expectSystemExit();
 
