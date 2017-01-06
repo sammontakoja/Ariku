@@ -19,12 +19,6 @@ and sport's competitions are hold in over 30 countries.
 
 ### Identification phase
 
-New users are registered via identification phase.
-When registration is completed (both sign up and verify sign up ok) then user can login.
-
-After successful login user will get security message which will be used later with so verification backend
-will recognice
-
 ![](states1.png)
 
 |Use case   | Implementation |
