@@ -15,18 +15,32 @@ there's no reason why other than Finnish clubs or individuals cannot use this pr
 Example [Olympic skeet](https://en.wikipedia.org/wiki/Olympic_skeet) is international sport
 and sport's competitions are hold in over 30 countries.
 
-## Implementation
+## Phases
 
 ### Identification phase
 
+New users are registered via identification phase.
+When registration is completed (both sign up and verify sign up ok) then user can login.
+
+After successful login user will get security message which will be used later with so verification backend
+will recognice
+
 ![](states1.png)
 
-|Use case   | Test command | Test result |
-|---|---|---|
-|User can sign up when given username is unique | TODO | TODO |
-|User can verify sign up when given username is signed up | TODO | TODO |
-|User can login when given username is verified | TODO | TODO |
-|User can logout when given username is logged in | TODO | TODO |
+|Use case   | Implementation |
+|---|---|
+|**A1:** User navigate to sign up location | Console |
+|**A2:** User fill sign up information, backend will notify if sign up was successful | - |
+|**B1:** User navigate to verify sign up location | Console |
+|**B2:** User fill sign up verification information, backend will notify if verification was successful | - |
+|**C1:** User navigate to login location | Console |
+|**C2:** User fill login information, backend's response contains security message if login was successful | - |
+|**D:** User navigate to logout location and remove given security message | Console |
+|**E:** Security cleaner clean all granted security messages which are older than X minutes | - |
+|**F:** Authorizer ask is security message valid. Will be used when using another services | - |
+
+**Tests**
+io.ariku.console.UserVerificationTest
 
 ## Licence
 
