@@ -19,6 +19,9 @@ and sport's competitions are hold in over 30 countries.
 
 ### Identification phase
 
+##### Tests
+io.ariku.console.UserVerificationTest
+
 ![](states1.png)
 
 |Use case   | Implementation |
@@ -32,9 +35,6 @@ and sport's competitions are hold in over 30 countries.
 |**D:** User navigate to logout location and remove given security message | Console |
 |**E:** Security cleaner clean all granted security messages which are older than X minutes | - |
 |**F:** Authorizer ask is security message valid. Will be used when using another services | - |
-
-**Tests**
-io.ariku.console.UserVerificationTest
 
 ## Licence
 
