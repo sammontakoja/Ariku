@@ -1,6 +1,8 @@
 package io.ariku.console;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,9 @@ import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;
 public class Keyboard {
 
     enum DirectionButton {
+
         UP(KeyEvent.VK_UP), DOWN(KeyEvent.VK_DOWN), ENTER(KeyEvent.VK_ENTER);
+
         public final int keyCode;
 
         DirectionButton(int keyCode) {
@@ -50,10 +54,6 @@ public class Keyboard {
         }
     }
 
-    public void type(String chars) {
-        charStorage.add(new TypeInput(chars));
-    }
-
     public void typeDown() {
         charStorage.add(new TypeInput(DirectionButton.DOWN));
     }
@@ -62,74 +62,43 @@ public class Keyboard {
         charStorage.add(new TypeInput(DirectionButton.ENTER));
     }
 
-    public void startTypingAfterTwoSeconds() {
-
-        Executors.newScheduledThreadPool(1).schedule(() -> {
-
-            for (TypeInput typeInput : charStorage) {
-
-                if (typeInput.directionButton != null)
-                    pressKey(typeInput.directionButton.keyCode);
-                else if (typeInput.types != null)
-                    pressChars(typeInput.types);
-
-            }
-
-        }, 2, TimeUnit.SECONDS);
-
+    public void typeText(String text) {
+        charStorage.add(new TypeInput(text));
     }
 
-    private void pressChars(String chars) {
-        for (int i = 0, len = chars.length(); i < len; i++) {
-            char c = chars.charAt(i);
-            AWTKeyStroke keyStroke = getKeyStroke(c);
-            int keyCode = keyStroke.getKeyCode();
+    public void startTypingAfterTwoSeconds() {
+        Executors.newScheduledThreadPool(1).schedule(() -> startTyping(), 2, TimeUnit.SECONDS);
+    }
 
-            boolean shift = Character.isUpperCase(c) || keyStroke.getModifiers() == (SHIFT_DOWN_MASK + 1);
-            if (shift) {
-                robot.keyPress(KeyEvent.VK_SHIFT);
-            }
+    public void startTyping() {
+        for (TypeInput typeInput : charStorage) {
 
-            pressKey(keyCode);
+            if (typeInput.directionButton != null)
+                pressKey(typeInput.directionButton.keyCode);
+            else if (typeInput.types != null)
+                pressKeys(typeInput.types);
 
-            if (shift) {
-                robot.keyRelease(KeyEvent.VK_SHIFT);
-            }
         }
+    }
+
+    protected void pressKeys(String chars) {
+
+        StringSelection selection = new StringSelection(chars);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(selection, null);
+
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_SHIFT);
+        robot.keyPress(KeyEvent.VK_V);
+
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyRelease(KeyEvent.VK_SHIFT);
     }
 
     private void pressKey(int keyCode) {
         robot.keyPress(keyCode);
         robot.keyRelease(keyCode);
-    }
-
-    private static AWTKeyStroke getKeyStroke(char c) {
-        String upper = "`~'\"!@#$%^&*()_+{}|:<>?";
-        String lower = "`~'\"1234567890-=[]\\;,./";
-
-        int index = upper.indexOf(c);
-        if (index != -1) {
-            int keyCode;
-            boolean shift = false;
-            switch (c) {
-
-                case '~':
-                    shift = true;
-                case '`':
-                    keyCode = KeyEvent.VK_BACK_QUOTE;
-                    break;
-                case '\"':
-                    shift = true;
-                case '\'':
-                    keyCode = KeyEvent.VK_QUOTE;
-                    break;
-                default:
-                    keyCode = (int) Character.toUpperCase(lower.charAt(index));
-                    shift = true;
-            }
-            return getAWTKeyStroke(keyCode, shift ? SHIFT_DOWN_MASK : 0);
-        }
-        return getAWTKeyStroke((int) Character.toUpperCase(c), 0);
     }
 
 }
