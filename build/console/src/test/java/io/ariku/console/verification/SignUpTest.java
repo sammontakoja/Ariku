@@ -11,15 +11,10 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 
-import java.awt.event.KeyEvent;
-import java.util.Arrays;
-import java.util.List;
-
-import static java.awt.event.KeyEvent.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SignInTest {
+public class SignUpTest {
 
     @Rule
     public final SystemOutRule systemOut = new SystemOutRule();
@@ -28,27 +23,37 @@ public class SignInTest {
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
     @Test
-    public void user_can_fill_SignIn_values_and_exit() {
+    public void user_can_fill_SignUp_values_and_exit() {
+
+        String email = "a@a.fi";
 
         systemOut.enableLog();
-
         exit.expectSystemExit();
-        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("Pressed SignUp")));
+        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("SignUp OK "+email)));
 
         Keyboard keyboard = new Keyboard();
 
-        // go to sign in page
+        // Go to SignUp page
         keyboard.typeEnter();
         keyboard.typeEnter();
 
-        // exit sign in page
+        // Fill values
+        keyboard.typeText(email);
+        keyboard.typeDown();
+        keyboard.typeEnter();
+
+        // Exit SignUp page
+        keyboard.typeDown();
+        keyboard.typeEnter();
+
+        // Exit verification page
         keyboard.typeDown();
         keyboard.typeDown();
         keyboard.typeDown();
         keyboard.typeDown();
         keyboard.typeEnter();
 
-        // exit program
+        // Exit program
         keyboard.typeDown();
         keyboard.typeDown();
         keyboard.typeEnter();
