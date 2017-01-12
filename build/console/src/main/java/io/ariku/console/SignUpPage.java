@@ -4,7 +4,6 @@ import com.googlecode.lanterna.gui2.*;
 import io.ariku.verification.api.*;
 
 import static io.ariku.composer.Composer.COMPOSER;
-import static io.ariku.console.ConsoleUser.CONSOLE_USER;
 
 /**
  * @author Ari Aaltonen
@@ -18,7 +17,7 @@ public class SignUpPage {
         TextBox emailAddressText = new TextBox();
         emailAddressText.addTo(panel);
 
-        Button okButton = new Button("OK", () -> operate(emailAddressText.getText()));
+        Button okButton = new Button("OK", () -> signUp(emailAddressText.getText()));
         okButton.addTo(panel);
 
         Button exitButton = new Button("Exit", () -> UserVerificationMenu.draw(window));
@@ -27,14 +26,12 @@ public class SignUpPage {
         window.setComponent(panel);
     }
 
-    private static void operate(String value) {
+    private static void signUp(String value) {
 
         UserVerificationService userVerificationService = COMPOSER.userVerificationService;
 
         if (value.isEmpty())
             return;
-
-        CONSOLE_USER.userId(value);
 
         boolean signUp = userVerificationService.signUp(new SignUpRequest(value));
         if (signUp)
