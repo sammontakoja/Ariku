@@ -31,7 +31,7 @@ io.ariku.console.UserVerificationTest
 |**B1:** User navigate to verify sign up location | Console |
 |**B2:** User fill sign up verification information, backend will notify if verification was successful or failed | Console |
 |**C1:** User navigate to login location | Console |
-|**C2:** User fill login information, backend's response contains security message if login was successful or failed| Console |
+|**C2:** User fill login information, backend's response contains security message if login was successful or failed | Console |
 |**D:** User navigate to logout location and remove given security message | Console |
 |**E:** Security cleaner clean all granted security messages which are older than X minutes | - |
 |**F:** Authorizer ask is security message valid. Will be used when using another services | - |

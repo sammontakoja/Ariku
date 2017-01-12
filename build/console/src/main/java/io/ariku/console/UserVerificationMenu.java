@@ -32,8 +32,12 @@ public class UserVerificationMenu {
                     System.out.println("Pressed login");
                     LoginPage.draw(window);
                 }),
-                new Button("Logout", () -> System.out.println("Pressed logout")),
-                new Button("Menu", () -> BaseMenu.draw(window)));
+                new Button("Logout", () -> {
+                    System.out.println("Pressed logout");
+                    LogoutPage.draw(window);
+                }),
+                new Button("Menu", () -> BaseMenu.draw(window))
+        );
 
         Panel panel = new Panel();
         buttons.forEach(button -> button.addTo(panel));
