@@ -28,7 +28,10 @@ public class UserVerificationMenu {
                     System.out.println("Pressed verifySignUp");
                     VerifySignUpPage.draw(window);
                 }),
-                new Button("Login", () -> System.out.println("Pressed login")),
+                new Button("Login", () -> {
+                    System.out.println("Pressed login");
+                    LoginPage.draw(window);
+                }),
                 new Button("Logout", () -> System.out.println("Pressed logout")),
                 new Button("Menu", () -> BaseMenu.draw(window)));
 
