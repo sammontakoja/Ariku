@@ -17,7 +17,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static io.ariku.composer.Composer.COMPOSER_MEMORY;
+import static io.ariku.composer.Composer.COMPOSER;
 
 public class ArikuConsole {
 
@@ -26,7 +26,7 @@ public class ArikuConsole {
     public static void main(String[] args) {
 
         if (Arrays.asList(args).contains("-v")) {
-            System.out.println(COMPOSER_MEMORY.arikuVersion);
+            System.out.println(COMPOSER.arikuVersion);
             System.exit(0);
         }
 

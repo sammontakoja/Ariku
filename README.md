@@ -27,7 +27,7 @@ io.ariku.console.UserVerificationTest
 |Use case   | Implementation |
 |---|---|
 |**A1:** User navigate to sign up location | Console |
-|**A2:** User fill sign up information, backend will notify if sign up was successful | - |
+|**A2:** User fill sign up information, backend will notify if sign up was successful or failed | Console |
 |**B1:** User navigate to verify sign up location | Console |
 |**B2:** User fill sign up verification information, backend will notify if verification was successful | - |
 |**C1:** User navigate to login location | Console |

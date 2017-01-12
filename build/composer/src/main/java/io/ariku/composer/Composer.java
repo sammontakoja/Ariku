@@ -13,7 +13,7 @@ import io.ariku.verification.simple.SimpleUserVerificationDatabase;
  */
 public enum Composer {
 
-    COMPOSER_MEMORY;
+    COMPOSER;
 
     public final String arikuVersion;
     public final UserVerificationService userVerificationService;

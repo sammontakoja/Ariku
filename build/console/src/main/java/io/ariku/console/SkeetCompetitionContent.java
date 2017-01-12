@@ -4,7 +4,7 @@ import com.googlecode.lanterna.gui2.*;
 import io.ariku.competition.skeet.api.Competition;
 import io.ariku.verification.api.UserVerificationService;
 
-import static io.ariku.composer.Composer.COMPOSER_MEMORY;
+import static io.ariku.composer.Composer.COMPOSER;
 import static io.ariku.console.ConsoleUser.CONSOLE_USER;
 
 /**
@@ -14,7 +14,7 @@ public class SkeetCompetitionContent {
 
     public static void skeetNewCompetitionPanel(Panel contentPanel) {
 
-        UserVerificationService userVerificationService = COMPOSER_MEMORY.userVerificationService;
+        UserVerificationService userVerificationService = COMPOSER.userVerificationService;
 
         contentPanel.removeAllComponents();
         contentPanel.setLayoutManager(new GridLayout(1));
@@ -30,7 +30,7 @@ public class SkeetCompetitionContent {
         contentPanel.addComponent(new Button("Create new competition", () -> {
             String competitionName = competitionNameTextBox.getText();
             if (!competitionName.isEmpty()) {
-                COMPOSER_MEMORY.skeetCompetitionService.createNewCompetition(CONSOLE_USER.userId(), competitionName);
+                COMPOSER.skeetCompetitionService.createNewCompetition(CONSOLE_USER.userId(), competitionName);
             }
         }));
     }
@@ -40,7 +40,7 @@ public class SkeetCompetitionContent {
         contentPanel.removeAllComponents();
         contentPanel.setLayoutManager(new GridLayout(1));
 
-        UserVerificationService userVerificationService = COMPOSER_MEMORY.userVerificationService;
+        UserVerificationService userVerificationService = COMPOSER.userVerificationService;
 
         if (!userVerificationService.isUserLoggedIn(CONSOLE_USER.userId())) {
             contentPanel.addComponent(new Label("Please login"));
@@ -52,7 +52,7 @@ public class SkeetCompetitionContent {
         System.out.println("Listing competitionsBy userid:"+userId);
 
         if (!userId.isEmpty())
-            for (Competition competition : COMPOSER_MEMORY.skeetCompetitionService.listCompetitions(userId))
+            for (Competition competition : COMPOSER.skeetCompetitionService.listCompetitions(userId))
                 contentPanel.addComponent(new Label(competition.name));
 
     }
