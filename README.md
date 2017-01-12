@@ -24,7 +24,7 @@ io.ariku.console.UserVerificationTest
 
 ![](states1.png)
 
-|Use case   | Implementation |
+|Use case   | Implemented |
 |---|---|
 |**A1:** User navigate to sign up location | Console |
 |**A2:** User fill sign up information, backend will notify if sign up was successful or failed | Console |
