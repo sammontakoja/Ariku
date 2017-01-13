@@ -1,7 +1,5 @@
 package io.ariku.verification.api;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -67,36 +65,59 @@ public class SecurityCleanerTest {
         verify(database, never()).updateUserVerification(any());
     }
 
-    @Ignore("Until SecurityCleaner's scheduler works")
     @Test
     public void make_sure_automatic_token_cleaner_works() throws InterruptedException {
 
         SecurityCleaner securityCleaner = new SecurityCleaner();
 
-        UserVerificationDatabase database = mock(UserVerificationDatabase.class);
-
-        // Create UserVerification which is used 1 second ago
+        // Create UserVerification
         UserVerification userVerification = new UserVerification();
         userVerification.securityMessage.token = UUID.randomUUID().toString();
-        userVerification.securityMessage.lastSecurityActivity = Instant.now().minusSeconds(1).toString();
+        userVerification.securityMessage.lastSecurityActivity = Instant.now().toString();
 
-        // Make sure SecurityCleaner get created UserVerification when getting all UserVerifications from database
-        when(database.userVerifications()).thenReturn(Arrays.asList(userVerification));
+        class UpdateUserVerification {
+            public boolean called;
+        }
 
-        // Wipe all tokens which are used over 2 seconds ago with one second interval
+        UpdateUserVerification updateUserVerification = new UpdateUserVerification();
+
+        securityCleaner.userVerificationDatabase = new UserVerificationDatabase() {
+            @Override
+            public void createUserVerification(String userId) {
+
+            }
+
+            @Override
+            public UserVerification readUserVerification(String userId) {
+                return null;
+            }
+
+            @Override
+            public void deleteUserVerification(String userId) {
+
+            }
+
+            @Override
+            public void updateUserVerification(UserVerification userVerification) {
+                updateUserVerification.called = true;
+                assertThat(userVerification.securityMessage.token, is(""));
+            }
+
+            @Override
+            public List<UserVerification> userVerifications() {
+                return Arrays.asList(userVerification);
+            }
+        };
+
+        // Wipe all tokens which are older than 1 second with one second interval
         securityCleaner.wipeTokensWhichAreOlderThan(1, 1);
 
-        // Tokens are not cleared yet because token's last activity is not over 2 seconds
-        verify(database, never()).updateUserVerification(any());
+        // UserVerification is not old enough to be updated by SecurityCleaner
+        assertThat(updateUserVerification.called, is(false));
 
-        // Wait 1,5 seconds, now SecurityClearer should have wiped token because 2,5 seconds have passed with created UserVerification.
-        Thread.sleep(1500);
-
-        ArgumentCaptor<UserVerification> argument = ArgumentCaptor.forClass(UserVerification.class);
-
-        verify(database).updateUserVerification(argument.capture());
-
-        assertThat(argument.getValue().securityMessage.token, is(""));
+        // After 2 seconds UserVerification should be updated by SecurityCleaner
+        Thread.sleep(2000);
+        assertThat(updateUserVerification.called, is(true));
     }
 
 }

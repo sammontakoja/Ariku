@@ -16,7 +16,6 @@ public class SecurityCleaner {
 
     public UserVerificationDatabase userVerificationDatabase;
 
-
     public void wipeTokensWhichAreOlderThan(int scanInterval, int grantedNonActiveLoginTimeInSeconds) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> wipeTokensWhichAreOlderThan(grantedNonActiveLoginTimeInSeconds), 0, scanInterval, SECONDS);
