@@ -4,6 +4,8 @@ import com.googlecode.junittoolbox.ParallelRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.UUID;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -105,7 +107,6 @@ public class UserVerificationServiceTest {
     public void logout_is_successful_when_user_is_found_but_not_logged_in() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isLoggedIn = false;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
         when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
@@ -119,10 +120,9 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void logout_is_successful_when_user_is_not_found() {
+    public void logout_fail_when_user_is_not_found() {
 
         UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isLoggedIn = true;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
         when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
@@ -136,13 +136,13 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void logout_is_successful_when_user_is_found_and_logged_in() {
+    public void logout_is_successful_when_user_is_found_and_logged_in_with_given_securityMessage() {
 
         UserVerification userVerification = new UserVerification();
         userVerification.userId = "a";
-        userVerification.isLoggedIn = true;
         userVerification.isSignedInConfirmed = true;
         userVerification.isSignedIn = true;
+        userVerification.securityMessage = UUID.randomUUID().toString();
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
         when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);
@@ -150,9 +150,29 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean successful = userVerificationService.logout(new LogoutRequest("a"));
+        boolean successful = userVerificationService.logout(new LogoutRequest(userVerification.userId, userVerification.securityMessage));
 
         assertThat(successful, is(true));
+    }
+
+    @Test
+    public void logout_fails_when_user_is_found_but_logged_in_with_different_securityMessage() {
+
+        UserVerification userVerification = new UserVerification();
+        userVerification.userId = "a";
+        userVerification.isSignedInConfirmed = true;
+        userVerification.isSignedIn = true;
+        userVerification.securityMessage = UUID.randomUUID().toString();
+
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
+
+        boolean successful = userVerificationService.logout(new LogoutRequest(userVerification.userId, "notSameSecurityMessage"));
+
+        assertThat(successful, is(false));
     }
 
     @Test
@@ -169,9 +189,10 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         LoginRequest loginRequest = new LoginRequest();
-        boolean successful = userVerificationService.login(loginRequest);
 
-        assertThat(successful, is(false));
+        String securityMessage = userVerificationService.login(loginRequest);
+
+        assertThat(securityMessage.isEmpty(), is(true));
     }
 
     @Test
@@ -188,9 +209,10 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         LoginRequest loginRequest = new LoginRequest();
-        boolean successful = userVerificationService.login(loginRequest);
 
-        assertThat(successful, is(false));
+        String securityMessage = userVerificationService.login(loginRequest);
+
+        assertThat(securityMessage.isEmpty(), is(true));
     }
 
     @Test
@@ -207,9 +229,10 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         LoginRequest loginRequest = new LoginRequest();
-        boolean successful = userVerificationService.login(loginRequest);
 
-        assertThat(successful, is(false));
+        String securityMessage = userVerificationService.login(loginRequest);
+
+        assertThat(securityMessage.isEmpty(), is(true));
     }
 
     @Test
@@ -226,39 +249,9 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean successful = userVerificationService.login(new LoginRequest("a"));
+        String securityMessage = userVerificationService.login(new LoginRequest("a"));
 
-        assertThat(successful, is(true));
-    }
-
-    @Test
-    public void is_logged_in_if_stored_UserVerification_says_so() {
-
-        UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isLoggedIn = true;
-
-        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
-
-        UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationDatabase = userVerificationDatabase;
-
-        assertThat(userVerificationService.isUserLoggedIn(""), is(true));
-    }
-
-    @Test
-    public void is_logged_out_if_stored_UserVerification_says_so() {
-
-        UserVerification storedUserVerification = new UserVerification();
-        storedUserVerification.isLoggedIn = false;
-
-        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(storedUserVerification);
-
-        UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationDatabase = userVerificationDatabase;
-
-        assertThat(userVerificationService.isUserLoggedIn(""), is(false));
+        assertThat(securityMessage.isEmpty(), is(false));
     }
 
     @Test

@@ -40,7 +40,7 @@ public class SimpleUserVerificationDatabase implements UserVerificationDatabase 
         if (foundVerification != null) {
             foundVerification.isSignedInConfirmed = userVerification.isSignedInConfirmed;
             foundVerification.isSignedIn = userVerification.isSignedIn;
-            foundVerification.isLoggedIn = userVerification.isLoggedIn;
+            foundVerification.securityMessage = userVerification.securityMessage;
         }
     }
 

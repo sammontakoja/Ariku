@@ -5,6 +5,8 @@ import io.ariku.verification.api.UserVerification;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.UUID;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -54,7 +56,7 @@ public class SimpleUserVerificationDatabaseTest {
         UserVerification userVerification = new UserVerification();
         userVerification.userId = "123";
         userVerification.isSignedIn = true;
-        userVerification.isLoggedIn = true;
+        userVerification.securityMessage = UUID.randomUUID().toString();
         userVerification.isSignedInConfirmed = true;
 
         userVerificationServiceSimple.createUserVerification("123");
@@ -63,7 +65,7 @@ public class SimpleUserVerificationDatabaseTest {
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
 
         assertThat(readUserVerification.userId, is("123"));
-        assertThat(readUserVerification.isLoggedIn, is(true));
+        assertThat(readUserVerification.securityMessage, is(userVerification.securityMessage));
         assertThat(readUserVerification.isSignedIn, is(true));
         assertThat(readUserVerification.isSignedInConfirmed, is(true));
     }

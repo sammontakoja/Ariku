@@ -1,5 +1,7 @@
 package io.ariku.verification.api;
 
+import java.util.UUID;
+
 /**
  * @author Ari Aaltonen
  */
@@ -26,18 +28,19 @@ public class UserVerificationService {
         return false;
     }
 
-    public boolean login(LoginRequest loginRequest) {
+    public String login(LoginRequest loginRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(loginRequest.userId);
 
-        boolean canLogin = !userVerification.userId.isEmpty() && userVerification.isSignedIn
-                && userVerification.isSignedInConfirmed;
+        boolean canLogin = !userVerification.userId.isEmpty() && userVerification.isSignedIn && userVerification.isSignedInConfirmed;
 
         if (canLogin) {
-            userVerification.isLoggedIn = true;
+            String securityMessage = UUID.randomUUID().toString();
+            userVerification.securityMessage = securityMessage;
             userVerificationDatabase.updateUserVerification(userVerification);
+            return securityMessage;
         }
 
-        return canLogin;
+        return "";
     }
 
     public boolean logout(LogoutRequest logoutRequest) {
@@ -45,18 +48,20 @@ public class UserVerificationService {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(logoutRequest.userId);
 
         boolean canLogout = !userVerification.userId.isEmpty() && userVerification.isSignedIn
-                && userVerification.isSignedInConfirmed && userVerification.isLoggedIn;
+                && userVerification.isSignedInConfirmed
+                && userVerification.securityMessage.equals(logoutRequest.securityMessage);
 
         if (canLogout) {
-            userVerification.isLoggedIn = false;
+            userVerification.securityMessage = "";
             userVerificationDatabase.updateUserVerification(userVerification);
         }
 
         return canLogout;
     }
 
-    public boolean isUserLoggedIn(String userId) {
-        return userVerificationDatabase.readUserVerification(userId).isLoggedIn;
+    public boolean isUserLoggedIn(String userId, String securityMessage) {
+        UserVerification userVerification = userVerificationDatabase.readUserVerification(userId);
+        return userVerification != null && userVerification.securityMessage.equals(securityMessage);
     }
 
     public boolean isUserSignedIn(String userId) {

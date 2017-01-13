@@ -5,6 +5,7 @@ import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.verification.api.LoginRequest;
+import io.ariku.verification.api.UserVerification;
 import io.ariku.verification.api.UserVerificationService;
 import io.ariku.verification.api.VerifySignUpRequest;
 
@@ -38,9 +39,10 @@ public class LoginPage {
         if (value.isEmpty())
             return;
 
-        boolean loggedIn = userVerificationService.login(new LoginRequest(value));
+        String securityMessage = userVerificationService.login(new LoginRequest(value));
+        ConsoleCache.securityMessage = securityMessage;
 
-        if (loggedIn)
+        if (!securityMessage.isEmpty())
             print("Login OK " + value);
         else
             print("Login FAIL " + value);

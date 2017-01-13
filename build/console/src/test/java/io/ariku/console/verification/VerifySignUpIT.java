@@ -8,7 +8,6 @@ import io.ariku.composer.Composer;
 import io.ariku.console.ArikuConsole;
 import io.ariku.console.Keyboard;
 import io.ariku.verification.api.SignUpRequest;
-import io.ariku.verification.api.VerifySignUpRequest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
@@ -17,7 +16,7 @@ import org.junit.contrib.java.lang.system.SystemOutRule;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class LoginTest {
+public class VerifySignUpIT {
 
     @Rule
     public final SystemOutRule systemOut = new SystemOutRule();
@@ -26,23 +25,21 @@ public class LoginTest {
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
     @Test
-    public void when_user_login_with_email_which_is_verified_then_login_succeed() {
+    public void when_user_give_email_which_is_used_in_SignUp_then_signup_is_verified_successfully() {
 
         String email = "b@b.fi";
 
-        // SignUp and VerifySignUp before login attempt
+        // SignUp using email which will be verified
         Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
-        Composer.COMPOSER.userVerificationService.verifySignUp(new VerifySignUpRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();
-        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("Login OK "+email)));
+        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("VerifySignUp OK "+email)));
 
         Keyboard keyboard = new Keyboard();
 
-        // Go to Login page
+        // Go to VerifySignUp page
         keyboard.typeEnter();
-        keyboard.typeDown();
         keyboard.typeDown();
         keyboard.typeEnter();
 
@@ -51,7 +48,7 @@ public class LoginTest {
         keyboard.typeDown();
         keyboard.typeEnter();
 
-        // Exit Login page
+        // Exit VerifySignUp page
         keyboard.typeDown();
         keyboard.typeEnter();
 
@@ -73,22 +70,18 @@ public class LoginTest {
     }
 
     @Test
-    public void when_user_login_with_email_which_is_not_verified_then_login_fails() {
+    public void when_user_give_email_which_is_not_used_in_SignUp_then_signup_verification_fails() {
 
         String email = "b@b.fi";
 
-        // SignUp but skip VerifySignUp before login attempt
-        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
-
         systemOut.enableLog();
         exit.expectSystemExit();
-        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("Login FAIL "+email)));
+        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("VerifySignUp FAIL "+email)));
 
         Keyboard keyboard = new Keyboard();
 
-        // Go to Login page
+        // Go to VerifySignUp page
         keyboard.typeEnter();
-        keyboard.typeDown();
         keyboard.typeDown();
         keyboard.typeEnter();
 
@@ -97,7 +90,51 @@ public class LoginTest {
         keyboard.typeDown();
         keyboard.typeEnter();
 
-        // Exit Login page
+        // Exit VerifySignUp page
+        keyboard.typeDown();
+        keyboard.typeEnter();
+
+        // Exit verification page
+        keyboard.typeDown();
+        keyboard.typeDown();
+        keyboard.typeDown();
+        keyboard.typeDown();
+        keyboard.typeEnter();
+
+        // Exit program
+        keyboard.typeDown();
+        keyboard.typeDown();
+        keyboard.typeEnter();
+
+        keyboard.startTypingAfterTwoSeconds();
+
+        ArikuConsole.main(new String[0]);
+    }
+
+    @Test
+    public void when_user_can_fill_already_used_email_then_signup_fails() {
+
+        String email = "a@a.fi";
+
+        // SignUp using email which will be used again
+        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
+
+        systemOut.enableLog();
+        exit.expectSystemExit();
+        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("SignUp FAIL "+email)));
+
+        Keyboard keyboard = new Keyboard();
+
+        // Go to SignUp page
+        keyboard.typeEnter();
+        keyboard.typeEnter();
+
+        // Fill values
+        keyboard.typeText(email);
+        keyboard.typeDown();
+        keyboard.typeEnter();
+
+        // Exit SignUp page
         keyboard.typeDown();
         keyboard.typeEnter();
 

@@ -22,7 +22,7 @@ public class LogoutPage {
         TextBox emailAddressText = new TextBox();
         emailAddressText.addTo(panel);
 
-        Button okButton = new Button("Logout", () -> logout(emailAddressText.getText()));
+        Button okButton = new Button("Logout", () -> logout(emailAddressText.getText(), ConsoleCache.securityMessage));
         okButton.addTo(panel);
 
         Button exitButton = new Button("Exit", () -> UserVerificationMenu.draw(window));
@@ -31,19 +31,19 @@ public class LogoutPage {
         window.setComponent(panel);
     }
 
-    private static void logout(String value) {
+    private static void logout(String email, String securityMessage) {
 
         UserVerificationService userVerificationService = COMPOSER.userVerificationService;
 
-        if (value.isEmpty())
+        if (email.isEmpty())
             return;
 
-        boolean loggedout = userVerificationService.logout(new LogoutRequest(value));
+        boolean loggedout = userVerificationService.logout(new LogoutRequest(email, securityMessage));
 
         if (loggedout)
-            print("Logout OK " + value);
+            print("Logout OK " + email);
         else
-            print("Logout FAIL " + value);
+            print("Logout FAIL " + email);
     }
 
     public static void print(String value) {
