@@ -5,6 +5,7 @@ import io.ariku.verification.api.UserVerification;
 import io.ariku.verification.api.UserVerificationDatabase;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Ari Aaltonen
@@ -42,6 +43,11 @@ public class SimpleUserVerificationDatabase implements UserVerificationDatabase 
             foundVerification.isSignedIn = userVerification.isSignedIn;
             foundVerification.securityMessage = userVerification.securityMessage;
         }
+    }
+
+    @Override
+    public List<UserVerification> userVerifications() {
+        return null;
     }
 
 }

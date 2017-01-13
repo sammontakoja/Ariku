@@ -56,7 +56,7 @@ public class SimpleUserVerificationDatabaseTest {
         UserVerification userVerification = new UserVerification();
         userVerification.userId = "123";
         userVerification.isSignedIn = true;
-        userVerification.securityMessage = UUID.randomUUID().toString();
+        userVerification.securityMessage.token = UUID.randomUUID().toString();
         userVerification.isSignedInConfirmed = true;
 
         userVerificationServiceSimple.createUserVerification("123");

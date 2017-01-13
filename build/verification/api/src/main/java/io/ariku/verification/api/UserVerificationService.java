@@ -7,6 +7,8 @@ import java.util.UUID;
  */
 public class UserVerificationService {
 
+    public static int grantedNonActiveLoginTimeInSeconds = 900; // 15 minutes
+
     public UserVerificationDatabase userVerificationDatabase;
 
     public boolean signUp(SignUpRequest signUpRequest) {
@@ -35,7 +37,7 @@ public class UserVerificationService {
 
         if (canLogin) {
             String securityMessage = UUID.randomUUID().toString();
-            userVerification.securityMessage = securityMessage;
+            userVerification.securityMessage.token = securityMessage;
             userVerificationDatabase.updateUserVerification(userVerification);
             return securityMessage;
         }
@@ -49,10 +51,10 @@ public class UserVerificationService {
 
         boolean canLogout = !userVerification.userId.isEmpty() && userVerification.isSignedIn
                 && userVerification.isSignedInConfirmed
-                && userVerification.securityMessage.equals(logoutRequest.securityMessage);
+                && userVerification.securityMessage.token.equals(logoutRequest.securityMessage);
 
         if (canLogout) {
-            userVerification.securityMessage = "";
+            userVerification.securityMessage.token = "";
             userVerificationDatabase.updateUserVerification(userVerification);
         }
 

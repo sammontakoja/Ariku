@@ -4,6 +4,7 @@ import com.googlecode.junittoolbox.ParallelRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -17,6 +18,18 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(ParallelRunner.class)
 public class UserVerificationServiceTest {
+
+    @Test
+    public void plaa() {
+
+        String a = Instant.now().toString();
+        System.out.printf(a);
+
+        String b = Instant.parse(a).toString();
+        System.out.println(b);
+
+        assertThat(a, is(b));
+    }
 
     @Test
     public void verify_sign_up_fail_when_user_is_found_but_not_signed_in() {
@@ -142,7 +155,7 @@ public class UserVerificationServiceTest {
         userVerification.userId = "a";
         userVerification.isSignedInConfirmed = true;
         userVerification.isSignedIn = true;
-        userVerification.securityMessage = UUID.randomUUID().toString();
+        userVerification.securityMessage.token = UUID.randomUUID().toString();
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
         when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);
@@ -150,7 +163,7 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean successful = userVerificationService.logout(new LogoutRequest(userVerification.userId, userVerification.securityMessage));
+        boolean successful = userVerificationService.logout(new LogoutRequest(userVerification.userId, userVerification.securityMessage.token));
 
         assertThat(successful, is(true));
     }
@@ -162,7 +175,7 @@ public class UserVerificationServiceTest {
         userVerification.userId = "a";
         userVerification.isSignedInConfirmed = true;
         userVerification.isSignedIn = true;
-        userVerification.securityMessage = UUID.randomUUID().toString();
+        userVerification.securityMessage.token = UUID.randomUUID().toString();
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
         when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);

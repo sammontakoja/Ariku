@@ -5,7 +5,7 @@ package io.ariku.verification.api;
  */
 public class UserVerification {
     public String userId = "";
-    public String securityMessage = "";
+    public SecurityMessage securityMessage = new SecurityMessage();
     public boolean isSignedIn;
     public boolean isSignedInConfirmed;
 
