@@ -5,10 +5,7 @@ package io.ariku.console;
  */
 
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.gui2.BasicWindow;
-import com.googlecode.lanterna.gui2.DefaultWindowManager;
-import com.googlecode.lanterna.gui2.EmptySpace;
-import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
+import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -30,6 +27,15 @@ public class ArikuConsole {
             System.exit(0);
         }
 
+        startConsole(() -> System.out.println("Console started from jar packet"));
+    }
+
+    public interface AfterConsoleStarted {
+        void doSomething();
+    }
+
+    public static void startConsole(AfterConsoleStarted afterConsoleStarted) {
+
         Screen screen;
         try {
             Terminal terminal = new DefaultTerminalFactory().createTerminal();
@@ -42,7 +48,13 @@ public class ArikuConsole {
         BaseMenu.draw(window);
 
         MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLACK));
-        gui.addWindowAndWait(window);
+
+        gui.addWindow(window);
+
+        afterConsoleStarted.doSomething();
+
+        gui.waitForWindowToClose(window);
+
     }
 
 }
