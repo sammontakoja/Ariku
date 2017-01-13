@@ -39,7 +39,7 @@ public class LogoutIT {
 
         systemOut.enableLog();
         exit.expectSystemExit();
-        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("Logout OK "+email)));
+        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("Logout OK " + email)));
 
         Keyboard keyboard = new Keyboard();
 
@@ -71,9 +71,7 @@ public class LogoutIT {
         keyboard.typeDown();
         keyboard.typeEnter();
 
-        keyboard.startTypingAfterTwoSeconds();
-
-        ArikuConsole.main(new String[0]);
+        ArikuConsole.startConsole(() -> keyboard.startTyping());
     }
 
     @Test
@@ -87,7 +85,7 @@ public class LogoutIT {
 
         systemOut.enableLog();
         exit.expectSystemExit();
-        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("Logout FAIL "+email)));
+        exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("Logout FAIL " + email)));
 
         Keyboard keyboard = new Keyboard();
 
@@ -119,10 +117,7 @@ public class LogoutIT {
         keyboard.typeDown();
         keyboard.typeEnter();
 
-        keyboard.startTypingAfterTwoSeconds();
-
-        ArikuConsole.main(new String[0]);
+        ArikuConsole.startConsole(() -> keyboard.startTyping());
     }
-
 }
 

@@ -64,9 +64,7 @@ public class VerifySignUpIT {
         keyboard.typeDown();
         keyboard.typeEnter();
 
-        keyboard.startTypingAfterTwoSeconds();
-
-        ArikuConsole.main(new String[0]);
+        ArikuConsole.startConsole(() -> keyboard.startTyping());
     }
 
     @Test
@@ -106,9 +104,7 @@ public class VerifySignUpIT {
         keyboard.typeDown();
         keyboard.typeEnter();
 
-        keyboard.startTypingAfterTwoSeconds();
-
-        ArikuConsole.main(new String[0]);
+        ArikuConsole.startConsole(() -> keyboard.startTyping());
     }
 
     @Test
@@ -150,9 +146,7 @@ public class VerifySignUpIT {
         keyboard.typeDown();
         keyboard.typeEnter();
 
-        keyboard.startTypingAfterTwoSeconds();
-
-        ArikuConsole.main(new String[0]);
+        ArikuConsole.startConsole(() -> keyboard.startTyping());
     }
 
 }
