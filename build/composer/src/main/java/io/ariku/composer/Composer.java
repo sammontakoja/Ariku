@@ -2,10 +2,7 @@ package io.ariku.composer;
 
 import io.ariku.competition.skeet.api.SkeetCompetitionService;
 import io.ariku.competition.skeet.simple.SimpleCompetitionDatabase;
-import io.ariku.verification.api.LoginRequest;
-import io.ariku.verification.api.SignUpRequest;
-import io.ariku.verification.api.UserVerificationService;
-import io.ariku.verification.api.VerifySignUpRequest;
+import io.ariku.verification.api.*;
 import io.ariku.verification.simple.SimpleUserVerificationDatabase;
 
 /**
@@ -22,11 +19,12 @@ public enum Composer {
     Composer() {
         StringBuilder sb = new StringBuilder();
 
-        UserVerificationService userVerificationService = new UserVerificationService();
-        sb.append("UserVerificationService version 1.0-SNAPSHOT");
-
-        userVerificationService.userVerificationDatabase = new SimpleUserVerificationDatabase();
+        SimpleUserVerificationDatabase simpleUserVerificationDatabase = new SimpleUserVerificationDatabase();
         sb.append("\nSimpleUserVerificationDatabase version 1.0-SNAPSHOT (Competition data will be lost after program is closed)");
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationDatabase = simpleUserVerificationDatabase;
+        sb.append("UserVerificationService version 1.0-SNAPSHOT");
 
         SkeetCompetitionService skeetCompetitionService = new SkeetCompetitionService();
         sb.append("\nSkeetCompetitionService version 1.0-SNAPSHOT");
@@ -37,6 +35,11 @@ public enum Composer {
         System.out.println("User with userId 'user' verified signed up");
         userVerificationService.signUp(new SignUpRequest("user"));
         userVerificationService.verifySignUp(new VerifySignUpRequest("user"));
+
+        SecurityCleaner securityCleaner = new SecurityCleaner();
+        securityCleaner.userVerificationDatabase = simpleUserVerificationDatabase;
+        securityCleaner.wipeTokensWhichAreOlderThan(60, 900);
+        sb.append("\nStarted SecurityCleaner version 1.0-SNAPSHOT, scan interval 1 minute, clean security tokens older than 15 minutes");
 
         this.userVerificationService = userVerificationService;
         this.skeetCompetitionService = skeetCompetitionService;

@@ -54,7 +54,6 @@ public class ArikuConsole {
         afterConsoleStarted.doSomething();
 
         gui.waitForWindowToClose(window);
-
     }
 
 }

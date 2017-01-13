@@ -7,8 +7,6 @@ import java.util.UUID;
  */
 public class UserVerificationService {
 
-    public static int grantedNonActiveLoginTimeInSeconds = 900; // 15 minutes
-
     public UserVerificationDatabase userVerificationDatabase;
 
     public boolean signUp(SignUpRequest signUpRequest) {
