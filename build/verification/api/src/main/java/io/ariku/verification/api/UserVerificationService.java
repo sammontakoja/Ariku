@@ -59,9 +59,9 @@ public class UserVerificationService {
         return canLogout;
     }
 
-    public boolean isUserLoggedIn(String userId, String securityMessage) {
+    public boolean isAuthorized(String userId, String securityMessage) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(userId);
-        return userVerification != null && userVerification.securityMessage.equals(securityMessage);
+        return userVerification != null && userVerification.securityMessage.token.equals(securityMessage);
     }
 
     public boolean isUserSignedIn(String userId) {

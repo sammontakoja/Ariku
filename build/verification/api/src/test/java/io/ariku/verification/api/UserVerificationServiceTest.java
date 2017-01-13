@@ -327,4 +327,54 @@ public class UserVerificationServiceTest {
         assertThat(userVerificationService.isUserSignedInConfirmed(""), is(false));
     }
 
+    @Test
+    public void user_is_authorized_when_given_userId_and_security_token_match() {
+
+        UserVerification userVerification = new UserVerification();
+        userVerification.userId = "a@a.com";
+        userVerification.securityMessage.token = UUID.randomUUID().toString();
+
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
+
+        boolean userAuthorized = userVerificationService.isAuthorized(userVerification.userId, userVerification.securityMessage.token);
+
+        assertThat(userAuthorized, is(true));
+    }
+
+    @Test
+    public void user_is_not_authorized_when_given_security_token_do_not_match() {
+
+        UserVerification userVerification = new UserVerification();
+        userVerification.userId = "a@a.com";
+        userVerification.securityMessage.token = UUID.randomUUID().toString();
+
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(userVerification);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
+
+        boolean userAuthorized = userVerificationService.isAuthorized(userVerification.userId, "not the same");
+
+        assertThat(userAuthorized, is(false));
+    }
+
+    @Test
+    public void user_is_not_authorized_when_UserVerification_not_found_with_given_userId() {
+
+        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
+        when(userVerificationDatabase.readUserVerification(anyString())).thenReturn(null);
+
+        UserVerificationService userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
+
+        boolean userAuthorized = userVerificationService.isAuthorized("userid", "securityToken");
+
+        assertThat(userAuthorized, is(false));
+    }
+
 }

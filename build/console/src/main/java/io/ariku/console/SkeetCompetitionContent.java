@@ -19,7 +19,7 @@ public class SkeetCompetitionContent {
         contentPanel.removeAllComponents();
         contentPanel.setLayoutManager(new GridLayout(1));
 
-        if (!userVerificationService.isUserLoggedIn(CONSOLE_USER.userId(), "")) {
+        if (!userVerificationService.isAuthorized(CONSOLE_USER.userId(), "")) {
             contentPanel.addComponent(new Label("Please login"));
             return;
         }
@@ -42,7 +42,7 @@ public class SkeetCompetitionContent {
 
         UserVerificationService userVerificationService = COMPOSER.userVerificationService;
 
-        if (!userVerificationService.isUserLoggedIn(CONSOLE_USER.userId(), "")) {
+        if (!userVerificationService.isAuthorized(CONSOLE_USER.userId(), "")) {
             contentPanel.addComponent(new Label("Please login"));
             return;
         }
