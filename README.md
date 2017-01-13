@@ -1,4 +1,4 @@
-# Ariku
+# Ariku ![Build status](https://travis-ci.org/sammontakoja/Ariku.svg?branch=master)
 
 Ariku is an application for running shooting competitions.
 
