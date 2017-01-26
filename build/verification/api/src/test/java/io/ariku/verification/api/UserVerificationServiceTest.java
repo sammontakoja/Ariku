@@ -18,19 +18,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(ParallelRunner.class)
 public class UserVerificationServiceTest {
-
-    @Test
-    public void plaa() {
-
-        String a = Instant.now().toString();
-        System.out.printf(a);
-
-        String b = Instant.parse(a).toString();
-        System.out.println(b);
-
-        assertThat(a, is(b));
-    }
-
+    
     @Test
     public void verify_sign_up_fail_when_user_is_found_but_not_signed_in() {
 
