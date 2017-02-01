@@ -328,7 +328,11 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean userAuthorized = userVerificationService.isAuthorized(userVerification.userId, userVerification.securityMessage.token);
+        AuthorizeRequest authorizeRequest = new AuthorizeRequest();
+        authorizeRequest.securityMessage = userVerification.securityMessage.token;
+        authorizeRequest.userId = userVerification.userId;
+
+        boolean userAuthorized = userVerificationService.isAuthorized(authorizeRequest);
 
         assertThat(userAuthorized, is(true));
     }
@@ -346,7 +350,11 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean userAuthorized = userVerificationService.isAuthorized(userVerification.userId, "not the same");
+        AuthorizeRequest authorizeRequest = new AuthorizeRequest();
+        authorizeRequest.securityMessage = "securityToken";
+        authorizeRequest.userId = "userId";
+
+        boolean userAuthorized = userVerificationService.isAuthorized(authorizeRequest);
 
         assertThat(userAuthorized, is(false));
     }
@@ -360,7 +368,11 @@ public class UserVerificationServiceTest {
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
-        boolean userAuthorized = userVerificationService.isAuthorized("userid", "securityToken");
+        AuthorizeRequest authorizeRequest = new AuthorizeRequest();
+        authorizeRequest.securityMessage = "securityToken";
+        authorizeRequest.userId = "userId";
+
+        boolean userAuthorized = userVerificationService.isAuthorized(authorizeRequest);
 
         assertThat(userAuthorized, is(false));
     }

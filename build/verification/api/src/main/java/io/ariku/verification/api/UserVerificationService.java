@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * @author Ari Aaltonen
  */
-public class UserVerificationService {
+public class UserVerificationService implements UserAuthorizer {
 
     public UserVerificationDatabase userVerificationDatabase;
 
@@ -59,9 +59,9 @@ public class UserVerificationService {
         return canLogout;
     }
 
-    public boolean isAuthorized(String userId, String securityMessage) {
-        UserVerification userVerification = userVerificationDatabase.readUserVerification(userId);
-        return userVerification != null && userVerification.securityMessage.token.equals(securityMessage);
+    public boolean isAuthorized(AuthorizeRequest authorizeRequest) {
+        UserVerification userVerification = userVerificationDatabase.readUserVerification(authorizeRequest.userId);
+        return userVerification != null && userVerification.securityMessage.token.equals(authorizeRequest.securityMessage);
     }
 
     public boolean isUserSignedIn(String userId) {
