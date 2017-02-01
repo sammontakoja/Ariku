@@ -17,15 +17,15 @@ Original plan grew little larger and now Ariku project's focus is on providing s
 
 |Use case   | Implemented with|
 |---|---|
-|User navigate to sign up location | Console |
-|User fill sign up information, backend will notify if sign up was successful or failed | Console |
-|User navigate to verify sign up location | Console |
-|User fill sign up verification information, backend will notify if verification was successful or failed | Console |
-|User navigate to login location | Console |
-|User fill login information, backend's response contains security message if login was successful or failed | Console |
-|User navigate to logout location and remove given security message | Console |
-|Security cleaner clean all granted security messages which are older than X minutes | Console |
-|System ask is security message valid. Will be used when using another services | Console |
+|User navigate to sign up location | API, Console |
+|User fill sign up information, backend will notify if sign up was successful or failed | API, Console |
+|User navigate to verify sign up location | API, Console |
+|User fill sign up verification information, backend will notify if verification was successful or failed | API, Console |
+|User navigate to login location | API, Console |
+|User fill login information, backend's response contains security message if login was successful or failed | API, Console |
+|User navigate to logout location and remove given security message | API, Console |
+|Security cleaner clean all granted security messages which are older than X minutes | API, Console |
+|System ask is security message valid. Will be used when using another services | API, Console |
 
 ##### Unit tests
 io.ariku.verification.api.UserVerificationServiceTest
@@ -41,13 +41,14 @@ io.ariku.console.verification.SignUpIT
 
 |Use case   | Implemented with |
 |---|---|
-|User can create new competition and became competition owner | - |
-|Owner give competition name and competition type | - |
-|Owner navigate to modify owners location | - |
+|User can create new competition and became competition owner | API |
+|Owner can list all of his/her competitions | API |
 |Owner can either add or remove another user by userid | - |
 |Owner navigate to modify competition state location | - |
-|Owner can open/close attending and start/close competition | - |
-|Owner can open competition view | - |
+|Owner can open attending to competition | - |
+|Owner can close attending to competition | - |
+|Owner can start competition | - |
+|Owner can close competition | - |
 
 ##### Unit tests
 -
