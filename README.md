@@ -46,7 +46,7 @@ io.ariku.console.verification.SignUpIT
 |Owner can add another user to be competition's owner as well using userid | API |
 |Owner can remove another competition's owner using userid | API |
 |Owner navigate to modify competition state location | - |
-|Owner can open attending to competition | - |
+|Owner can open attending to competition | API |
 |Owner can close attending to competition | - |
 |Owner can start competition | - |
 |Owner can close competition | - |
