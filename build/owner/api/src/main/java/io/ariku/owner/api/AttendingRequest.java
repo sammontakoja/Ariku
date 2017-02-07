@@ -5,7 +5,7 @@ import io.ariku.verification.api.AuthorizeRequest;
 /**
  * @author Ari Aaltonen
  */
-public class OpenAttendingRequest {
+public class AttendingRequest {
     public AuthorizeRequest authorizeRequest;
     public String competitionId;
     public String userId;

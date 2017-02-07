@@ -1,8 +1,6 @@
 package io.ariku.owner.api;
 
-import io.ariku.util.data.User;
 import io.ariku.verification.api.AuthorizeRequest;
-import io.ariku.verification.api.UserAuthorizer;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,11 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.any;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
