@@ -48,8 +48,10 @@ io.ariku.console.verification.SignUpIT
 |Owner navigate to modify competition state location | - |
 |Owner can open attending to competition | API |
 |Owner can close attending to competition | API |
+|User can get competition's attending status  | - |
 |Owner can start competition | - |
 |Owner can close competition | - |
+|User can get competition's started/closed status  | - |
 
 ##### Unit tests
 -
