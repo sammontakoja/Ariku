@@ -115,8 +115,8 @@ public class SecurityCleanerTest {
         // UserVerification is not old enough to be updated by SecurityCleaner
         assertThat(updateUserVerification.called, is(false));
 
-        // After 2 seconds UserVerification should be updated by SecurityCleaner
-        Thread.sleep(2000);
+        // After 4 seconds UserVerification should be updated by SecurityCleaner
+        Thread.sleep(4000);
         assertThat(updateUserVerification.called, is(true));
     }
 
