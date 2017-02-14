@@ -39,7 +39,7 @@ public class WhenClosingAttendingToCompetitionTest {
     }
 
     @Test
-    public void authorized_non_owner_user_cannot_open_attending_to_competition() {
+    public void authorized_non_owner_user_cannot_close_attending_to_competition() {
 
         OwnerService ownerService = new OwnerService();
         ownerService.userAuthorizer = authorizeRequest -> true;
@@ -60,7 +60,7 @@ public class WhenClosingAttendingToCompetitionTest {
     }
     
     @Test
-    public void authorized_owner_can_open_attending_to_competition() {
+    public void authorized_owner_can_close_attending_to_competition() {
 
         OwnerService ownerService = new OwnerService();
         ownerService.userAuthorizer = authorizeRequest -> true;
