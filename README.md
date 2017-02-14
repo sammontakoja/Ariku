@@ -11,8 +11,6 @@ Ariku project's original idea was to create new program for them which works and
 
 Original plan grew little larger and now Ariku project's focus is on providing services to any kind of competition.
 
-## Architecture
-
 ### User identification
 
 |Use case   | Implemented with|
@@ -48,13 +46,15 @@ io.ariku.console.verification.SignUpIT
 |Owner navigate to modify competition state location | - |
 |Owner can open attending to competition | API |
 |Owner can close attending to competition | API |
-|User can get competition's attending status  | - |
 |Owner can start competition | API |
 |Owner can close competition | API |
-|User can get competition's started/closed status  | - |
 
 ##### Unit tests
--
+io.ariku.owner.api.OwnerServiceTest
+io.ariku.owner.api.WhenClosingAttendingToCompetitionTest
+io.ariku.owner.api.WhenClosingCompetitionTest
+io.ariku.owner.api.WhenOpeningAttendingToCompetitionTest
+io.ariku.owner.api.WhenOpeningCompetitionTest
 
 ##### Integration tests
 -
