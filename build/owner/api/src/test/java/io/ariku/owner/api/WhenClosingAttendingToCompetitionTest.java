@@ -20,11 +20,11 @@ public class WhenClosingAttendingToCompetitionTest {
         OwnerService ownerService = new OwnerService();
         ownerService.userAuthorizer = authorizeRequest -> false;
 
-        AttendingDatabase attendingDatabase = mock(AttendingDatabase.class);
-        ownerService.attendingDatabase = attendingDatabase;
+        CompetitionStateDatabase competitionStateDatabase = mock(CompetitionStateDatabase.class);
+        ownerService.competitionStateDatabase = competitionStateDatabase;
         ownerService.ownerDatabase = mock(OwnerDatabase.class);
 
-        AttendingRequest request = new AttendingRequest();
+        OwnerCompetitionRequest request = new OwnerCompetitionRequest();
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionId = UUID.randomUUID().toString();
         request.userId = UUID.randomUUID().toString();
@@ -35,7 +35,7 @@ public class WhenClosingAttendingToCompetitionTest {
 
         ownerService.closeAttending(request);
 
-        verify(ownerService.attendingDatabase, never()).closeAttending(eq(request.userId), eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, never()).closeAttending(eq(request.userId), eq(request.competitionId));
     }
 
     @Test
@@ -44,11 +44,11 @@ public class WhenClosingAttendingToCompetitionTest {
         OwnerService ownerService = new OwnerService();
         ownerService.userAuthorizer = authorizeRequest -> true;
 
-        AttendingDatabase attendingDatabase = mock(AttendingDatabase.class);
-        ownerService.attendingDatabase = attendingDatabase;
+        CompetitionStateDatabase competitionStateDatabase = mock(CompetitionStateDatabase.class);
+        ownerService.competitionStateDatabase = competitionStateDatabase;
         ownerService.ownerDatabase = mock(OwnerDatabase.class);
 
-        AttendingRequest request = new AttendingRequest();
+        OwnerCompetitionRequest request = new OwnerCompetitionRequest();
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionId = UUID.randomUUID().toString();
         request.userId = UUID.randomUUID().toString();
@@ -56,7 +56,7 @@ public class WhenClosingAttendingToCompetitionTest {
 
         ownerService.closeAttending(request);
 
-        verify(ownerService.attendingDatabase, never()).closeAttending(eq(request.userId), eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, never()).closeAttending(eq(request.userId), eq(request.competitionId));
     }
     
     @Test
@@ -65,11 +65,11 @@ public class WhenClosingAttendingToCompetitionTest {
         OwnerService ownerService = new OwnerService();
         ownerService.userAuthorizer = authorizeRequest -> true;
 
-        AttendingDatabase attendingDatabase = mock(AttendingDatabase.class);
-        ownerService.attendingDatabase = attendingDatabase;
+        CompetitionStateDatabase competitionStateDatabase = mock(CompetitionStateDatabase.class);
+        ownerService.competitionStateDatabase = competitionStateDatabase;
         ownerService.ownerDatabase = mock(OwnerDatabase.class);
 
-        AttendingRequest request = new AttendingRequest();
+        OwnerCompetitionRequest request = new OwnerCompetitionRequest();
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionId = UUID.randomUUID().toString();
         request.userId = UUID.randomUUID().toString();
@@ -80,7 +80,7 @@ public class WhenClosingAttendingToCompetitionTest {
 
         ownerService.closeAttending(request);
 
-        verify(ownerService.attendingDatabase, atLeastOnce()).closeAttending(eq(request.userId), eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, atLeastOnce()).closeAttending(eq(request.userId), eq(request.competitionId));
     }
 
 }

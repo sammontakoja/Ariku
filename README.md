@@ -49,8 +49,8 @@ io.ariku.console.verification.SignUpIT
 |Owner can open attending to competition | API |
 |Owner can close attending to competition | API |
 |User can get competition's attending status  | - |
-|Owner can start competition | - |
-|Owner can close competition | - |
+|Owner can start competition | API |
+|Owner can close competition | API |
 |User can get competition's started/closed status  | - |
 
 ##### Unit tests

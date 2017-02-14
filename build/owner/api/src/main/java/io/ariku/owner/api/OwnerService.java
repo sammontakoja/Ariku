@@ -14,7 +14,7 @@ public class OwnerService {
     public UserAuthorizer userAuthorizer;
     public CompetitionDatabase competitionDatabase;
     public OwnerDatabase ownerDatabase;
-    public AttendingDatabase attendingDatabase;
+    public CompetitionStateDatabase competitionStateDatabase;
 
     public void createNewCompetition(NewCompetitionRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
@@ -34,16 +34,28 @@ public class OwnerService {
                     ownerDatabase.addOwner(request.userIdNewOwner, request.competitionId);
     }
 
-    public void openAttending(AttendingRequest request) {
+    public void openAttending(OwnerCompetitionRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
             if (userIsOwner(request.userId, request.competitionId))
-                attendingDatabase.openAttending(request.userId, request.competitionId);
+                competitionStateDatabase.openAttending(request.userId, request.competitionId);
     }
 
-    public void closeAttending(AttendingRequest request) {
+    public void closeAttending(OwnerCompetitionRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
             if (userIsOwner(request.userId, request.competitionId))
-                attendingDatabase.closeAttending(request.userId, request.competitionId);
+                competitionStateDatabase.closeAttending(request.userId, request.competitionId);
+    }
+
+    public void openCompetition(OwnerCompetitionRequest request) {
+        if (userAuthorizer.isAuthorized(request.authorizeRequest))
+            if (userIsOwner(request.userId, request.competitionId))
+                competitionStateDatabase.openCompetition(request.userId, request.competitionId);
+    }
+
+    public void closeCompetition(OwnerCompetitionRequest request) {
+        if (userAuthorizer.isAuthorized(request.authorizeRequest))
+            if (userIsOwner(request.userId, request.competitionId))
+                competitionStateDatabase.closeCompetition(request.userId, request.competitionId);
     }
 
     private boolean userIsOwner(String userId, String competitionId) {
