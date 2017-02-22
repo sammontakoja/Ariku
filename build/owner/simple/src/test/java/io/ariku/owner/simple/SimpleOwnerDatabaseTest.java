@@ -1,8 +1,10 @@
 package io.ariku.owner.simple;
 
+import com.googlecode.junittoolbox.ParallelRunner;
 import io.ariku.owner.api.Competition;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +21,9 @@ import static org.junit.Assert.*;
 /**
  * @author Ari Aaltonen
  */
+@RunWith(ParallelRunner.class)
 public class SimpleOwnerDatabaseTest {
 
-    /**
-     *
-     */
     @Test
     public void happy_case() {
         SimpleOwnerDatabase db = new SimpleOwnerDatabase();
