@@ -30,12 +30,12 @@ public class WhenClosingCompetitionTest {
         request.userId = UUID.randomUUID().toString();
         request.authorizeRequest.userId = request.userId;
 
-        when(ownerService.ownerDatabase.competitionOwners(request.competitionId))
+        when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
                 .thenReturn(Arrays.asList(request.userId));
 
         ownerService.closeCompetition(request);
 
-        verify(ownerService.competitionStateDatabase, never()).closeCompetition(eq(request.userId), eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, never()).closeCompetition(eq(request.competitionId));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class WhenClosingCompetitionTest {
 
         ownerService.closeCompetition(request);
 
-        verify(ownerService.competitionStateDatabase, never()).closeCompetition(eq(request.userId), eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, never()).closeCompetition(eq(request.competitionId));
     }
 
     @Test
@@ -75,12 +75,12 @@ public class WhenClosingCompetitionTest {
         request.userId = UUID.randomUUID().toString();
         request.authorizeRequest.userId = request.userId;
 
-        when(ownerService.ownerDatabase.competitionOwners(request.competitionId))
+        when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
                 .thenReturn(Arrays.asList(request.userId));
 
         ownerService.closeCompetition(request);
 
-        verify(ownerService.competitionStateDatabase, atLeastOnce()).closeCompetition(eq(request.userId), eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, atLeastOnce()).closeCompetition(eq(request.competitionId));
     }
 
 }

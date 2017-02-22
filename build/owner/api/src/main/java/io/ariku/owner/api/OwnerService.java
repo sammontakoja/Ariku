@@ -23,7 +23,7 @@ public class OwnerService {
 
     public List<Competition> findOwnedCompetitions(AuthorizeRequest request) {
         if (userAuthorizer.isAuthorized(request))
-            return competitionDatabase.ownersCompetitions(request.userId);
+            return competitionDatabase.competitionsByOwner(request.userId);
         return new ArrayList<>();
     }
 
@@ -37,28 +37,28 @@ public class OwnerService {
     public void openAttending(OwnerCompetitionRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
             if (userIsOwner(request.userId, request.competitionId))
-                competitionStateDatabase.openAttending(request.userId, request.competitionId);
+                competitionStateDatabase.openAttending(request.competitionId);
     }
 
     public void closeAttending(OwnerCompetitionRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
             if (userIsOwner(request.userId, request.competitionId))
-                competitionStateDatabase.closeAttending(request.userId, request.competitionId);
+                competitionStateDatabase.closeAttending(request.competitionId);
     }
 
     public void openCompetition(OwnerCompetitionRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
             if (userIsOwner(request.userId, request.competitionId))
-                competitionStateDatabase.openCompetition(request.userId, request.competitionId);
+                competitionStateDatabase.openCompetition(request.competitionId);
     }
 
     public void closeCompetition(OwnerCompetitionRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
             if (userIsOwner(request.userId, request.competitionId))
-                competitionStateDatabase.closeCompetition(request.userId, request.competitionId);
+                competitionStateDatabase.closeCompetition(request.competitionId);
     }
 
     private boolean userIsOwner(String userId, String competitionId) {
-        return ownerDatabase.competitionOwners(competitionId).stream().anyMatch(x -> x.equals(userId));
+        return ownerDatabase.ownersByCompetition(competitionId).stream().anyMatch(x -> x.equals(userId));
     }
 }

@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface OwnerDatabase {
     void addOwner(String userId, String competitionId);
-    List<String> competitionOwners(String competitionId);
+    List<String> ownersByCompetition(String competitionId);
 }

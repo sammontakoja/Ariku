@@ -1,8 +1,7 @@
 package io.ariku.owner.api;
 
-import io.ariku.util.data.User;
-
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ari Aaltonen
@@ -11,10 +10,16 @@ public interface CompetitionDatabase {
 
     Competition createCompetition(String userId, String competitionName, String competitionType);
 
-    void deleteCompetition(Competition competition);
+    void deleteCompetition(String id);
 
-    void updateCompetition(Competition competition);
+    void updateCompetitionName(String name, String id);
 
-    List<Competition> ownersCompetitions(String userId);
+    void updateCompetitionType(String type, String id);
+
+    List<Competition> competitionsByOwner(String userId);
+
+    List<Competition> competitions();
+
+    Optional<Competition> competitionById(String id);
 
 }
