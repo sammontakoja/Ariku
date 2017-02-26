@@ -9,7 +9,6 @@ import io.ariku.verification.api.UserVerificationService;
 import io.ariku.verification.api.VerifySignUpRequest;
 
 import static io.ariku.composer.Composer.COMPOSER;
-import static io.ariku.console.ConsoleUser.CONSOLE_USER;
 
 /**
  * @author Ari Aaltonen
