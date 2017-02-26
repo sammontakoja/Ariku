@@ -2,8 +2,8 @@ package io.ariku.composer;
 
 import io.ariku.competition.skeet.api.SkeetCompetitionService;
 import io.ariku.competition.skeet.simple.SimpleCompetitionDatabase;
+import io.ariku.database.simple.SimpleUserVerificationDatabase;
 import io.ariku.verification.api.*;
-import io.ariku.verification.simple.SimpleUserVerificationDatabase;
 
 /**
  * @author Ari Aaltonen

@@ -15,6 +15,7 @@
         <module>owner</module>
         <module>user</module>
         <module>competition</module>
+        <module>database</module>
         <module>composer</module>
         <module>console</module>
     </modules>

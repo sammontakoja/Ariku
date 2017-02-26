@@ -1,4 +1,4 @@
-package io.ariku.owner.simple;
+package io.ariku.database.simple;
 
 import io.ariku.owner.api.*;
 import io.ariku.util.data.Competition;
