@@ -2,8 +2,11 @@ package io.ariku.composer;
 
 import io.ariku.competition.skeet.api.SkeetCompetitionService;
 import io.ariku.competition.skeet.simple.SimpleCompetitionDatabase;
-import io.ariku.database.simple.SimpleUserVerificationDatabase;
-import io.ariku.verification.api.*;
+import io.ariku.database.simple.SimpleDatabase;
+import io.ariku.verification.SecurityCleaner;
+import io.ariku.verification.SignUpRequest;
+import io.ariku.verification.UserVerificationService;
+import io.ariku.verification.VerifySignUpRequest;
 
 /**
  * @author Ari Aaltonen
@@ -19,7 +22,7 @@ public enum Composer {
     Composer() {
         StringBuilder sb = new StringBuilder();
 
-        SimpleUserVerificationDatabase simpleUserVerificationDatabase = new SimpleUserVerificationDatabase();
+        SimpleDatabase simpleUserVerificationDatabase = new SimpleDatabase();
         sb.append("\nSimpleUserVerificationDatabase version 1.0-SNAPSHOT (Competition data will be lost after program is closed)");
 
         UserVerificationService userVerificationService = new UserVerificationService();

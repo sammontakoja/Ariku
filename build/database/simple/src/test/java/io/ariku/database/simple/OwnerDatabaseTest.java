@@ -19,11 +19,11 @@ import static org.junit.Assert.*;
  * @author Ari Aaltonen
  */
 @RunWith(ParallelRunner.class)
-public class SimpleOwnerDatabaseTest {
+public class OwnerDatabaseTest {
 
     @Test
     public void happy_case() {
-        SimpleOwnerDatabase db = new SimpleOwnerDatabase();
+        SimpleDatabase db = new SimpleDatabase();
 
         for (int i=0; i<10; i++)
             db.createCompetition(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString());
@@ -77,7 +77,7 @@ public class SimpleOwnerDatabaseTest {
 
     @Test
     public void empty_list_returned_when_there_are_no_owners() {
-        SimpleOwnerDatabase db = new SimpleOwnerDatabase();
+        SimpleDatabase db = new SimpleDatabase();
         String competitinId = UUID.randomUUID().toString();
         List<String> owners = db.ownersByCompetition(competitinId);
         assertThat(owners.size(), is(0));
@@ -85,7 +85,7 @@ public class SimpleOwnerDatabaseTest {
 
     @Test
     public void after_adding_user_as_competition_owner_user_can_be_found_when_listing_competition_owners() {
-        SimpleOwnerDatabase db = new SimpleOwnerDatabase();
+        SimpleDatabase db = new SimpleDatabase();
         String userId = UUID.randomUUID().toString();
         String competitinId = UUID.randomUUID().toString();
         db.addOwner(userId, competitinId);
@@ -95,7 +95,7 @@ public class SimpleOwnerDatabaseTest {
 
     @Test
     public void same_user_cannot_be_added_twice_as_competition_owner() {
-        SimpleOwnerDatabase db = new SimpleOwnerDatabase();
+        SimpleDatabase db = new SimpleDatabase();
         String userId = UUID.randomUUID().toString();
         String competitinId = UUID.randomUUID().toString();
         db.addOwner(userId, competitinId);

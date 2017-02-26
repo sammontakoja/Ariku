@@ -4,6 +4,8 @@ import io.ariku.owner.api.*;
 import io.ariku.util.data.Competition;
 import io.ariku.util.data.CompetitionState;
 import io.ariku.util.data.CompetitionStateDatabase;
+import io.ariku.verification.UserVerificationDatabase;
+import io.ariku.verification.UserVerification;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,8 +13,9 @@ import java.util.stream.Collectors;
 /**
  * @author Ari Aaltonen
  */
-public class SimpleOwnerDatabase implements OwnerDatabase, CompetitionDatabase, CompetitionStateDatabase {
+public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, CompetitionStateDatabase, UserVerificationDatabase {
 
+    private HashMap<String, UserVerification> userVerifications = new HashMap<>();
     private HashMap<String, ArrayList<String>> competitionOwners = new HashMap<>();
     private List<Competition> competitions = new ArrayList<>();
     private List<CompetitionState> competitionStates = new ArrayList<>();
@@ -125,4 +128,41 @@ public class SimpleOwnerDatabase implements OwnerDatabase, CompetitionDatabase, 
                 .filter(s -> s.competitionId.equals(competitionId))
                 .findFirst().get().open = false;
     }
+
+    @Override
+    public void createUserVerification(String userId) {
+        UserVerification userVerification = new UserVerification(userId);
+        userVerification.isSignedIn = true;
+        userVerifications.put(userId, userVerification);
+    }
+
+    @Override
+    public UserVerification readUserVerification(String userId) {
+        UserVerification foundUserVerification = userVerifications.get(userId);
+        if (foundUserVerification != null)
+            return foundUserVerification;
+        else
+            return new UserVerification();
+    }
+
+    @Override
+    public void deleteUserVerification(String userId) {
+        userVerifications.remove(userId);
+    }
+
+    @Override
+    public void updateUserVerification(UserVerification userVerification) {
+        UserVerification foundVerification = userVerifications.get(userVerification.userId);
+        if (foundVerification != null) {
+            foundVerification.isSignedInConfirmed = userVerification.isSignedInConfirmed;
+            foundVerification.isSignedIn = userVerification.isSignedIn;
+            foundVerification.securityMessage = userVerification.securityMessage;
+        }
+    }
+
+    @Override
+    public List<UserVerification> userVerifications() {
+        return null;
+    }
+
 }

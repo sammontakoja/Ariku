@@ -1,7 +1,7 @@
 package io.ariku.database.simple;
 
 import com.googlecode.junittoolbox.ParallelRunner;
-import io.ariku.verification.api.UserVerification;
+import io.ariku.verification.UserVerification;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,13 +20,13 @@ public class SimpleUserVerificationDatabaseTest {
 
     @Test
     public void userVerification_is_not_null() {
-        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
+        SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
         assertThat(userVerificationServiceSimple.readUserVerification(""), not(nullValue()));
     }
 
     @Test
     public void created_UserVerification_is_signedIn() {
-        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
+        SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
         userVerificationServiceSimple.createUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
         assertThat(readUserVerification.isSignedIn, is(true));
@@ -34,7 +34,7 @@ public class SimpleUserVerificationDatabaseTest {
 
     @Test
     public void created_UserVerification_can_be_found_when_using_same_userId() {
-        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
+        SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
         userVerificationServiceSimple.createUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
         assertThat(readUserVerification.userId, is("123"));
@@ -42,7 +42,7 @@ public class SimpleUserVerificationDatabaseTest {
 
     @Test
     public void deleted_UserVerification_cannot_be_found_when_using_same_userId() {
-        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
+        SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
         userVerificationServiceSimple.createUserVerification("123");
         userVerificationServiceSimple.deleteUserVerification("123");
         UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
@@ -51,7 +51,7 @@ public class SimpleUserVerificationDatabaseTest {
 
     @Test
     public void UserVerification_values_change_when_using_update_with_same_userId() {
-        SimpleUserVerificationDatabase userVerificationServiceSimple = new SimpleUserVerificationDatabase();
+        SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
 
         UserVerification userVerification = new UserVerification();
         userVerification.userId = "123";

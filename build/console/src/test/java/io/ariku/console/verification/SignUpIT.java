@@ -7,7 +7,7 @@ package io.ariku.console.verification;
 import io.ariku.composer.Composer;
 import io.ariku.console.ArikuConsole;
 import io.ariku.console.Keyboard;
-import io.ariku.verification.api.SignUpRequest;
+import io.ariku.verification.SignUpRequest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;

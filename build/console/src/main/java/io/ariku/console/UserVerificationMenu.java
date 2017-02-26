@@ -2,15 +2,10 @@ package io.ariku.console;
 
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
-import com.googlecode.lanterna.gui2.ComboBox;
 import com.googlecode.lanterna.gui2.Panel;
-import io.ariku.verification.api.*;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static io.ariku.composer.Composer.COMPOSER;
-import static io.ariku.console.ConsoleUser.CONSOLE_USER;
 
 /**
  * @author Ari Aaltonen

@@ -1,7 +1,8 @@
 package io.ariku.console;
 
 import com.googlecode.lanterna.gui2.*;
-import io.ariku.verification.api.*;
+import io.ariku.verification.SignUpRequest;
+import io.ariku.verification.UserVerificationService;
 
 import static io.ariku.composer.Composer.COMPOSER;
 

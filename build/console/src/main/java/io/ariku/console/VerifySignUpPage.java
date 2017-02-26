@@ -4,9 +4,8 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
-import io.ariku.verification.api.SignUpRequest;
-import io.ariku.verification.api.UserVerificationService;
-import io.ariku.verification.api.VerifySignUpRequest;
+import io.ariku.verification.UserVerificationService;
+import io.ariku.verification.VerifySignUpRequest;
 
 import static io.ariku.composer.Composer.COMPOSER;
 
