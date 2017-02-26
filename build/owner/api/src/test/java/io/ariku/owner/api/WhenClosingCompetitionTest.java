@@ -1,8 +1,10 @@
 package io.ariku.owner.api;
 
+import com.googlecode.junittoolbox.ParallelRunner;
 import io.ariku.util.data.CompetitionStateDatabase;
 import io.ariku.verification.api.AuthorizeRequest;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -13,6 +15,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Ari Aaltonen
  */
+@RunWith(ParallelRunner.class)
 public class WhenClosingCompetitionTest {
 
     @Test
