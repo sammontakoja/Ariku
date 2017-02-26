@@ -1,5 +1,7 @@
 package io.ariku.owner.api;
 
+import io.ariku.util.data.Competition;
+import io.ariku.util.data.CompetitionStateDatabase;
 import io.ariku.verification.api.AuthorizeRequest;
 import io.ariku.verification.api.UserAuthorizer;
 

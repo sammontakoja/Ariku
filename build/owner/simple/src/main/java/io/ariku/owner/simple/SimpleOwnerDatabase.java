@@ -1,6 +1,9 @@
 package io.ariku.owner.simple;
 
 import io.ariku.owner.api.*;
+import io.ariku.util.data.Competition;
+import io.ariku.util.data.CompetitionState;
+import io.ariku.util.data.CompetitionStateDatabase;
 
 import java.util.*;
 import java.util.stream.Collectors;

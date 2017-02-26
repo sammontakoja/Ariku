@@ -1,5 +1,6 @@
 package io.ariku.owner.api;
 
+import io.ariku.util.data.Competition;
 import io.ariku.verification.api.AuthorizeRequest;
 import org.junit.Test;
 

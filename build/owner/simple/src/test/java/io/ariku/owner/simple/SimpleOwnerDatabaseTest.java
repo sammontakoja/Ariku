@@ -1,14 +1,11 @@
 package io.ariku.owner.simple;
 
 import com.googlecode.junittoolbox.ParallelRunner;
-import io.ariku.owner.api.Competition;
-import org.hamcrest.CoreMatchers;
+import io.ariku.util.data.Competition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

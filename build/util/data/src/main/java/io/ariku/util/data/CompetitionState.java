@@ -1,4 +1,4 @@
-package io.ariku.owner.api;
+package io.ariku.util.data;
 
 /**
  * @author Ari Aaltonen

@@ -41,14 +41,18 @@ io.ariku.console.verification.SignUpIT
 |Owner can start competition | API, Simple|
 |Owner can close competition | API, Simple|
 
+## User management
+
+|Use case   | Implemented in modules |
+|---|---|
+|User can participate to competition when competition is open to participating | API |
+|User can cancel participating when competition is open to participating | API |
+|User can list competition(s) which he/she is participating| API |
+
 #### Tests
 
 API module
-io.ariku.owner.api.OwnerServiceTest
-io.ariku.owner.api.WhenClosingAttendingToCompetitionTest
-io.ariku.owner.api.WhenClosingCompetitionTest
-io.ariku.owner.api.WhenOpeningAttendingToCompetitionTest
-io.ariku.owner.api.WhenOpeningCompetitionTest
+io.ariku.owner.api.UserServiceTest
 
 Simple module
 io.ariku.owner.simple.SimpleOwnerDatabaseTest
