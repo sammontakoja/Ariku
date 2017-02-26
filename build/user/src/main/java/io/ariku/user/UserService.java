@@ -16,18 +16,18 @@ import java.util.Optional;
 public class UserService {
 
     public UserAuthorizer userAuthorizer;
-    public PartiticipateDatabase partiticipateDatabase;
+    public AttendingDatabase attendingDatabase;
     public CompetitionStateDatabase competitionStateDatabase;
 
-    public void participateToCompetition(ParticipateRequest request) {
+    public void attendToCompetition(ParticipateRequest request) {
         if (userIsAuthorizedAndCompetitionIsOpenToAttending(request))
-            partiticipateDatabase.addParticipation(new Partiticipation(request.authorizeRequest.userId, request.competitionId));
+            attendingDatabase.add(new AttendingInfo(request.authorizeRequest.userId, request.competitionId));
 
     }
 
-    public void cancelParticipateToCompetition(ParticipateRequest request) {
+    public void cancelAttendingToCompetition(ParticipateRequest request) {
         if (userIsAuthorizedAndCompetitionIsOpenToAttending(request))
-            partiticipateDatabase.removeParticipation(new Partiticipation(request.authorizeRequest.userId, request.competitionId));
+            attendingDatabase.remove(new AttendingInfo(request.authorizeRequest.userId, request.competitionId));
     }
 
     private boolean userIsAuthorizedAndCompetitionIsOpenToAttending(ParticipateRequest request) {
@@ -40,7 +40,7 @@ public class UserService {
 
     public List<Competition> competitions(AuthorizeRequest request) {
         if (userAuthorizer.isAuthorized(request))
-            return partiticipateDatabase.competitions(request.userId);
+            return attendingDatabase.competitions(request.userId);
         return new ArrayList<>();
     }
 }

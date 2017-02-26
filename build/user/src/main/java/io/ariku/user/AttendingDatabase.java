@@ -7,9 +7,9 @@ import java.util.List;
 /**
  * @author Ari Aaltonen
  */
-public interface PartiticipateDatabase {
+public interface AttendingDatabase {
 
-    void addParticipation(Partiticipation partiticipation);
-    void removeParticipation(Partiticipation any);
+    void add(AttendingInfo attendingInfo);
+    void remove(AttendingInfo any);
     List<Competition> competitions(String userId);
 }

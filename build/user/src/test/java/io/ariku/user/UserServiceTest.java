@@ -41,15 +41,15 @@ public class UserServiceTest {
         when(userService.competitionStateDatabase.competitionState(competitionId))
                 .thenReturn(Optional.of(competitionState));
 
-        userService.partiticipateDatabase = mock(PartiticipateDatabase.class);
+        userService.attendingDatabase = mock(AttendingDatabase.class);
 
         ParticipateRequest request = new ParticipateRequest();
         request.authorizeRequest = new AuthorizeRequest(userId, "");
         request.competitionId = competitionId;
 
-        userService.participateToCompetition(request);
+        userService.attendToCompetition(request);
 
-        verify(userService.partiticipateDatabase, atLeastOnce()).addParticipation(any(Partiticipation.class));
+        verify(userService.attendingDatabase, atLeastOnce()).add(any(AttendingInfo.class));
     }
 
     @Test
@@ -69,15 +69,15 @@ public class UserServiceTest {
         when(userService.competitionStateDatabase.competitionState(competitionId))
                 .thenReturn(Optional.of(competitionState));
 
-        userService.partiticipateDatabase = mock(PartiticipateDatabase.class);
+        userService.attendingDatabase = mock(AttendingDatabase.class);
 
         ParticipateRequest request = new ParticipateRequest();
         request.authorizeRequest = new AuthorizeRequest(userId, "");
         request.competitionId = competitionId;
 
-        userService.participateToCompetition(request);
+        userService.attendToCompetition(request);
 
-        verify(userService.partiticipateDatabase, never()).addParticipation(any(Partiticipation.class));
+        verify(userService.attendingDatabase, never()).add(any(AttendingInfo.class));
     }
 
     @Test
@@ -89,15 +89,15 @@ public class UserServiceTest {
         UserService userService = new UserService();
         userService.userAuthorizer = authorizeRequest -> false;
 
-        userService.partiticipateDatabase = mock(PartiticipateDatabase.class);
+        userService.attendingDatabase = mock(AttendingDatabase.class);
 
         ParticipateRequest request = new ParticipateRequest();
         request.authorizeRequest = new AuthorizeRequest(userId, "");
         request.competitionId = competitionId;
 
-        userService.participateToCompetition(request);
+        userService.attendToCompetition(request);
 
-        verify(userService.partiticipateDatabase, never()).addParticipation(any(Partiticipation.class));
+        verify(userService.attendingDatabase, never()).add(any(AttendingInfo.class));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class UserServiceTest {
         UserService userService = new UserService();
         userService.userAuthorizer = authorizeRequest -> true;
 
-        userService.partiticipateDatabase = mock(PartiticipateDatabase.class);
+        userService.attendingDatabase = mock(AttendingDatabase.class);
 
         CompetitionState competitionState = new CompetitionState();
         competitionState.attending = true;
@@ -122,9 +122,9 @@ public class UserServiceTest {
         request.authorizeRequest = new AuthorizeRequest(userId, "");
         request.competitionId = competitionId;
 
-        userService.cancelParticipateToCompetition(request);
+        userService.cancelAttendingToCompetition(request);
 
-        verify(userService.partiticipateDatabase, atLeastOnce()).removeParticipation(any(Partiticipation.class));
+        verify(userService.attendingDatabase, atLeastOnce()).remove(any(AttendingInfo.class));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class UserServiceTest {
         UserService userService = new UserService();
         userService.userAuthorizer = authorizeRequest -> true;
 
-        userService.partiticipateDatabase = mock(PartiticipateDatabase.class);
+        userService.attendingDatabase = mock(AttendingDatabase.class);
 
         CompetitionState competitionState = new CompetitionState();
         competitionState.attending = false;
@@ -149,9 +149,9 @@ public class UserServiceTest {
         request.authorizeRequest = new AuthorizeRequest(userId, "");
         request.competitionId = competitionId;
 
-        userService.cancelParticipateToCompetition(request);
+        userService.cancelAttendingToCompetition(request);
 
-        verify(userService.partiticipateDatabase, never()).removeParticipation(any(Partiticipation.class));
+        verify(userService.attendingDatabase, never()).remove(any(AttendingInfo.class));
     }
 
     @Test
@@ -163,15 +163,15 @@ public class UserServiceTest {
         UserService userService = new UserService();
         userService.userAuthorizer = authorizeRequest -> false;
 
-        userService.partiticipateDatabase = mock(PartiticipateDatabase.class);
+        userService.attendingDatabase = mock(AttendingDatabase.class);
 
         ParticipateRequest request = new ParticipateRequest();
         request.authorizeRequest = new AuthorizeRequest(userId, "");
         request.competitionId = competitionId;
 
-        userService.cancelParticipateToCompetition(request);
+        userService.cancelAttendingToCompetition(request);
 
-        verify(userService.partiticipateDatabase, never()).removeParticipation(any(Partiticipation.class));
+        verify(userService.attendingDatabase, never()).remove(any(AttendingInfo.class));
     }
 
     @Test
@@ -182,11 +182,11 @@ public class UserServiceTest {
         UserService userService = new UserService();
         userService.userAuthorizer = authorizeRequest -> true;
 
-        userService.partiticipateDatabase = mock(PartiticipateDatabase.class);
+        userService.attendingDatabase = mock(AttendingDatabase.class);
 
         userService.competitions(new AuthorizeRequest(userId, ""));
 
-        verify(userService.partiticipateDatabase, atLeastOnce()).competitions(eq(userId));
+        verify(userService.attendingDatabase, atLeastOnce()).competitions(eq(userId));
     }
 
     @Test
@@ -196,12 +196,12 @@ public class UserServiceTest {
         UserService userService = new UserService();
         userService.userAuthorizer = authorizeRequest -> false;
 
-        userService.partiticipateDatabase = mock(PartiticipateDatabase.class);
+        userService.attendingDatabase = mock(AttendingDatabase.class);
 
         List<Competition> competitions = userService.competitions(new AuthorizeRequest(userId, ""));
         assertThat(competitions.size(), is(0));
 
-        verify(userService.partiticipateDatabase, never()).competitions(eq(userId));
+        verify(userService.attendingDatabase, never()).competitions(eq(userId));
     }
 
 }
