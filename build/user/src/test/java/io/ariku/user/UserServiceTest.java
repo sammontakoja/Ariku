@@ -186,7 +186,7 @@ public class UserServiceTest {
 
         userService.competitions(new AuthorizeRequest(userId, ""));
 
-        verify(userService.attendingDatabase, atLeastOnce()).competitions(eq(userId));
+        verify(userService.attendingDatabase, atLeastOnce()).competitionsByAttendingUser(eq(userId));
     }
 
     @Test
@@ -201,7 +201,7 @@ public class UserServiceTest {
         List<Competition> competitions = userService.competitions(new AuthorizeRequest(userId, ""));
         assertThat(competitions.size(), is(0));
 
-        verify(userService.attendingDatabase, never()).competitions(eq(userId));
+        verify(userService.attendingDatabase, never()).competitionsByAttendingUser(eq(userId));
     }
 
 }

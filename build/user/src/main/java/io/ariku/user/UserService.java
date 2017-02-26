@@ -40,7 +40,7 @@ public class UserService {
 
     public List<Competition> competitions(AuthorizeRequest request) {
         if (userAuthorizer.isAuthorized(request))
-            return attendingDatabase.competitions(request.userId);
+            return attendingDatabase.competitionsByAttendingUser(request.userId);
         return new ArrayList<>();
     }
 }

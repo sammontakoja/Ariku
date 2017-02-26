@@ -1,6 +1,8 @@
 package io.ariku.database.simple;
 
 import io.ariku.owner.api.*;
+import io.ariku.user.AttendingDatabase;
+import io.ariku.user.AttendingInfo;
 import io.ariku.util.data.Competition;
 import io.ariku.util.data.CompetitionState;
 import io.ariku.util.data.CompetitionStateDatabase;
@@ -13,12 +15,13 @@ import java.util.stream.Collectors;
 /**
  * @author Ari Aaltonen
  */
-public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, CompetitionStateDatabase, UserVerificationDatabase {
+public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, CompetitionStateDatabase, UserVerificationDatabase, AttendingDatabase {
 
     private HashMap<String, UserVerification> userVerifications = new HashMap<>();
     private HashMap<String, ArrayList<String>> competitionOwners = new HashMap<>();
     private List<Competition> competitions = new ArrayList<>();
     private List<CompetitionState> competitionStates = new ArrayList<>();
+    private List<AttendingInfo> attendingInfos = new ArrayList<>();
 
     @Override
     public void addOwner(String userId, String competitionId) {
@@ -163,6 +166,32 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
     @Override
     public List<UserVerification> userVerifications() {
         return null;
+    }
+
+    @Override
+    public void add(AttendingInfo a) {
+        attendingInfos.add(a);
+    }
+
+    @Override
+    public void remove(AttendingInfo a) {
+        Optional<AttendingInfo> attendingInfo = attendingInfos.stream()
+                .filter(x -> x.userId.equals(a.userId) && x.competitionId.equals(a.competitionId))
+                .findFirst();
+
+        if (attendingInfo.isPresent())
+            attendingInfos.remove(attendingInfo.get());
+    }
+
+    @Override
+    public List<Competition> competitionsByAttendingUser(String userId) {
+        List<AttendingInfo> usersAttendingInfos = attendingInfos.stream()
+                .filter(x -> x.userId.equals(userId))
+                .collect(Collectors.toList());
+
+        return competitions.stream()
+                .filter(x -> usersAttendingInfos.stream().anyMatch(y -> y.competitionId.equals(x.id)))
+                .collect(Collectors.toList());
     }
 
 }

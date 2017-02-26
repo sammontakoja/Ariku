@@ -11,5 +11,5 @@ public interface AttendingDatabase {
 
     void add(AttendingInfo attendingInfo);
     void remove(AttendingInfo any);
-    List<Competition> competitions(String userId);
+    List<Competition> competitionsByAttendingUser(String userId);
 }
