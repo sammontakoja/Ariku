@@ -1,8 +1,10 @@
-package io.ariku.owner.api;
+package io.ariku.owner;
 
+import com.googlecode.junittoolbox.ParallelRunner;
 import io.ariku.util.data.CompetitionStateDatabase;
 import io.ariku.verification.AuthorizeRequest;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -13,10 +15,11 @@ import static org.mockito.Mockito.*;
 /**
  * @author Ari Aaltonen
  */
-public class WhenClosingAttendingToCompetitionTest {
+@RunWith(ParallelRunner.class)
+public class WhenClosingCompetitionTest {
 
     @Test
-    public void non_authorized_owner_cannot_close_attending_to_competition() {
+    public void non_authorized_owner_cannot_close_competition() {
 
         OwnerService ownerService = new OwnerService();
         ownerService.userAuthorizer = authorizeRequest -> false;
@@ -34,13 +37,13 @@ public class WhenClosingAttendingToCompetitionTest {
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
                 .thenReturn(Arrays.asList(request.userId));
 
-        ownerService.closeAttending(request);
+        ownerService.closeCompetition(request);
 
-        verify(ownerService.competitionStateDatabase, never()).closeAttending(eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, never()).closeCompetition(eq(request.competitionId));
     }
 
     @Test
-    public void authorized_non_owner_user_cannot_close_attending_to_competition() {
+    public void authorized_non_owner_user_cannot_open__competition() {
 
         OwnerService ownerService = new OwnerService();
         ownerService.userAuthorizer = authorizeRequest -> true;
@@ -55,13 +58,13 @@ public class WhenClosingAttendingToCompetitionTest {
         request.userId = UUID.randomUUID().toString();
         request.authorizeRequest.userId = request.userId;
 
-        ownerService.closeAttending(request);
+        ownerService.closeCompetition(request);
 
-        verify(ownerService.competitionStateDatabase, never()).closeAttending(eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, never()).closeCompetition(eq(request.competitionId));
     }
-    
+
     @Test
-    public void authorized_owner_can_close_attending_to_competition() {
+    public void authorized_owner_can_open_competition() {
 
         OwnerService ownerService = new OwnerService();
         ownerService.userAuthorizer = authorizeRequest -> true;
@@ -79,9 +82,9 @@ public class WhenClosingAttendingToCompetitionTest {
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
                 .thenReturn(Arrays.asList(request.userId));
 
-        ownerService.closeAttending(request);
+        ownerService.closeCompetition(request);
 
-        verify(ownerService.competitionStateDatabase, atLeastOnce()).closeAttending(eq(request.competitionId));
+        verify(ownerService.competitionStateDatabase, atLeastOnce()).closeCompetition(eq(request.competitionId));
     }
 
 }

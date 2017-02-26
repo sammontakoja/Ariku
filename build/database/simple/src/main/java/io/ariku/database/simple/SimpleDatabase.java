@@ -1,6 +1,7 @@
 package io.ariku.database.simple;
 
-import io.ariku.owner.api.*;
+import io.ariku.owner.CompetitionDatabase;
+import io.ariku.owner.OwnerDatabase;
 import io.ariku.user.AttendingDatabase;
 import io.ariku.user.AttendingInfo;
 import io.ariku.util.data.Competition;

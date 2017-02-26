@@ -1,4 +1,4 @@
-package io.ariku.verification.api;
+package io.ariku.verification;
 
 import com.googlecode.junittoolbox.ParallelRunner;
 import io.ariku.verification.*;

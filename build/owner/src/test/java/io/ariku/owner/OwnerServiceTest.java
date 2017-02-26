@@ -1,4 +1,4 @@
-package io.ariku.owner.api;
+package io.ariku.owner;
 
 import com.googlecode.junittoolbox.ParallelRunner;
 import io.ariku.util.data.Competition;

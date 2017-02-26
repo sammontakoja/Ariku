@@ -1,4 +1,4 @@
-package io.ariku.verification.api;
+package io.ariku.verification;
 
 import io.ariku.verification.SecurityCleaner;
 import io.ariku.verification.UserVerification;
