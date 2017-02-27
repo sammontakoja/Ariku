@@ -1,10 +1,10 @@
-package io.ariku.console;
+package io.ariku.gui.console;
 
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
-import io.ariku.verification.LoginRequest;
+import io.ariku.verification.LogoutRequest;
 import io.ariku.verification.UserVerificationService;
 
 import static io.ariku.composer.Composer.COMPOSER;
@@ -12,7 +12,7 @@ import static io.ariku.composer.Composer.COMPOSER;
 /**
  * @author Ari Aaltonen
  */
-public class LoginPage {
+public class LogoutPage {
 
     public static void draw(BasicWindow window) {
 
@@ -21,7 +21,7 @@ public class LoginPage {
         TextBox emailAddressText = new TextBox();
         emailAddressText.addTo(panel);
 
-        Button okButton = new Button("Login", () -> login(emailAddressText.getText()));
+        Button okButton = new Button("Logout", () -> logout(emailAddressText.getText(), ConsoleCache.securityMessage));
         okButton.addTo(panel);
 
         Button exitButton = new Button("Exit", () -> UserVerificationMenu.draw(window));
@@ -30,20 +30,19 @@ public class LoginPage {
         window.setComponent(panel);
     }
 
-    private static void login(String value) {
+    private static void logout(String email, String securityMessage) {
 
         UserVerificationService userVerificationService = COMPOSER.userVerificationService;
 
-        if (value.isEmpty())
+        if (email.isEmpty())
             return;
 
-        String securityMessage = userVerificationService.login(new LoginRequest(value));
-        ConsoleCache.securityMessage = securityMessage;
+        boolean loggedout = userVerificationService.logout(new LogoutRequest(email, securityMessage));
 
-        if (!securityMessage.isEmpty())
-            print("Login OK " + value);
+        if (loggedout)
+            print("Logout OK " + email);
         else
-            print("Login FAIL " + value);
+            print("Logout FAIL " + email);
     }
 
     public static void print(String value) {

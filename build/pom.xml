@@ -16,7 +16,7 @@
         <module>user</module>
         <module>database</module>
         <module>composer</module>
-        <module>console</module>
+        <module>gui</module>
     </modules>
 
     <properties>

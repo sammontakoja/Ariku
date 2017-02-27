@@ -1,12 +1,12 @@
-package io.ariku.console.verification;
+package io.ariku.gui.console.verification;
 
 /**
  * @author Ari Aaltonen
  */
 
 import io.ariku.composer.Composer;
-import io.ariku.console.ArikuConsole;
-import io.ariku.console.Keyboard;
+import io.ariku.gui.console.ArikuConsole;
+import io.ariku.gui.console.Keyboard;
 import io.ariku.verification.SignUpRequest;
 import io.ariku.verification.VerifySignUpRequest;
 import org.junit.Rule;

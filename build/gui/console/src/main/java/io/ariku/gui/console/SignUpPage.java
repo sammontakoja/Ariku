@@ -1,4 +1,4 @@
-package io.ariku.console;
+package io.ariku.gui.console;
 
 import com.googlecode.lanterna.gui2.*;
 import io.ariku.verification.SignUpRequest;

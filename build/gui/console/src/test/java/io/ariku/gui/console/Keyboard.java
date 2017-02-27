@@ -1,4 +1,4 @@
-package io.ariku.console;
+package io.ariku.gui.console;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
