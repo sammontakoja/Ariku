@@ -17,7 +17,6 @@ public enum Composer {
 
     public final String arikuVersion;
     public final UserVerificationService userVerificationService;
-    public final SkeetCompetitionService skeetCompetitionService;
 
     Composer() {
         StringBuilder sb = new StringBuilder();
@@ -45,7 +44,6 @@ public enum Composer {
         sb.append("\nStarted SecurityCleaner version 1.0-SNAPSHOT, scan interval 1 minute, clean security tokens older than 15 minutes");
 
         this.userVerificationService = userVerificationService;
-        this.skeetCompetitionService = skeetCompetitionService;
         this.arikuVersion = sb.toString();
     }
 
