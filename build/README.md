@@ -1,58 +1,35 @@
-## User identification
+## User identification (verification-module)
 
-|Use case   | Implemented in modules |
+|Use case | verified to work with modules |
 |---|---|
-|User navigate to sign up location | API, Console |
-|User fill sign up information, backend will notify if sign up was successful or failed | API, Console |
-|User navigate to verify sign up location | API, Console |
-|User fill sign up verification information, backend will notify if verification was successful or failed | API, Console |
-|User navigate to login location | API, Console |
-|User fill login information, backend's response contains security message if login was successful or failed | API, Console |
-|User navigate to logout location and remove given security message | API, Console |
-|Security cleaner clean all granted security messages which are older than X minutes | API, Console |
-|System ask is security message valid. Will be used when using another services | API, Console |
+|User navigate to sign up location | database:simple, gui:console
+|User fill sign up information, backend will notify if sign up was successful or failed | database:simple, gui:console
+|User navigate to verify sign up location | database:simple, gui:console
+|User fill sign up verification information, backend will notify if verification was successful or failed | database:simple, gui:console
+|User navigate to login location | Console | Simple
+|User fill login information, backend's response contains security message if login was successful or failed | database:simple, gui:console
+|User navigate to logout location and remove given security message | database:simple, gui:console
+|Security cleaner clean all granted security messages which are older than X minutes | database:simple, gui:console
+|System ask is security message valid. Will be used when using another services | database:simple, gui:console
 
-#### Tests
+## Owner management (owner-module)
 
-Unit module:
-io.ariku.verification.api.UserVerificationServiceTest
-io.ariku.verification.simple.SimpleUserVerificationDatabaseTest
-
-Simple module:
-io.ariku.verification.simple.SimpleUserVerificationDatabaseTest
-
-Console module:
-io.ariku.console.verification.SignUpIT
-io.ariku.console.verification.VerifySignUpIT
-io.ariku.console.verification.LogoutIT
-io.ariku.console.verification.SignUpIT
-
-## Owner management
-
-|Use case   | Implemented in modules|
+|Use case | verified to work with modules |
 |---|---|
-|User can create new competition and became competition owner | API, Simple |
-|Owner can list all of his/her competitions | API, Simple |
-|Owner can add another user to be competition's owner as well using userid | API, Simple |
-|Owner can remove another competition's owner using userid | API, Simple |
+|User can create new competition and became competition owner | database:simple |
+|Owner can list all of his/her competitions | database:simple |
+|Owner can add another user to be competition's owner as well using userid | database:simple |
+|Owner can remove another competition's owner using userid | database:simple |
 |Owner navigate to modify competition state location | - |
-|Owner can open attending to competition | API, Simple |
-|Owner can close attending to competition | API, Simple |
-|Owner can start competition | API, Simple|
-|Owner can close competition | API, Simple|
+|Owner can open attending to competition | database:simple |
+|Owner can close attending to competition | database:simple |
+|Owner can start competition | database:simple |
+|Owner can close competition | database:simple |
 
-## User management
+## User management (user-module)
 
-|Use case   | Implemented in modules |
+|Use case | verified to work with modules |
 |---|---|
-|User can participate to competition when competition is open to participating | API |
-|User can cancel participating when competition is open to participating | API |
-|User can list competition(s) which he/she is participating| API |
-
-#### Tests
-
-API module
-io.ariku.owner.api.UserServiceTest
-
-Simple module
-io.ariku.owner.simple.SimpleOwnerDatabaseTest
+|User can participate to competition when competition is open to participating | database:simple |
+|User can cancel participating when competition is open to participating | database:simple |
+|User can list competition(s) which he/she is participating| database:simple |
