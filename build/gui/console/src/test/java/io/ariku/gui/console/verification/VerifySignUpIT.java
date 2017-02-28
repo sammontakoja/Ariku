@@ -30,7 +30,7 @@ public class VerifySignUpIT {
         String email = "b@b.fi";
 
         // SignUp using email which will be verified
-        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.signUp(new SignUpRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();
@@ -113,7 +113,7 @@ public class VerifySignUpIT {
         String email = "a@a.fi";
 
         // SignUp using email which will be used again
-        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.signUp(new SignUpRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();

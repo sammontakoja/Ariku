@@ -31,8 +31,8 @@ public class LoginIT {
         String email = "b@b.fi";
 
         // SignUp and VerifySignUp before login attempt
-        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
-        Composer.COMPOSER.userVerificationService.verifySignUp(new VerifySignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.signUp(new SignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.verifySignUp(new VerifySignUpRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();
@@ -76,7 +76,7 @@ public class LoginIT {
         String email = "b@b.fi";
 
         // SignUp but skip VerifySignUp before login attempt
-        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.signUp(new SignUpRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();

@@ -7,7 +7,7 @@ import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.verification.UserVerificationService;
 import io.ariku.verification.VerifySignUpRequest;
 
-import static io.ariku.composer.Composer.COMPOSER;
+import static io.ariku.composer.Composer.SIMPLE;
 
 /**
  * @author Ari Aaltonen
@@ -32,7 +32,7 @@ public class VerifySignUpPage {
 
     private static void verifySignUp(String value) {
 
-        UserVerificationService userVerificationService = COMPOSER.userVerificationService;
+        UserVerificationService userVerificationService = SIMPLE.userVerificationService;
 
         if (value.isEmpty())
             return;

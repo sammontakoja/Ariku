@@ -7,7 +7,7 @@ import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.verification.LogoutRequest;
 import io.ariku.verification.UserVerificationService;
 
-import static io.ariku.composer.Composer.COMPOSER;
+import static io.ariku.composer.Composer.SIMPLE;
 
 /**
  * @author Ari Aaltonen
@@ -32,7 +32,7 @@ public class LogoutPage {
 
     private static void logout(String email, String securityMessage) {
 
-        UserVerificationService userVerificationService = COMPOSER.userVerificationService;
+        UserVerificationService userVerificationService = SIMPLE.userVerificationService;
 
         if (email.isEmpty())
             return;

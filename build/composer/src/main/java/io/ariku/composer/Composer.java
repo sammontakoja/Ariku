@@ -1,8 +1,7 @@
 package io.ariku.composer;
 
-import io.ariku.competition.skeet.api.SkeetCompetitionService;
-import io.ariku.competition.skeet.simple.SimpleCompetitionDatabase;
 import io.ariku.database.simple.SimpleDatabase;
+import io.ariku.owner.OwnerService;
 import io.ariku.verification.SecurityCleaner;
 import io.ariku.verification.SignUpRequest;
 import io.ariku.verification.UserVerificationService;
@@ -13,38 +12,33 @@ import io.ariku.verification.VerifySignUpRequest;
  */
 public enum Composer {
 
-    COMPOSER;
+    SIMPLE;
 
-    public final String arikuVersion;
     public final UserVerificationService userVerificationService;
+    public final OwnerService ownerService;
 
     Composer() {
-        StringBuilder sb = new StringBuilder();
 
-        SimpleDatabase simpleUserVerificationDatabase = new SimpleDatabase();
-        sb.append("\nSimpleUserVerificationDatabase version 1.0-SNAPSHOT (Competition data will be lost after program is closed)");
+        SimpleDatabase database = new SimpleDatabase();
 
-        UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationDatabase = simpleUserVerificationDatabase;
-        sb.append("UserVerificationService version 1.0-SNAPSHOT");
+        // Build services using database
+        userVerificationService = new UserVerificationService();
+        userVerificationService.userVerificationDatabase = database;
 
-        SkeetCompetitionService skeetCompetitionService = new SkeetCompetitionService();
-        sb.append("\nSkeetCompetitionService version 1.0-SNAPSHOT");
+        ownerService = new OwnerService();
+        ownerService.competitionDatabase = database;
+        ownerService.competitionStateDatabase = database;
+        ownerService.ownerDatabase = database;
+        ownerService.userAuthorizer = userVerificationService;
 
-        skeetCompetitionService.competitionDatabase = new SimpleCompetitionDatabase();
-        sb.append("\nSimpleCompetitionDatabase version 1.0-SNAPSHOT (Competition data will be lost after program is closed)");
+        SecurityCleaner securityCleaner = new SecurityCleaner();
+        securityCleaner.userVerificationDatabase = database;
+        securityCleaner.wipeTokensWhichAreOlderThan(60, 900);
 
+        // Construct initial setup using services
         System.out.println("User with userId 'user' verified signed up");
         userVerificationService.signUp(new SignUpRequest("user"));
         userVerificationService.verifySignUp(new VerifySignUpRequest("user"));
-
-        SecurityCleaner securityCleaner = new SecurityCleaner();
-        securityCleaner.userVerificationDatabase = simpleUserVerificationDatabase;
-        securityCleaner.wipeTokensWhichAreOlderThan(60, 900);
-        sb.append("\nStarted SecurityCleaner version 1.0-SNAPSHOT, scan interval 1 minute, clean security tokens older than 15 minutes");
-
-        this.userVerificationService = userVerificationService;
-        this.arikuVersion = sb.toString();
     }
 
 }

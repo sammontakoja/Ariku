@@ -33,9 +33,9 @@ public class LogoutIT {
         String email = "d@d.fi";
 
         // sign up, verify sign up and login before logout attempt
-        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
-        Composer.COMPOSER.userVerificationService.verifySignUp(new VerifySignUpRequest(email));
-        ConsoleCache.securityMessage = Composer.COMPOSER.userVerificationService.login(new LoginRequest(email));
+        Composer.SIMPLE.userVerificationService.signUp(new SignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.verifySignUp(new VerifySignUpRequest(email));
+        ConsoleCache.securityMessage = Composer.SIMPLE.userVerificationService.login(new LoginRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();
@@ -80,8 +80,8 @@ public class LogoutIT {
         String email = "d@d.fi";
 
         // sign up, verify sign up and skip login before logout attempt
-        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
-        Composer.COMPOSER.userVerificationService.verifySignUp(new VerifySignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.signUp(new SignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.verifySignUp(new VerifySignUpRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();

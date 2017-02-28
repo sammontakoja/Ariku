@@ -69,7 +69,7 @@ public class SignUpIT {
         String email = "a@a.fi";
 
         // SignUp using email which will be used again
-        Composer.COMPOSER.userVerificationService.signUp(new SignUpRequest(email));
+        Composer.SIMPLE.userVerificationService.signUp(new SignUpRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();
