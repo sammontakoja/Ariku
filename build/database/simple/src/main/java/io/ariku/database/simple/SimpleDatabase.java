@@ -166,7 +166,7 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
 
     @Override
     public List<UserVerification> userVerifications() {
-        return null;
+        return new ArrayList<>(userVerifications.values());
     }
 
     @Override

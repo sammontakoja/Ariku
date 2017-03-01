@@ -14,4 +14,12 @@ public class AuthorizeRequest {
 
     public AuthorizeRequest() {
     }
+
+    @Override
+    public String toString() {
+        return "AuthorizeRequest{" +
+                "userId='" + userId + '\'' +
+                ", securityMessage='" + securityMessage + '\'' +
+                '}';
+    }
 }

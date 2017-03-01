@@ -30,24 +30,25 @@ public class LoginPage {
         window.setComponent(panel);
     }
 
-    private static void login(String value) {
+    private static void login(String userId) {
 
         UserVerificationService userVerificationService = SIMPLE.userVerificationService;
 
-        if (value.isEmpty())
+        if (userId.isEmpty())
             return;
 
-        String securityMessage = userVerificationService.login(new LoginRequest(value));
-        ConsoleCache.securityMessage = securityMessage;
+        String securityMessage = userVerificationService.login(new LoginRequest(userId));
 
-        if (!securityMessage.isEmpty())
-            print("Login OK " + value);
-        else
-            print("Login FAIL " + value);
-    }
+        if (!securityMessage.isEmpty()) {
+            UserCache.securityMessage = securityMessage;
+            UserCache.userId = userId;
+            System.out.println("Login OK " + userId);
+        }
 
-    public static void print(String value) {
-        System.out.println(value);
+        else {
+            System.out.println("Login FAIL " + userId);
+        }
+
     }
 
 }

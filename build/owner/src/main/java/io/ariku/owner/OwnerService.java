@@ -19,8 +19,10 @@ public class OwnerService {
     public CompetitionStateDatabase competitionStateDatabase;
 
     public void createNewCompetition(NewCompetitionRequest request) {
-        if (userAuthorizer.isAuthorized(request.authorizeRequest))
+        if (userAuthorizer.isAuthorized(request.authorizeRequest)) {
             competitionDatabase.createCompetition(request.authorizeRequest.userId, request.competitionName, request.competitionType);
+        }
+
     }
 
     public List<Competition> findOwnedCompetitions(AuthorizeRequest request) {

@@ -6,8 +6,8 @@ package io.ariku.gui.console.verification;
 
 import io.ariku.composer.Composer;
 import io.ariku.gui.console.ArikuConsole;
-import io.ariku.gui.console.ConsoleCache;
 import io.ariku.gui.console.Keyboard;
+import io.ariku.gui.console.UserCache;
 import io.ariku.verification.LoginRequest;
 import io.ariku.verification.SignUpRequest;
 import io.ariku.verification.VerifySignUpRequest;
@@ -35,7 +35,7 @@ public class LogoutIT {
         // sign up, verify sign up and login before logout attempt
         Composer.SIMPLE.userVerificationService.signUp(new SignUpRequest(email));
         Composer.SIMPLE.userVerificationService.verifySignUp(new VerifySignUpRequest(email));
-        ConsoleCache.securityMessage = Composer.SIMPLE.userVerificationService.login(new LoginRequest(email));
+        UserCache.securityMessage = Composer.SIMPLE.userVerificationService.login(new LoginRequest(email));
 
         systemOut.enableLog();
         exit.expectSystemExit();

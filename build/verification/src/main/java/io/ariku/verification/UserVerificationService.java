@@ -1,5 +1,6 @@
 package io.ariku.verification;
 
+import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -36,6 +37,7 @@ public class UserVerificationService implements UserAuthorizer {
         if (canLogin) {
             String securityMessage = UUID.randomUUID().toString();
             userVerification.securityMessage.token = securityMessage;
+            userVerification.securityMessage.lastSecurityActivity = Instant.now().toString();
             userVerificationDatabase.updateUserVerification(userVerification);
             return securityMessage;
         }
@@ -61,7 +63,9 @@ public class UserVerificationService implements UserAuthorizer {
 
     public boolean isAuthorized(AuthorizeRequest authorizeRequest) {
         UserVerification userVerification = userVerificationDatabase.readUserVerification(authorizeRequest.userId);
-        return userVerification != null && userVerification.securityMessage.token.equals(authorizeRequest.securityMessage);
+        boolean authorizedCall = userVerification != null && userVerification.securityMessage.token.equals(authorizeRequest.securityMessage);
+        System.out.println(authorizeRequest + " authorizedCall => " + authorizedCall);
+        return authorizedCall;
     }
 
     public boolean isUserSignedIn(String userId) {

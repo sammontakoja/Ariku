@@ -36,13 +36,9 @@ public class SignUpPage {
 
         boolean signUp = userVerificationService.signUp(new SignUpRequest(value));
         if (signUp)
-            print("SignUp OK " + value);
+            System.out.println("SignUp OK " + value);
         else
-            print("SignUp FAIL " + value);
-    }
-
-    public static void print(String value) {
-        System.out.println(value);
+            System.out.println("SignUp FAIL " + value);
     }
 
 }

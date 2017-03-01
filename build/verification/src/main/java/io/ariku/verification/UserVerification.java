@@ -15,4 +15,14 @@ public class UserVerification {
     public UserVerification(String userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "UserVerification{" +
+                "userId='" + userId + '\'' +
+                ", securityMessage=" + securityMessage +
+                ", isSignedIn=" + isSignedIn +
+                ", isSignedInConfirmed=" + isSignedInConfirmed +
+                '}';
+    }
 }

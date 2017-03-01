@@ -49,25 +49,26 @@ public class Keyboard {
     public Keyboard() {
         try {
             this.robot = new Robot();
+            this.robot.setAutoDelay(20);
+
         } catch (AWTException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void typeDown() {
+    public Keyboard typeDown() {
         charStorage.add(new TypeInput(DirectionButton.DOWN));
+        return this;
     }
 
-    public void typeEnter() {
+    public Keyboard typeEnter() {
         charStorage.add(new TypeInput(DirectionButton.ENTER));
+        return this;
     }
 
-    public void typeText(String text) {
+    public Keyboard typeText(String text) {
         charStorage.add(new TypeInput(text));
-    }
-
-    public void startTypingAfterTwoSeconds() {
-        Executors.newScheduledThreadPool(1).schedule(() -> startTyping(), 2, TimeUnit.SECONDS);
+        return this;
     }
 
     public void startTyping() {
@@ -82,6 +83,12 @@ public class Keyboard {
     }
 
     protected void pressKeys(String chars) {
+
+        try {
+            Thread.sleep(600);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         StringSelection selection = new StringSelection(chars);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

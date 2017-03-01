@@ -6,9 +6,6 @@ import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.owner.NewCompetitionRequest;
 import io.ariku.owner.OwnerService;
-import io.ariku.verification.AuthorizeRequest;
-import io.ariku.verification.SignUpRequest;
-import io.ariku.verification.UserVerificationService;
 
 import static io.ariku.composer.Composer.SIMPLE;
 
@@ -25,34 +22,39 @@ public class NewCompetitionPage {
         nameText.addTo(panel);
 
         TextBox typeText = new TextBox();
-        nameText.addTo(panel);
+        typeText.addTo(panel);
 
-        Button okButton = new Button("OK", () -> createNewCompetition(nameText.getText(), typeText.getText()));
+        Button okButton = new Button("OK", () -> {
+            boolean createdNewCompetition = createNewCompetition(nameText.getText(), typeText.getText());
+            if (createdNewCompetition) {
+                System.out.println("Created new competition");
+                nameText.setText("");
+                typeText.setText("");
+            }
+        });
         okButton.addTo(panel);
 
-        Button exitButton = new Button("Exit", () -> UserVerificationMenu.draw(window));
+        Button exitButton = new Button("Exit", () -> OwnerMenu.draw(window));
         exitButton.addTo(panel);
 
         window.setComponent(panel);
     }
 
-    private static void createNewCompetition(String name, String type) {
+    private static boolean createNewCompetition(String name, String type) {
 
         OwnerService ownerService = SIMPLE.ownerService;
 
-        if (name.isEmpty())
-            return;
+        if (name.isEmpty() || type.isEmpty())
+            return false;
 
         NewCompetitionRequest newCompetitionRequest = new NewCompetitionRequest();
         newCompetitionRequest.competitionName = name;
         newCompetitionRequest.competitionType = type;
-        newCompetitionRequest.authorizeRequest = new AuthorizeRequest("", "token");
+        newCompetitionRequest.authorizeRequest = UserCache.authorizeRequest();
 
-        // TODO
-    }
+        ownerService.createNewCompetition(newCompetitionRequest);
 
-    public static void print(String value) {
-        System.out.println(value);
+        return true;
     }
 
 }

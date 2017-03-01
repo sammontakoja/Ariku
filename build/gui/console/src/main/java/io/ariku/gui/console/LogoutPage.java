@@ -21,7 +21,7 @@ public class LogoutPage {
         TextBox emailAddressText = new TextBox();
         emailAddressText.addTo(panel);
 
-        Button okButton = new Button("Logout", () -> logout(emailAddressText.getText(), ConsoleCache.securityMessage));
+        Button okButton = new Button("Logout", () -> logout(emailAddressText.getText(), UserCache.securityMessage));
         okButton.addTo(panel);
 
         Button exitButton = new Button("Exit", () -> UserVerificationMenu.draw(window));
