@@ -7,8 +7,7 @@ import io.ariku.gui.console.Keyboard;
  */
 public class UserSimulator {
 
-    public void signUp(String userId) {
-
+    public UserSimulator signUp(String userId) {
         new Keyboard()
                 // Go to sign up page and fill user id
                 .typeEnter()
@@ -27,10 +26,10 @@ public class UserSimulator {
                 .typeDown()
                 .typeEnter()
                 .startTyping();
+        return this;
     }
 
-    public void verifySignUp(String userId) {
-
+    public UserSimulator verifySignUp(String userId) {
         new Keyboard()
                 // Go to sign up verification page and fill user id
                 .typeEnter()
@@ -50,10 +49,10 @@ public class UserSimulator {
                 .typeDown()
                 .typeEnter()
                 .startTyping();
+        return this;
     }
 
-    public void login(String userId) {
-
+    public UserSimulator login(String userId) {
         new Keyboard()
                 // Go to login page and fill user id
                 .typeEnter()
@@ -74,9 +73,17 @@ public class UserSimulator {
                 .typeDown()
                 .typeEnter()
                 .startTyping();
+        return this;
     }
 
-    public void createCompetition(String competitionName, String competitionType) {
+    public UserSimulator signUpAndLoginUser(String userId) {
+        signUp(userId);
+        verifySignUp(userId);
+        login(userId);
+        return this;
+    }
+
+    public UserSimulator createCompetition(String competitionName, String competitionType) {
 
         new Keyboard()
                 // Go to owner menu
@@ -98,9 +105,11 @@ public class UserSimulator {
                 .typeDown()
                 .typeEnter()
                 .startTyping();
+
+        return this;
     }
 
-    public void printOwnedCompetitionsToConsole() {
+    public UserSimulator printOwnedCompetitionsToConsole() {
 
         new Keyboard()
                 // Go to owner menu
@@ -117,6 +126,8 @@ public class UserSimulator {
                 .typeDown()
                 .typeEnter()
                 .startTyping();
+
+        return this;
     }
 
     public void exit() {

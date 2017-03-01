@@ -32,14 +32,12 @@ public class CreateNewCompetitionIT {
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString("Created new competition")));
 
-        ArikuConsole.startConsole(() -> {
-            UserSimulator userSimulator = new UserSimulator();
-            userSimulator.signUp(userId);
-            userSimulator.verifySignUp(userId);
-            userSimulator.login(userId);
-            userSimulator.createCompetition(competitionName, competitionType);
-            userSimulator.exit();
-        });
+        ArikuConsole.startConsole(() -> new UserSimulator()
+                .signUp(userId)
+                .verifySignUp(userId)
+                .login(userId)
+                .createCompetition(competitionName, competitionType)
+                .exit());
     }
 
     @Test
@@ -54,15 +52,13 @@ public class CreateNewCompetitionIT {
         String expectedOutput = String.format("Competitions:[Competition{name='%s', type='%s'", competitionName, competitionType);
         exit.checkAssertionAfterwards(() -> assertThat(systemOut.getLog(), containsString(expectedOutput)));
 
-        ArikuConsole.startConsole(() -> {
-            UserSimulator userSimulator = new UserSimulator();
-            userSimulator.signUp(userId);
-            userSimulator.verifySignUp(userId);
-            userSimulator.login(userId);
-            userSimulator.createCompetition(competitionName, competitionType);
-            userSimulator.printOwnedCompetitionsToConsole();
-            userSimulator.exit();
-        });
+        ArikuConsole.startConsole(() -> new UserSimulator()
+                .signUp(userId)
+                .verifySignUp(userId)
+                .login(userId)
+                .createCompetition(competitionName, competitionType)
+                .printOwnedCompetitionsToConsole()
+                .exit());
     }
 
 }
