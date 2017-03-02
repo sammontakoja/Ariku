@@ -2,13 +2,15 @@ package io.ariku.database.simple;
 
 import io.ariku.owner.CompetitionDatabase;
 import io.ariku.owner.OwnerDatabase;
+import io.ariku.owner.UserDatabase;
 import io.ariku.user.AttendingDatabase;
 import io.ariku.user.AttendingInfo;
 import io.ariku.util.data.Competition;
 import io.ariku.util.data.CompetitionState;
 import io.ariku.util.data.CompetitionStateDatabase;
-import io.ariku.verification.UserVerificationDatabase;
+import io.ariku.util.data.User;
 import io.ariku.verification.UserVerification;
+import io.ariku.verification.UserVerificationDatabase;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,9 +18,10 @@ import java.util.stream.Collectors;
 /**
  * @author Ari Aaltonen
  */
-public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, CompetitionStateDatabase, UserVerificationDatabase, AttendingDatabase {
+public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, CompetitionStateDatabase, UserVerificationDatabase, AttendingDatabase, UserDatabase {
 
-    private HashMap<String, UserVerification> userVerifications = new HashMap<>();
+    private List<User> users = new ArrayList<>();
+    private List<UserVerification> userVerifications = new ArrayList<>();
     private HashMap<String, ArrayList<String>> competitionOwners = new HashMap<>();
     private List<Competition> competitions = new ArrayList<>();
     private List<CompetitionState> competitionStates = new ArrayList<>();
@@ -134,19 +137,36 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
     }
 
     @Override
-    public void createUserVerification(String userId) {
-        UserVerification userVerification = new UserVerification(userId);
-        userVerification.isSignedIn = true;
-        userVerifications.put(userId, userVerification);
+    public void createUserVerification(String username) {
+        if (!usernameTaken(username)) {
+            UserVerification userVerification = new UserVerification();
+            userVerification.userId = createUniqueUserId();
+            userVerification.username = username;
+            userVerifications.add(userVerification);
+        }
+    }
+
+    private String createUniqueUserId() {
+        while (true) {
+            String id = UUID.randomUUID().toString();
+            boolean sameIdFound = userVerifications.stream().anyMatch(userVerification -> userVerification.userId.equals(id));
+            if (!sameIdFound)
+                return id;
+        }
+    }
+
+    private boolean usernameTaken(String username) {
+        return userVerifications.stream().anyMatch(userVerification -> userVerification.username.equals(username));
     }
 
     @Override
-    public UserVerification readUserVerification(String userId) {
-        UserVerification foundUserVerification = userVerifications.get(userId);
-        if (foundUserVerification != null)
-            return foundUserVerification;
-        else
-            return new UserVerification();
+    public Optional<UserVerification> findByUserId(String userId) {
+        return userVerifications.stream().filter(u -> u.userId.equals(userId)).findFirst();
+    }
+
+    @Override
+    public Optional<UserVerification> findByUsername(String username) {
+        return userVerifications.stream().filter(u -> u.username.equals(username)).findFirst();
     }
 
     @Override
@@ -156,17 +176,18 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
 
     @Override
     public void updateUserVerification(UserVerification userVerification) {
-        UserVerification foundVerification = userVerifications.get(userVerification.userId);
-        if (foundVerification != null) {
-            foundVerification.isSignedInConfirmed = userVerification.isSignedInConfirmed;
-            foundVerification.isSignedIn = userVerification.isSignedIn;
-            foundVerification.securityMessage = userVerification.securityMessage;
-        }
+
+        Optional<UserVerification> found = userVerifications.stream().filter(u -> u.userId.equals(userVerification.userId)).findFirst();
+
+        found.ifPresent(u -> {
+            u.isSignedInConfirmed = userVerification.isSignedInConfirmed;
+            u.securityMessage = userVerification.securityMessage;
+        });
     }
 
     @Override
     public List<UserVerification> userVerifications() {
-        return new ArrayList<>(userVerifications.values());
+        return new ArrayList<>(userVerifications);
     }
 
     @Override
@@ -195,4 +216,10 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Optional<User> findUserByUsername(String username) {
+        return users.stream()
+                .filter(user -> user.username.equals(username))
+                .findFirst();
+    }
 }

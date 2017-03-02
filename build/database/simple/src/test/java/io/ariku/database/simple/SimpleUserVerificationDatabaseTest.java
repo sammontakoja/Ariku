@@ -7,9 +7,7 @@ import org.junit.runner.RunWith;
 
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -21,23 +19,15 @@ public class SimpleUserVerificationDatabaseTest {
     @Test
     public void userVerification_is_not_null() {
         SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
-        assertThat(userVerificationServiceSimple.readUserVerification(""), not(nullValue()));
+        assertThat(userVerificationServiceSimple.findByUserId(""), not(nullValue()));
     }
 
     @Test
-    public void created_UserVerification_is_signedIn() {
+    public void created_UserVerification_is_not_confirmed_signed_in() {
         SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
         userVerificationServiceSimple.createUserVerification("123");
-        UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
-        assertThat(readUserVerification.isSignedIn, is(true));
-    }
-
-    @Test
-    public void created_UserVerification_can_be_found_when_using_same_userId() {
-        SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
-        userVerificationServiceSimple.createUserVerification("123");
-        UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
-        assertThat(readUserVerification.userId, is("123"));
+        UserVerification userVerification = userVerificationServiceSimple.findByUsername("123").get();
+        assertThat(userVerification.isSignedInConfirmed, is(false));
     }
 
     @Test
@@ -45,28 +35,31 @@ public class SimpleUserVerificationDatabaseTest {
         SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
         userVerificationServiceSimple.createUserVerification("123");
         userVerificationServiceSimple.deleteUserVerification("123");
-        UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
-        assertThat(readUserVerification.userId, not("123"));
+        assertThat(userVerificationServiceSimple.findByUserId("123").isPresent(), is(false));
     }
 
     @Test
-    public void UserVerification_values_change_when_using_update_with_same_userId() {
+    public void UserVerification_values_change_when_using_update_with_username() {
         SimpleDatabase userVerificationServiceSimple = new SimpleDatabase();
 
+        userVerificationServiceSimple.createUserVerification("jippii");
+
+        UserVerification readUserVerification = userVerificationServiceSimple.findByUsername("jippii").get();
+
+
         UserVerification userVerification = new UserVerification();
-        userVerification.userId = "123";
-        userVerification.isSignedIn = true;
+        userVerification.userId = readUserVerification.userId;
+        userVerification.username = "jippii";
         userVerification.securityMessage.token = UUID.randomUUID().toString();
         userVerification.isSignedInConfirmed = true;
 
-        userVerificationServiceSimple.createUserVerification("123");
         userVerificationServiceSimple.updateUserVerification(userVerification);
 
-        UserVerification readUserVerification = userVerificationServiceSimple.readUserVerification("123");
+        UserVerification updatedUserVerification = userVerificationServiceSimple.findByUserId(readUserVerification.userId).get();
 
-        assertThat(readUserVerification.userId, is("123"));
+        assertThat(updatedUserVerification.userId.isEmpty(), is(false));
+        assertThat(updatedUserVerification.username, is("jippii"));
         assertThat(readUserVerification.securityMessage, is(userVerification.securityMessage));
-        assertThat(readUserVerification.isSignedIn, is(true));
         assertThat(readUserVerification.isSignedInConfirmed, is(true));
     }
 
