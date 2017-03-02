@@ -2,12 +2,14 @@ package io.ariku.owner;
 
 import com.googlecode.junittoolbox.ParallelRunner;
 import io.ariku.util.data.Competition;
+import io.ariku.util.data.User;
 import io.ariku.verification.AuthorizeRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
@@ -98,17 +100,22 @@ public class OwnerServiceTest {
 
         ownerService.ownerDatabase = mock(OwnerDatabase.class);
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);
+        ownerService.userDatabase = mock(UserDatabase.class);
 
         Competition competition = new Competition();
         competition.id = UUID.randomUUID().toString();
         competition.name = UUID.randomUUID().toString();
+
+        User user = new User();
+        user.username = UUID.randomUUID().toString();
+        user.id = UUID.randomUUID().toString();
 
         AddOwnerRightsRequest request = new AddOwnerRightsRequest();
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionName = competition.name;
         request.userIdExistingOwner = UUID.randomUUID().toString();
         request.authorizeRequest.userId = request.userIdExistingOwner;
-        request.userIdNewOwner = UUID.randomUUID().toString();
+        request.usernameOfNewOwner = user.username;
 
         when(ownerService.competitionDatabase.competitionsByOwner(request.userIdExistingOwner))
                 .thenReturn(Arrays.asList(competition));
@@ -116,9 +123,12 @@ public class OwnerServiceTest {
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionName))
                 .thenReturn(Arrays.asList(request.userIdExistingOwner));
 
+        when(ownerService.userDatabase.findUserByUsername(request.usernameOfNewOwner))
+                .thenReturn(Optional.of(user));
+
         ownerService.addOwnerRights(request);
 
-        verify(ownerService.ownerDatabase, atLeastOnce()).addOwner(eq(request.userIdNewOwner), eq(competition.id));
+        verify(ownerService.ownerDatabase, atLeastOnce()).addOwner(eq(user.id), eq(competition.id));
     }
 
     @Test
@@ -134,14 +144,14 @@ public class OwnerServiceTest {
         request.authorizeRequest.userId = UUID.randomUUID().toString();
         request.competitionName = UUID.randomUUID().toString();
         request.userIdExistingOwner = UUID.randomUUID().toString();
-        request.userIdNewOwner = UUID.randomUUID().toString();
+        request.usernameOfNewOwner = UUID.randomUUID().toString();
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionName))
                 .thenReturn(Arrays.asList(request.userIdExistingOwner));
 
         ownerService.addOwnerRights(request);
 
-        verify(ownerService.ownerDatabase, never()).addOwner(eq(request.userIdNewOwner), eq(request.competitionName));
+        verify(ownerService.ownerDatabase, never()).addOwner(any(), any());
     }
 
     @Test
@@ -155,7 +165,7 @@ public class OwnerServiceTest {
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionName = UUID.randomUUID().toString();
         request.userIdExistingOwner = UUID.randomUUID().toString();
-        request.userIdNewOwner = UUID.randomUUID().toString();
+        request.usernameOfNewOwner = UUID.randomUUID().toString();
 
         ownerService.addOwnerRights(request);
 
@@ -176,7 +186,7 @@ public class OwnerServiceTest {
         request.competitionName = UUID.randomUUID().toString();
         request.userIdExistingOwner = UUID.randomUUID().toString();
         request.authorizeRequest.userId = request.userIdExistingOwner;
-        request.userIdNewOwner = UUID.randomUUID().toString();
+        request.usernameOfNewOwner = UUID.randomUUID().toString();
 
         when(ownerService.competitionDatabase.competitionsByOwner(request.userIdExistingOwner))
                 .thenReturn(Arrays.asList());

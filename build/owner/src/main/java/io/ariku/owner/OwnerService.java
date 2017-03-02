@@ -16,6 +16,7 @@ public class OwnerService {
     public UserAuthorizer userAuthorizer;
     public CompetitionDatabase competitionDatabase;
     public OwnerDatabase ownerDatabase;
+    public UserDatabase userDatabase;
     public CompetitionStateDatabase competitionStateDatabase;
 
     public void createNewCompetition(NewCompetitionRequest request) {
@@ -35,9 +36,10 @@ public class OwnerService {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
             if (request.authorizeRequest.userId.equals(request.userIdExistingOwner))
                 competitionDatabase.competitionsByOwner(request.userIdExistingOwner).stream()
-                        .filter(c -> c.name.equals(request.competitionName))
+                        .filter(ownedCompetition -> ownedCompetition.name.equals(request.competitionName))
                         .findFirst()
-                        .ifPresent(competition -> ownerDatabase.addOwner(request.userIdNewOwner, competition.id));
+                        .ifPresent(ownedAndLookedForCompetition -> userDatabase.findUserByUsername(request.usernameOfNewOwner)
+                                .ifPresent(user -> ownerDatabase.addOwner(user.id, ownedAndLookedForCompetition.id)));
     }
 
     public void openAttending(OwnerCompetitionRequest request) {
