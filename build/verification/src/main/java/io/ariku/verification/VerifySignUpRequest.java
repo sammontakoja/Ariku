@@ -5,12 +5,12 @@ package io.ariku.verification;
  */
 public class VerifySignUpRequest {
 
-    public String userId = "";
+    public String username = "";
 
     public VerifySignUpRequest() {
     }
 
-    public VerifySignUpRequest(String userId) {
-        this.userId = userId;
+    public VerifySignUpRequest(String username) {
+        this.username = username;
     }
 }

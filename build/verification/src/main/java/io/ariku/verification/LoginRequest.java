@@ -4,12 +4,12 @@ package io.ariku.verification;
  * @author Ari Aaltonen
  */
 public class LoginRequest {
-    public String userId = "";
+    public String username = "";
 
     public LoginRequest() {
     }
 
-    public LoginRequest(String userId) {
-        this.userId = userId;
+    public LoginRequest(String username) {
+        this.username = username;
     }
 }

@@ -1,18 +1,16 @@
 package io.ariku.verification;
 
-import io.ariku.verification.SecurityCleaner;
-import io.ariku.verification.UserVerification;
-import io.ariku.verification.UserVerificationDatabase;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -91,7 +89,12 @@ public class SecurityCleanerTest {
             }
 
             @Override
-            public UserVerification readUserVerification(String userId) {
+            public Optional<UserVerification> findByUserId(String userId) {
+                return null;
+            }
+
+            @Override
+            public Optional<UserVerification> findByUsername(String username) {
                 return null;
             }
 
