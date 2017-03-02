@@ -4,7 +4,7 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
-import io.ariku.verification.LogoutRequest;
+import io.ariku.verification.AuthorizeRequest;
 import io.ariku.verification.UserVerificationService;
 
 import static io.ariku.composer.Composer.SIMPLE;
@@ -37,12 +37,7 @@ public class LogoutPage {
         if (email.isEmpty())
             return;
 
-        boolean loggedout = userVerificationService.logout(new LogoutRequest(email, securityMessage));
-
-        if (loggedout)
-            print("Logout OK " + email);
-        else
-            print("Logout FAIL " + email);
+        userVerificationService.logout(new AuthorizeRequest(email, securityMessage));
     }
 
     public static void print(String value) {

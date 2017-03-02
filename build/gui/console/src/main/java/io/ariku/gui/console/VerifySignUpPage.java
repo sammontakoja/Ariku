@@ -37,12 +37,7 @@ public class VerifySignUpPage {
         if (value.isEmpty())
             return;
 
-        boolean signUpVerified = userVerificationService.verifySignUp(new VerifySignUpRequest(value));
-
-        if (signUpVerified)
-            print("VerifySignUp OK " + value);
-        else
-            print("VerifySignUp FAIL " + value);
+        userVerificationService.verifySignUp(new VerifySignUpRequest(value));
     }
 
     public static void print(String value) {
