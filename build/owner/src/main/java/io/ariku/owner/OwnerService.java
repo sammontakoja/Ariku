@@ -34,8 +34,10 @@ public class OwnerService {
     public void addOwnerRights(AddOwnerRightsRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
             if (request.authorizeRequest.userId.equals(request.userIdExistingOwner))
-                if (userIsOwner(request.userIdExistingOwner, request.competitionId))
-                    ownerDatabase.addOwner(request.userIdNewOwner, request.competitionId);
+                competitionDatabase.competitionsByOwner(request.userIdExistingOwner).stream()
+                        .filter(c -> c.name.equals(request.competitionName))
+                        .findFirst()
+                        .ifPresent(competition -> ownerDatabase.addOwner(request.userIdNewOwner, competition.id));
     }
 
     public void openAttending(OwnerCompetitionRequest request) {

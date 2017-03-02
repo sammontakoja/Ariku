@@ -9,7 +9,7 @@ public class AddOwnerRightsRequest {
 
     public String userIdNewOwner;
     public String userIdExistingOwner;
-    public String competitionId;
+    public String competitionName;
     public AuthorizeRequest authorizeRequest;
 
 }

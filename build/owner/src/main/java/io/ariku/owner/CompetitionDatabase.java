@@ -24,4 +24,6 @@ public interface CompetitionDatabase {
 
     Optional<Competition> competitionById(String id);
 
+    Optional<Competition> competitionByName(String name);
+
 }
