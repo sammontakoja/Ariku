@@ -6,6 +6,7 @@ import io.ariku.util.data.User;
 import io.ariku.verification.AuthorizeRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
@@ -121,14 +121,17 @@ public class OwnerServiceTest {
                 .thenReturn(Arrays.asList(competition));
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionName))
-                .thenReturn(Arrays.asList(request.userIdExistingOwner));
+                .thenReturn(Arrays.asList(new Owner().userId(request.userIdExistingOwner)));
 
         when(ownerService.userDatabase.findUserByUsername(request.usernameOfNewOwner))
                 .thenReturn(Optional.of(user));
 
         ownerService.addOwnerRights(request);
 
-        verify(ownerService.ownerDatabase, atLeastOnce()).addOwner(eq(user.id), eq(competition.id));
+        ArgumentCaptor<Owner> argument = ArgumentCaptor.forClass(Owner.class);
+        verify(ownerService.ownerDatabase).addOwner(argument.capture());
+        assertThat(argument.getValue().userId, is(user.id));
+        assertThat(argument.getValue().competitionId, is(competition.id));
     }
 
     @Test
@@ -147,11 +150,11 @@ public class OwnerServiceTest {
         request.usernameOfNewOwner = UUID.randomUUID().toString();
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionName))
-                .thenReturn(Arrays.asList(request.userIdExistingOwner));
+                .thenReturn(Arrays.asList(new Owner().userId(request.userIdExistingOwner)));
 
         ownerService.addOwnerRights(request);
 
-        verify(ownerService.ownerDatabase, never()).addOwner(any(), any());
+        verify(ownerService.ownerDatabase, never()).addOwner(any());
     }
 
     @Test
@@ -169,7 +172,7 @@ public class OwnerServiceTest {
 
         ownerService.addOwnerRights(request);
 
-        verify(ownerService.ownerDatabase, never()).addOwner(any(), any());
+        verify(ownerService.ownerDatabase, never()).addOwner(any());
     }
 
     @Test
@@ -193,7 +196,7 @@ public class OwnerServiceTest {
 
         ownerService.addOwnerRights(request);
 
-        verify(ownerService.ownerDatabase, never()).addOwner(any(), any());
+        verify(ownerService.ownerDatabase, never()).addOwner(any());
     }
 
 }

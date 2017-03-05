@@ -1,6 +1,7 @@
 package io.ariku.database.simple;
 
 import io.ariku.owner.CompetitionDatabase;
+import io.ariku.owner.Owner;
 import io.ariku.owner.OwnerDatabase;
 import io.ariku.owner.UserDatabase;
 import io.ariku.user.AttendingDatabase;
@@ -12,7 +13,10 @@ import io.ariku.util.data.User;
 import io.ariku.verification.UserVerification;
 import io.ariku.verification.UserVerificationDatabase;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -22,27 +26,28 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
 
     private List<User> users = new ArrayList<>();
     private List<UserVerification> userVerifications = new ArrayList<>();
-    private HashMap<String, ArrayList<String>> competitionOwners = new HashMap<>();
+    private List<Owner> competitionOwners = new ArrayList<>();
     private List<Competition> competitions = new ArrayList<>();
     private List<CompetitionState> competitionStates = new ArrayList<>();
     private List<AttendingInfo> attendingInfos = new ArrayList<>();
 
     @Override
-    public void addOwner(String userId, String competitionId) {
-        if (competitionOwners.get(competitionId) == null)
-            competitionOwners.put(competitionId, new ArrayList<>());
+    public void addOwner(Owner owner) {
+        if (!competitionOwners.stream().anyMatch(o -> o.equals(owner)))
+            competitionOwners.add(owner);
+    }
 
-        ArrayList<String> owners = competitionOwners.get(competitionId);
-        if (!owners.contains(userId))
-            competitionOwners.get(competitionId).add(userId);
+
+    @Override
+    public List<Owner> ownersByCompetition(String competitionId) {
+        return competitionOwners.stream()
+                .filter(o -> o.competitionId.equals(competitionId))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<String> ownersByCompetition(String competitionId) {
-        if (competitionOwners.get(competitionId) == null)
-            competitionOwners.put(competitionId, new ArrayList<>());
-
-        return competitionOwners.get(competitionId);
+    public List<Owner> owners() {
+        return competitionOwners;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
         competition.type = competitionType;
         competitions.add(competition);
 
-        addOwner(userId, competition.id);
+        addOwner(new Owner(userId, competition.id));
 
         CompetitionState competitionState = new CompetitionState();
         competitionState.competitionId = competition.id;
@@ -88,14 +93,19 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
 
     @Override
     public List<Competition> competitionsByOwner(String userId) {
+
+        List<Owner> ownersWithWantedUserId = competitionOwners.stream()
+                .filter(owner -> owner.userId.equals(userId))
+                .collect(Collectors.toList());
+
         return competitions.stream()
-                .filter(c -> competitionOwners.get(c.id).contains(userId))
+                .filter(c -> ownersWithWantedUserId.stream().anyMatch(owner -> owner.competitionId.equals(c.id)))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Competition> competitions() {
-        return new ArrayList<>(competitions);
+        return competitions;
     }
 
     @Override

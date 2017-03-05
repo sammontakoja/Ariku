@@ -19,6 +19,7 @@ public enum Composer {
     public void printDatabaseContentToConsole() {
         System.out.println("Users:" + database.userVerifications());
         System.out.println("Competitions:" + database.competitions());
+        System.out.println("Owners:" + database.owners());
     }
 
     Composer() {

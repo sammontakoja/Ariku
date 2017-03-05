@@ -1,6 +1,7 @@
 package io.ariku.database.simple;
 
 import com.googlecode.junittoolbox.ParallelRunner;
+import io.ariku.owner.Owner;
 import io.ariku.util.data.Competition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +11,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author Ari Aaltonen
@@ -53,13 +52,13 @@ public class OwnerDatabaseTest {
         List<Competition> competitionsAfterCreatingFirstCompetition = db.competitionsByOwner("userA");
         assertThat(competitionsAfterCreatingFirstCompetition.size(), is(1));
 
-        List<String> ownersBeforeAddingNewOwner = db.ownersByCompetition(competition.id);
-        assertThat(ownersBeforeAddingNewOwner, hasItem("userA"));
+        List<Owner> ownersBeforeAddingNewOwner = db.ownersByCompetition(competition.id);
+        assertThat(ownersBeforeAddingNewOwner, hasItem(new Owner().userId("userA").competitionId(competition.id)));
 
-        db.addOwner("userB", competition.id);
+        db.addOwner(new Owner("userB", competition.id));
 
-        List<String> ownersAfterAddingNewOwner = db.ownersByCompetition(competition.id);
-        assertThat(ownersAfterAddingNewOwner, hasItems("userA", "userB"));
+        List<Owner> ownersAfterAddingNewOwner = db.ownersByCompetition(competition.id);
+        assertThat(ownersAfterAddingNewOwner, hasItems(new Owner("userB", competition.id), new Owner("userA", competition.id)));
 
         assertThat(db.competitionState(competition.id).get().attending, is(false));
         db.openAttending(competition.id);
@@ -79,7 +78,7 @@ public class OwnerDatabaseTest {
     public void empty_list_returned_when_there_are_no_owners() {
         SimpleDatabase db = new SimpleDatabase();
         String competitinId = UUID.randomUUID().toString();
-        List<String> owners = db.ownersByCompetition(competitinId);
+        List<Owner> owners = db.ownersByCompetition(competitinId);
         assertThat(owners.size(), is(0));
     }
 
@@ -88,9 +87,9 @@ public class OwnerDatabaseTest {
         SimpleDatabase db = new SimpleDatabase();
         String userId = UUID.randomUUID().toString();
         String competitinId = UUID.randomUUID().toString();
-        db.addOwner(userId, competitinId);
-        List<String> owners = db.ownersByCompetition(competitinId);
-        assertThat(owners, hasItem(userId));
+        db.addOwner(new Owner(userId, competitinId));
+        List<Owner> owners = db.ownersByCompetition(competitinId);
+        assertThat(owners, hasItem(new Owner().userId(userId).competitionId(competitinId)));
     }
 
     @Test
@@ -98,9 +97,9 @@ public class OwnerDatabaseTest {
         SimpleDatabase db = new SimpleDatabase();
         String userId = UUID.randomUUID().toString();
         String competitinId = UUID.randomUUID().toString();
-        db.addOwner(userId, competitinId);
-        db.addOwner(userId, competitinId);
-        List<String> owners = db.ownersByCompetition(competitinId);
+        db.addOwner(new Owner(userId, competitinId));
+        db.addOwner(new Owner(userId, competitinId));
+        List<Owner> owners = db.ownersByCompetition(competitinId);
         assertThat(owners.size(), is(1));
     }
 

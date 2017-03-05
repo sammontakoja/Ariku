@@ -39,7 +39,7 @@ public class OwnerService {
                         .filter(ownedCompetition -> ownedCompetition.name.equals(request.competitionName))
                         .findFirst()
                         .ifPresent(ownedAndLookedForCompetition -> userDatabase.findUserByUsername(request.usernameOfNewOwner)
-                                .ifPresent(user -> ownerDatabase.addOwner(user.id, ownedAndLookedForCompetition.id)));
+                                .ifPresent(user -> ownerDatabase.addOwner(new Owner(user.id, ownedAndLookedForCompetition.id))));
     }
 
     public void openAttending(OwnerCompetitionRequest request) {
@@ -67,6 +67,6 @@ public class OwnerService {
     }
 
     private boolean userIsOwner(String userId, String competitionId) {
-        return ownerDatabase.ownersByCompetition(competitionId).stream().anyMatch(x -> x.equals(userId));
+        return ownerDatabase.ownersByCompetition(competitionId).stream().anyMatch(x -> x.userId.equals(userId));
     }
 }

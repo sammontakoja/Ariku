@@ -32,7 +32,7 @@ public class WhenClosingAttendingToCompetitionTest {
         request.authorizeRequest.userId = request.userId;
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
-                .thenReturn(Arrays.asList(request.userId));
+                .thenReturn(Arrays.asList(new Owner().userId(request.userId)));
 
         ownerService.closeAttending(request);
 
@@ -77,7 +77,7 @@ public class WhenClosingAttendingToCompetitionTest {
         request.authorizeRequest.userId = request.userId;
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
-                .thenReturn(Arrays.asList(request.userId));
+                .thenReturn(Arrays.asList(new Owner().userId(request.userId)));
 
         ownerService.closeAttending(request);
 

@@ -9,8 +9,6 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -37,7 +35,7 @@ public class WhenOpeningAttendingToCompetitionTest {
         request.authorizeRequest.userId = request.userId;
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
-                .thenReturn(Arrays.asList(request.userId));
+                .thenReturn(Arrays.asList(new Owner().userId(request.userId)));
 
         ownerService.openAttending(request);
 
@@ -82,7 +80,7 @@ public class WhenOpeningAttendingToCompetitionTest {
         request.authorizeRequest.userId = request.userId;
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
-                .thenReturn(Arrays.asList(request.userId));
+                .thenReturn(Arrays.asList(new Owner().userId(request.userId)));
 
         ownerService.openAttending(request);
 

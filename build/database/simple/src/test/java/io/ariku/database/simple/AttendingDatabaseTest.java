@@ -1,6 +1,5 @@
 package io.ariku.database.simple;
 
-import io.ariku.user.AttendingDatabase;
 import io.ariku.user.AttendingInfo;
 import io.ariku.util.data.Competition;
 import org.junit.Test;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author Ari Aaltonen
@@ -25,7 +24,7 @@ public class AttendingDatabaseTest {
         Competition competition = db.createCompetition(userId, "name", "type");
 
         db.add(new AttendingInfo(userId, competition.id));
-        List<Competition> competitions = db.competitionsByAttendingUser(userId);
+        List<Competition> competitions = db.competitions();
         assertThat(competitions.size(), is(1));
     }
 
