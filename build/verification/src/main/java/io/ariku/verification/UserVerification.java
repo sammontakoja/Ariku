@@ -13,8 +13,8 @@ public class UserVerification {
     public UserVerification() {
     }
 
-    public UserVerification(String userId) {
-        this.userId = userId;
+    public UserVerification(String username) {
+        this.username = username;
     }
 
     @Override

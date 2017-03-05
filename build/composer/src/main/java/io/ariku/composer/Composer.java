@@ -36,6 +36,7 @@ public enum Composer {
         ownerService.competitionStateDatabase = database;
         ownerService.ownerDatabase = database;
         ownerService.userAuthorizer = userVerificationService;
+        ownerService.userDatabase = database;
     }
 
 }

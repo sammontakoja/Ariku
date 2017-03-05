@@ -16,9 +16,9 @@
 
 |Use case | verified to work with modules |
 |---|---|
-|User can create new competition and became competition owner | database:simple |
-|Owner can list all of his/her competitions | database:simple |
-|Owner can add another user to be competition's owner as well using userid | database:simple |
+|User can create new competition and became competition owner | database:simple, gui:console|
+|Owner can list all of his/her competitions | database:simple, gui:console |
+|Owner can add another user to be competition's owner as well using userid | database:simple, TODO gui:console |
 |Owner can remove another competition's owner using userid | database:simple |
 |Owner navigate to modify competition state location | - |
 |Owner can open attending to competition | database:simple |

@@ -23,7 +23,4 @@ public interface CompetitionDatabase {
     List<Competition> competitions();
 
     Optional<Competition> competitionById(String id);
-
-    Optional<Competition> competitionByName(String name);
-
 }

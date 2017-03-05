@@ -99,9 +99,32 @@ public class UserSimulator {
                 .typeEnter()
                 // Exit to owner menu
                 .typeDown()
+                .typeDown()
                 .typeEnter()
                 // Exit to main menu
                 .typeDown()
+                .typeDown()
+                .typeDown()
+                .typeEnter()
+                .startTyping();
+
+        return this;
+    }
+
+    public UserSimulator addUserAsOwner(String usernameOfNewOwner, String competitionName) {
+
+        new Keyboard()
+                // Go to owner menu
+                .typeDown()
+                .typeEnter()
+                // Go to add new owner page
+                .typeDown()
+                .typeDown()
+                .typeEnter()
+                // fill values
+                .typeText(usernameOfNewOwner)
+                .typeDown()
+                .typeText(competitionName)
                 .typeDown()
                 .typeEnter()
                 .startTyping();

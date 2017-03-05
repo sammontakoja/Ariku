@@ -21,6 +21,7 @@ public class OwnerMenu {
         List<Button> buttons = Arrays.asList(
                 new Button("New competition", () -> NewCompetitionPage.draw(window)),
                 new Button("Competitions", () -> printUsersCompetitionsToConsole(SIMPLE.ownerService)),
+                new Button("New owner", () -> NewOwnerPage.draw(window)),
                 new Button("Menu", () -> BaseMenu.draw(window))
         );
 

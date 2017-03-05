@@ -15,7 +15,7 @@ public class UserCache {
     }
 
     public static void printToConsole() {
-        System.out.println(String.format("UserCache [userId:%s] [securityMessage:%s]", userId, securityMessage));
+        System.out.println(String.format("UserCache [username:%s] [securityMessage:%s]", userId, securityMessage));
     }
 
 }

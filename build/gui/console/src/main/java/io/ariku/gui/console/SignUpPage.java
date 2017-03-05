@@ -1,6 +1,9 @@
 package io.ariku.gui.console;
 
-import com.googlecode.lanterna.gui2.*;
+import com.googlecode.lanterna.gui2.BasicWindow;
+import com.googlecode.lanterna.gui2.Button;
+import com.googlecode.lanterna.gui2.Panel;
+import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.verification.SignUpRequest;
 import io.ariku.verification.UserVerificationService;
 
@@ -34,11 +37,7 @@ public class SignUpPage {
         if (value.isEmpty())
             return;
 
-        boolean signUp = userVerificationService.signUp(new SignUpRequest(value));
-        if (signUp)
-            System.out.println("SignUp OK " + value);
-        else
-            System.out.println("SignUp FAIL " + value);
+        userVerificationService.signUp(new SignUpRequest(value));
     }
 
 }

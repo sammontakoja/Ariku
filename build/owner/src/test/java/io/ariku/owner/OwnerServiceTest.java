@@ -35,7 +35,7 @@ public class OwnerServiceTest {
         NewCompetitionRequest newCompetitionRequest = new NewCompetitionRequest();
         newCompetitionRequest.competitionName = "NastaGP";
         newCompetitionRequest.competitionType = "Skeet";
-        newCompetitionRequest.authorizeRequest = new AuthorizeRequest("userId", "token");
+        newCompetitionRequest.authorizeRequest = new AuthorizeRequest("username", "token");
 
         ownerService.createNewCompetition(newCompetitionRequest);
 
@@ -68,10 +68,10 @@ public class OwnerServiceTest {
 
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);
 
-        when(ownerService.competitionDatabase.competitionsByOwner("userId"))
+        when(ownerService.competitionDatabase.competitionsByOwner("username"))
                 .thenReturn(Arrays.asList(new Competition("1"), new Competition("2")));
 
-        List<Competition> ownedCompetitions = ownerService.findOwnedCompetitions(new AuthorizeRequest("userId", ""));
+        List<Competition> ownedCompetitions = ownerService.findOwnedCompetitions(new AuthorizeRequest("username", ""));
 
         assertThat(ownedCompetitions.size(), is(2));
     }
@@ -84,10 +84,10 @@ public class OwnerServiceTest {
 
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);
 
-        when(ownerService.competitionDatabase.competitionsByOwner("userId"))
+        when(ownerService.competitionDatabase.competitionsByOwner("username"))
                 .thenReturn(Arrays.asList(new Competition("1"), new Competition("2")));
 
-        List<Competition> ownedCompetitions = ownerService.findOwnedCompetitions(new AuthorizeRequest("userId", ""));
+        List<Competition> ownedCompetitions = ownerService.findOwnedCompetitions(new AuthorizeRequest("username", ""));
 
         assertThat(ownedCompetitions.size(), is(0));
     }

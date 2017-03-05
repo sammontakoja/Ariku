@@ -11,16 +11,13 @@ public class UserVerificationService implements UserAuthorizer {
 
     public UserVerificationDatabase userVerificationDatabase;
 
-    public boolean signUp(SignUpRequest signUpRequest) {
-        if (userVerificationDatabase.findByUsername(signUpRequest.username).isPresent()) {
+    public void signUp(SignUpRequest signUpRequest) {
+        if (!userVerificationDatabase.findByUsername(signUpRequest.username).isPresent())
             userVerificationDatabase.createUserVerification(signUpRequest.username);
-            return true;
-        }
-        return false;
     }
 
     public void verifySignUp(VerifySignUpRequest verifySignUpRequest) {
-        Optional<UserVerification> userVerification = userVerificationDatabase.findByUserId(verifySignUpRequest.username);
+        Optional<UserVerification> userVerification = userVerificationDatabase.findByUsername(verifySignUpRequest.username);
 
         userVerification.ifPresent(user -> {
             user.isSignedInConfirmed = true;

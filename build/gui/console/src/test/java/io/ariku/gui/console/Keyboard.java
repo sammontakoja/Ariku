@@ -6,11 +6,6 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import static java.awt.AWTKeyStroke.getAWTKeyStroke;
-import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;
 
 /**
  * Simulate keyboard typing.
@@ -85,7 +80,7 @@ public class Keyboard {
     protected void pressKeys(String chars) {
 
         try {
-            Thread.sleep(600);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -22,54 +22,46 @@ public class UserVerificationServiceTest {
     @Test
     public void sign_up_verification_ok_when_found_stored_UserVerification_with_same_username() {
 
-        UserVerification userVerification = new UserVerification();
-        userVerification.username = UUID.randomUUID().toString();
-
-        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.findByUserId(anyString())).thenReturn(Optional.of(userVerification));
-
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationDatabase = userVerificationDatabase;
+        userVerificationService.userVerificationDatabase = mock(UserVerificationDatabase.class);
 
-        VerifySignUpRequest request = new VerifySignUpRequest();
-        request.username = userVerification.username;
+        String username = UUID.randomUUID().toString();
 
-        userVerificationService.verifySignUp(request);
+        when(userVerificationService.userVerificationDatabase.findByUsername(anyString()))
+                .thenReturn(Optional.of(new UserVerification(username)));
 
-        verify(userVerificationDatabase, atLeastOnce()).updateUserVerification(any());
+        userVerificationService.verifySignUp(new VerifySignUpRequest(username));
+
+        verify(userVerificationService.userVerificationDatabase, atLeastOnce()).updateUserVerification(any());
     }
 
     @Test
-    public void sign_up_fail_when_username_already_taken() {
-
-        UserVerification userVerification = new UserVerification();
-        userVerification.username = "x";
-
-        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.findByUserId(anyString())).thenReturn(Optional.of(userVerification));
+    public void sign_up_is_successful_when_username_is_not_taken() {
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationDatabase = userVerificationDatabase;
+        userVerificationService.userVerificationDatabase = mock(UserVerificationDatabase.class);
 
-        boolean signUpSuccessful = userVerificationService.signUp(new SignUpRequest("x"));
+        when(userVerificationService.userVerificationDatabase.findByUsername(anyString()))
+                .thenReturn(Optional.empty());
 
-        assertThat(signUpSuccessful, is(false));
+        SignUpRequest request = new SignUpRequest(UUID.randomUUID().toString());
+        userVerificationService.signUp(request);
+
+        verify(userVerificationService.userVerificationDatabase, atLeastOnce()).createUserVerification(eq(request.username));
     }
 
     @Test
-    public void sign_up_is_successful_when_username_is_not_used() {
-
-        UserVerification userVerification = new UserVerification();
-
-        UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.findByUsername(anyString())).thenReturn(Optional.of(userVerification));
+    public void sign_up_fails_when_username_is_taken() {
 
         UserVerificationService userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationDatabase = userVerificationDatabase;
+        userVerificationService.userVerificationDatabase = mock(UserVerificationDatabase.class);
 
-        boolean successful = userVerificationService.signUp(new SignUpRequest());
+        when(userVerificationService.userVerificationDatabase.findByUsername(anyString()))
+                .thenReturn(Optional.of(new UserVerification()));
 
-        assertThat(successful, is(true));
+        userVerificationService.signUp(new SignUpRequest());
+
+        verify(userVerificationService.userVerificationDatabase, never()).createUserVerification(anyString());
     }
 
     @Test
