@@ -1,9 +1,9 @@
-language: java
+sudo: required
 
-jdk:
-  - oraclejdk8
+services:
+  - docker
 
-script: cd build && mvn clean test
+script: sudo docker build .
 
 branches:
   only:
