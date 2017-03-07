@@ -7,14 +7,15 @@ import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.owner.NewCompetitionRequest;
 import io.ariku.owner.OwnerService;
 
-import static io.ariku.composer.Composer.SIMPLE;
-
 /**
  * @author Ari Aaltonen
  */
 public class NewCompetitionPage {
 
-    public static void draw(BasicWindow window) {
+    OwnerMenu ownerMenu;
+    public OwnerService ownerService;
+
+    public void draw(BasicWindow window) {
 
         Panel panel = new Panel();
 
@@ -34,15 +35,13 @@ public class NewCompetitionPage {
         });
         okButton.addTo(panel);
 
-        Button exitButton = new Button("Exit", () -> OwnerMenu.draw(window));
+        Button exitButton = new Button("Exit", () -> ownerMenu.draw(window));
         exitButton.addTo(panel);
 
         window.setComponent(panel);
     }
 
-    private static boolean createNewCompetition(String name, String type) {
-
-        OwnerService ownerService = SIMPLE.ownerService;
+    private boolean createNewCompetition(String name, String type) {
 
         if (name.isEmpty() || type.isEmpty())
             return false;

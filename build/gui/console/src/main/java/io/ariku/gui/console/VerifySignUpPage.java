@@ -7,14 +7,15 @@ import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.verification.UserVerificationService;
 import io.ariku.verification.VerifySignUpRequest;
 
-import static io.ariku.composer.Composer.SIMPLE;
-
 /**
  * @author Ari Aaltonen
  */
 public class VerifySignUpPage {
 
-    public static void draw(BasicWindow window) {
+    public UserVerificationMenu userVerificationMenu;
+    public UserVerificationService userVerificationService;
+
+    public void draw(BasicWindow window) {
 
         Panel panel = new Panel();
 
@@ -24,15 +25,13 @@ public class VerifySignUpPage {
         Button okButton = new Button("OK", () -> verifySignUp(emailAddressText.getText()));
         okButton.addTo(panel);
 
-        Button exitButton = new Button("Exit", () -> UserVerificationMenu.draw(window));
+        Button exitButton = new Button("Exit", () -> userVerificationMenu.draw(window));
         exitButton.addTo(panel);
 
         window.setComponent(panel);
     }
 
-    private static void verifySignUp(String value) {
-
-        UserVerificationService userVerificationService = SIMPLE.userVerificationService;
+    private void verifySignUp(String value) {
 
         if (value.isEmpty())
             return;

@@ -13,6 +13,9 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import io.ariku.composer.Composer;
+import io.ariku.owner.OwnerService;
+import io.ariku.verification.UserVerificationService;
 
 import java.io.IOException;
 
@@ -39,7 +42,11 @@ public class ArikuConsole {
             throw new RuntimeException(e);
         }
 
-        BaseMenu.draw(window);
+        Composer composer = new Composer();
+
+        BaseMenu baseMenu = new GuiComposer().baseMenu(composer.ownerService, composer.userVerificationService);
+
+        baseMenu.draw(window);
 
         MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLACK));
 
@@ -49,6 +56,8 @@ public class ArikuConsole {
 
         gui.waitForWindowToClose(window);
     }
+
+
 
 }
 

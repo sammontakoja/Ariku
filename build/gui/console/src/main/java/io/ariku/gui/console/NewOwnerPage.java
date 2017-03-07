@@ -7,14 +7,15 @@ import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.owner.AddOwnerRightsRequest;
 import io.ariku.owner.OwnerService;
 
-import static io.ariku.composer.Composer.SIMPLE;
-
 /**
  * @author Ari Aaltonen
  */
 public class NewOwnerPage {
 
-    public static void draw(BasicWindow window) {
+    public OwnerMenu ownerMenu;
+    public OwnerService ownerService;
+
+    public void draw(BasicWindow window) {
 
         System.out.println("Entered NewOwnerPage");
 
@@ -36,15 +37,13 @@ public class NewOwnerPage {
         });
         okButton.addTo(panel);
 
-        Button exitButton = new Button("Exit", () -> OwnerMenu.draw(window));
+        Button exitButton = new Button("Exit", () -> ownerMenu.draw(window));
         exitButton.addTo(panel);
 
         window.setComponent(panel);
     }
 
-    private static boolean addNewOwner(String competitionName, String anotherUsersId) {
-
-        OwnerService ownerService = SIMPLE.ownerService;
+    private boolean addNewOwner(String competitionName, String anotherUsersId) {
 
         if (competitionName.isEmpty() || anotherUsersId.isEmpty())
             return false;

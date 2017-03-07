@@ -1,43 +1,54 @@
 package io.ariku.composer;
 
 import io.ariku.database.simple.SimpleDatabase;
+import io.ariku.owner.CompetitionDatabase;
+import io.ariku.owner.OwnerDatabase;
 import io.ariku.owner.OwnerService;
+import io.ariku.owner.UserDatabase;
+import io.ariku.util.data.CompetitionStateDatabase;
 import io.ariku.verification.SecurityCleaner;
+import io.ariku.verification.UserVerificationDatabase;
 import io.ariku.verification.UserVerificationService;
 
 /**
  * @author Ari Aaltonen
  */
-public enum Composer {
+public class Composer {
 
-    SIMPLE;
-
-    public final SimpleDatabase database = new SimpleDatabase();
+    // Services
     public final UserVerificationService userVerificationService;
     public final OwnerService ownerService;
 
-    public void printDatabaseContentToConsole() {
-        System.out.println("Users:" + database.userVerifications());
-        System.out.println("Competitions:" + database.competitions());
-        System.out.println("Owners:" + database.owners());
-    }
+    // Database implementations
+    private final UserVerificationDatabase userVerificationDatabase;
+    private final CompetitionDatabase competitionDatabase;
+    private final OwnerDatabase ownerDatabase;
+    private final UserDatabase userDatabase;
+    private final CompetitionStateDatabase competitionStateDatabase;
 
-    Composer() {
+    public Composer() {
 
-        // Build services using database
+        SimpleDatabase simpleDatabase = new SimpleDatabase();
+        this.userVerificationDatabase = simpleDatabase;
+        this.competitionDatabase = simpleDatabase;
+        this.ownerDatabase = simpleDatabase;
+        this.userDatabase = simpleDatabase;
+        this.competitionStateDatabase = simpleDatabase;
+
+        // Build services using implemented databases
         userVerificationService = new UserVerificationService();
-        userVerificationService.userVerificationDatabase = database;
+        userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         SecurityCleaner securityCleaner = new SecurityCleaner();
-        securityCleaner.userVerificationDatabase = database;
+        securityCleaner.userVerificationDatabase = userVerificationDatabase;
         securityCleaner.wipeTokensWhichAreOlderThan(60, 900);
 
         ownerService = new OwnerService();
-        ownerService.competitionDatabase = database;
-        ownerService.competitionStateDatabase = database;
-        ownerService.ownerDatabase = database;
+        ownerService.competitionDatabase = competitionDatabase;
+        ownerService.competitionStateDatabase = competitionStateDatabase;
+        ownerService.ownerDatabase = ownerDatabase;
         ownerService.userAuthorizer = userVerificationService;
-        ownerService.userDatabase = database;
+        ownerService.userDatabase = userDatabase;
     }
 
 }

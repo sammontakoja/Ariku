@@ -9,20 +9,23 @@ import io.ariku.util.data.Competition;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.ariku.composer.Composer.SIMPLE;
-
 /**
  * @author Ari Aaltonen
  */
 public class OwnerMenu {
 
-    public static void draw(BasicWindow window) {
+    BaseMenu baseMenu;
+    public NewCompetitionPage newCompetitionPage;
+    public NewOwnerPage newOwnerPage;
+    public OwnerService ownerService;
+
+    public void draw(BasicWindow window) {
 
         List<Button> buttons = Arrays.asList(
-                new Button("New competition", () -> NewCompetitionPage.draw(window)),
-                new Button("Competitions", () -> printUsersCompetitionsToConsole(SIMPLE.ownerService)),
-                new Button("New owner", () -> NewOwnerPage.draw(window)),
-                new Button("Menu", () -> BaseMenu.draw(window))
+                new Button("New competition", () -> newCompetitionPage.draw(window)),
+                new Button("Competitions", () -> printUsersCompetitionsToConsole()),
+                new Button("New owner", () -> newOwnerPage.draw(window)),
+                new Button("Menu", () -> baseMenu.draw(window))
         );
 
         Panel panel = new Panel();
@@ -31,7 +34,7 @@ public class OwnerMenu {
         window.setComponent(panel);
     }
 
-    private static void printUsersCompetitionsToConsole(OwnerService ownerService) {
+    private void printUsersCompetitionsToConsole() {
         List<Competition> ownedCompetitions = ownerService.findOwnedCompetitions(UserCache.authorizeRequest());
         System.out.println("User '"+UserCache.userId+"' own competitions:"+ ownedCompetitions);
     }

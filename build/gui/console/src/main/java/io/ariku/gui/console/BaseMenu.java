@@ -1,6 +1,8 @@
 package io.ariku.gui.console;
 
-import com.googlecode.lanterna.gui2.*;
+import com.googlecode.lanterna.gui2.BasicWindow;
+import com.googlecode.lanterna.gui2.Button;
+import com.googlecode.lanterna.gui2.Panel;
 import io.ariku.composer.Composer;
 
 /**
@@ -8,12 +10,14 @@ import io.ariku.composer.Composer;
  */
 public class BaseMenu {
 
-    public static void draw(BasicWindow window) {
+    UserVerificationMenu userVerificationMenu;
+    OwnerMenu ownerMenu;
+
+    public void draw(BasicWindow window) {
         Panel panel = new Panel();
-        panel.addComponent(new Button("User verification", () -> UserVerificationMenu.draw(window)));
-        panel.addComponent(new Button("Owner", () -> OwnerMenu.draw(window)));
+        panel.addComponent(new Button("User verification", () -> userVerificationMenu.draw(window)));
+        panel.addComponent(new Button("Owner", () -> ownerMenu.draw(window)));
         panel.addComponent(new Button("Exit", () -> {
-            Composer.SIMPLE.printDatabaseContentToConsole();
             UserCache.printToConsole();
             System.exit(0);
         }));
