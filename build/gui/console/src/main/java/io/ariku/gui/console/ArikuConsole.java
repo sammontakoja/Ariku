@@ -18,6 +18,10 @@ import java.io.IOException;
 
 public class ArikuConsole {
 
+    static {
+        System.setProperty("java.awt.headless", "true");
+    }
+
     public static void main(String[] args) {
         startConsole(() -> System.out.println("Console started!"));
     }
