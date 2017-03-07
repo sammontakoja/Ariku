@@ -6,5 +6,3 @@ WORKDIR /tmp/ariku/build
 RUN ["mvn","clean","install","-DskipTests"]
 # Run unit tests
 RUN ["mvn","test"]
-# Run console GUI tests
-RUN ["mvn","integration-test","-Dit.test=LoginIT"]
