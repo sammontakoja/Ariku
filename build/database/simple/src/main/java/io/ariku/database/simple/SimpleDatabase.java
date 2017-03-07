@@ -37,7 +37,6 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
             competitionOwners.add(owner);
     }
 
-
     @Override
     public List<Owner> ownersByCompetition(String competitionId) {
         return competitionOwners.stream()
