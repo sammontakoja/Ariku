@@ -75,7 +75,7 @@ public class UserVerificationServiceTest {
 
         String userId = UUID.randomUUID().toString();
 
-        when(userVerificationService.userVerificationDatabase.findByUserId(userId)).thenReturn(Optional.of(userVerification));
+        when(userVerificationService.userVerificationDatabase.findByUsername(userId)).thenReturn(Optional.of(userVerification));
 
         userVerificationService.logout(new AuthorizeRequest(userId, userVerification.securityMessage.token));
 
@@ -115,7 +115,7 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void login_is_failed_when_user_found_but_Signed_in_not_confirmed() {
+    public void login_fail_when_user_found_but_Signed_in_not_confirmed() {
 
         UserVerification userVerification = new UserVerification();
         userVerification.isSignedInConfirmed = false;
@@ -134,18 +134,22 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void login_is_failed_when_user_found_but_not_SignedIn() {
+    public void login_fail_when_user_found_but_not_SignedIn() {
+
+        String username = UUID.randomUUID().toString();
 
         UserVerification userVerification = new UserVerification();
-        userVerification.isSignedInConfirmed = true;
+        userVerification.username = username;
+        userVerification.isSignedInConfirmed = false;
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.findByUserId(anyString())).thenReturn(Optional.of(userVerification));
+        when(userVerificationDatabase.findByUsername(anyString())).thenReturn(Optional.of(userVerification));
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         LoginRequest loginRequest = new LoginRequest();
+        loginRequest.username = username;
 
         String securityMessage = userVerificationService.login(loginRequest);
 
@@ -153,13 +157,10 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void login_is_failed_when_user_is_not_found() {
-
-        UserVerification userVerification = new UserVerification();
-        userVerification.isSignedInConfirmed = true;
+    public void login_fail_when_user_is_not_found() {
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.findByUserId(anyString())).thenReturn(Optional.of(userVerification));
+        when(userVerificationDatabase.findByUsername(anyString())).thenReturn(Optional.empty());
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
@@ -237,7 +238,7 @@ public class UserVerificationServiceTest {
 
         AuthorizeRequest authorizeRequest = new AuthorizeRequest();
         authorizeRequest.securityMessage = userVerification.securityMessage.token;
-        authorizeRequest.userId = userVerification.userId;
+        authorizeRequest.username = userVerification.userId;
 
         boolean userAuthorized = userVerificationService.isAuthorized(authorizeRequest);
 
@@ -259,7 +260,7 @@ public class UserVerificationServiceTest {
 
         AuthorizeRequest authorizeRequest = new AuthorizeRequest();
         authorizeRequest.securityMessage = "securityToken";
-        authorizeRequest.userId = "username";
+        authorizeRequest.username = "username";
 
         boolean userAuthorized = userVerificationService.isAuthorized(authorizeRequest);
 
@@ -277,7 +278,7 @@ public class UserVerificationServiceTest {
 
         AuthorizeRequest authorizeRequest = new AuthorizeRequest();
         authorizeRequest.securityMessage = "securityToken";
-        authorizeRequest.userId = "username";
+        authorizeRequest.username = "username";
 
         assertThat(userVerificationService.isAuthorized(authorizeRequest), is(false));
     }

@@ -43,7 +43,7 @@ public class UserVerificationService implements UserAuthorizer {
     }
 
     public void logout(AuthorizeRequest authorizeRequest) {
-        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUserId(authorizeRequest.userId);
+        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUsername(authorizeRequest.username);
         if (userVerificationOptional.isPresent()) {
             UserVerification userVerification = userVerificationOptional.get();
             if (userVerification.securityMessage.token.equals(authorizeRequest.securityMessage)) {
@@ -55,7 +55,7 @@ public class UserVerificationService implements UserAuthorizer {
     }
 
     public boolean isAuthorized(AuthorizeRequest authorizeRequest) {
-        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUserId(authorizeRequest.userId);
+        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUserId(authorizeRequest.username);
 
         if (userVerificationOptional.isPresent()) {
             UserVerification userVerification = userVerificationOptional.get();
