@@ -33,9 +33,9 @@ public class ArikuRest {
 
         path("/verification", () -> {
             before((q, a) -> logger.info("Received verification call"));
-            get("/signup/:username", (request, response) -> signUp(request.params(":username")));
-            get("/verifysignup/:username", (request, response) -> verifySignUp(request.params(":username")));
-            get("/login/:username", (request, response) -> login(request.params(":username")));
+            post("/signup", (request, response) -> signUp(request.queryParams("username")));
+            post("/verifysignup", (request, response) -> verifySignUp(request.queryParams("username")));
+            post("/login", (request, response) -> login(request.queryParams("username")));
         });
 
     }
