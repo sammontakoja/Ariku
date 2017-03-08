@@ -4,6 +4,7 @@ package io.ariku.rest;
  * @author Ari Aaltonen
  */
 
+import com.google.gson.Gson;
 import io.ariku.composer.Composer;
 
 import static spark.Spark.get;
@@ -15,7 +16,8 @@ public class ArikuRest {
 
     public static void main(String[] args) {
         port(5000);
-        get("/hello", (req, res) -> "Moikka");
+        Gson gson = new Gson();
+        get("/hello", (request, response) -> "Moikka", gson::toJson);
     }
 
 }
