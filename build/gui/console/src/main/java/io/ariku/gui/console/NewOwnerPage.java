@@ -51,7 +51,7 @@ public class NewOwnerPage {
         AddOwnerRightsRequest request = new AddOwnerRightsRequest();
         request.authorizeRequest = UserCache.authorizeRequest();
         request.competitionName = competitionName;
-        request.userIdExistingOwner = UserCache.userId;
+        request.userIdExistingOwner = UserCache.username;
         request.usernameOfNewOwner = anotherUsersId;
         ownerService.addOwnerRights(request);
 

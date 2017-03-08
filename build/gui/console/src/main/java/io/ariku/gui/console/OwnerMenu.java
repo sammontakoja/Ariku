@@ -36,7 +36,7 @@ public class OwnerMenu {
 
     private void printUsersCompetitionsToConsole() {
         List<Competition> ownedCompetitions = ownerService.findOwnedCompetitions(UserCache.authorizeRequest());
-        System.out.println("User '"+UserCache.userId+"' own competitions:"+ ownedCompetitions);
+        System.out.println("User '"+UserCache.username +"' own competitions:"+ ownedCompetitions);
     }
 
 }

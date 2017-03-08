@@ -40,7 +40,7 @@ public class LoginPage {
 
         if (!securityMessage.isEmpty()) {
             UserCache.securityMessage = securityMessage;
-            UserCache.userId = userId;
+            UserCache.username = userId;
             System.out.println("Login OK " + userId);
         }
 
