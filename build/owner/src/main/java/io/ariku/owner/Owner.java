@@ -41,7 +41,7 @@ public class Owner {
     @Override
     public String toString() {
         return "Owner{" +
-                "userId='" + userId + '\'' +
+                "username='" + userId + '\'' +
                 ", competitionId='" + competitionId + '\'' +
                 '}';
     }

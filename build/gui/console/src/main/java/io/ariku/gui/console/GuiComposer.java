@@ -13,6 +13,7 @@ public class GuiComposer {
 
         baseMenu.userVerificationMenu = new UserVerificationMenu();
         baseMenu.userVerificationMenu.baseMenu = baseMenu;
+        baseMenu.userVerificationMenu.userVerificationService = userVerificationService;
 
         baseMenu.userVerificationMenu.signUpPage = new SignUpPage();
         baseMenu.userVerificationMenu.signUpPage.userVerificationMenu = baseMenu.userVerificationMenu;
@@ -25,10 +26,6 @@ public class GuiComposer {
         baseMenu.userVerificationMenu.loginPage = new LoginPage();
         baseMenu.userVerificationMenu.loginPage.userVerificationMenu = baseMenu.userVerificationMenu;
         baseMenu.userVerificationMenu.loginPage.userVerificationService = userVerificationService;
-
-        baseMenu.userVerificationMenu.logoutPage = new LogoutPage();
-        baseMenu.userVerificationMenu.logoutPage.userVerificationMenu = baseMenu.userVerificationMenu;
-        baseMenu.userVerificationMenu.logoutPage.userVerificationService = userVerificationService;
 
         baseMenu.ownerMenu = new OwnerMenu();
         baseMenu.ownerMenu.baseMenu = baseMenu;

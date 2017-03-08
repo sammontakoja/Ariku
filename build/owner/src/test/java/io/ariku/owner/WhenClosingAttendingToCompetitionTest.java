@@ -29,7 +29,7 @@ public class WhenClosingAttendingToCompetitionTest {
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionId = UUID.randomUUID().toString();
         request.userId = UUID.randomUUID().toString();
-        request.authorizeRequest.userId = request.userId;
+        request.authorizeRequest.username = request.userId;
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
                 .thenReturn(Arrays.asList(new Owner().userId(request.userId)));
@@ -53,7 +53,7 @@ public class WhenClosingAttendingToCompetitionTest {
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionId = UUID.randomUUID().toString();
         request.userId = UUID.randomUUID().toString();
-        request.authorizeRequest.userId = request.userId;
+        request.authorizeRequest.username = request.userId;
 
         ownerService.closeAttending(request);
 
@@ -74,7 +74,7 @@ public class WhenClosingAttendingToCompetitionTest {
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionId = UUID.randomUUID().toString();
         request.userId = UUID.randomUUID().toString();
-        request.authorizeRequest.userId = request.userId;
+        request.authorizeRequest.username = request.userId;
 
         when(ownerService.ownerDatabase.ownersByCompetition(request.competitionId))
                 .thenReturn(Arrays.asList(new Owner().userId(request.userId)));

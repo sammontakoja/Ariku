@@ -21,20 +21,20 @@ public class OwnerService {
 
     public void createNewCompetition(NewCompetitionRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest)) {
-            competitionDatabase.createCompetition(request.authorizeRequest.userId, request.competitionName, request.competitionType);
+            competitionDatabase.createCompetition(request.authorizeRequest.username, request.competitionName, request.competitionType);
         }
 
     }
 
     public List<Competition> findOwnedCompetitions(AuthorizeRequest request) {
         if (userAuthorizer.isAuthorized(request))
-            return competitionDatabase.competitionsByOwner(request.userId);
+            return competitionDatabase.competitionsByOwner(request.username);
         return new ArrayList<>();
     }
 
     public void addOwnerRights(AddOwnerRightsRequest request) {
         if (userAuthorizer.isAuthorized(request.authorizeRequest))
-            if (request.authorizeRequest.userId.equals(request.userIdExistingOwner))
+            if (request.authorizeRequest.username.equals(request.userIdExistingOwner))
                 competitionDatabase.competitionsByOwner(request.userIdExistingOwner).stream()
                         .filter(ownedCompetition -> ownedCompetition.name.equals(request.competitionName))
                         .findFirst()

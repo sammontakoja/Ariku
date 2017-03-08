@@ -114,7 +114,7 @@ public class OwnerServiceTest {
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionName = competition.name;
         request.userIdExistingOwner = UUID.randomUUID().toString();
-        request.authorizeRequest.userId = request.userIdExistingOwner;
+        request.authorizeRequest.username = request.userIdExistingOwner;
         request.usernameOfNewOwner = user.username;
 
         when(ownerService.competitionDatabase.competitionsByOwner(request.userIdExistingOwner))
@@ -144,7 +144,7 @@ public class OwnerServiceTest {
 
         AddOwnerRightsRequest request = new AddOwnerRightsRequest();
         request.authorizeRequest = new AuthorizeRequest();
-        request.authorizeRequest.userId = UUID.randomUUID().toString();
+        request.authorizeRequest.username = UUID.randomUUID().toString();
         request.competitionName = UUID.randomUUID().toString();
         request.userIdExistingOwner = UUID.randomUUID().toString();
         request.usernameOfNewOwner = UUID.randomUUID().toString();
@@ -188,7 +188,7 @@ public class OwnerServiceTest {
         request.authorizeRequest = new AuthorizeRequest();
         request.competitionName = UUID.randomUUID().toString();
         request.userIdExistingOwner = UUID.randomUUID().toString();
-        request.authorizeRequest.userId = request.userIdExistingOwner;
+        request.authorizeRequest.username = request.userIdExistingOwner;
         request.usernameOfNewOwner = UUID.randomUUID().toString();
 
         when(ownerService.competitionDatabase.competitionsByOwner(request.userIdExistingOwner))

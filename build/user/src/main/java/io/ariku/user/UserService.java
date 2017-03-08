@@ -21,13 +21,13 @@ public class UserService {
 
     public void attendToCompetition(ParticipateRequest request) {
         if (userIsAuthorizedAndCompetitionIsOpenToAttending(request))
-            attendingDatabase.add(new AttendingInfo(request.authorizeRequest.userId, request.competitionId));
+            attendingDatabase.add(new AttendingInfo(request.authorizeRequest.username, request.competitionId));
 
     }
 
     public void cancelAttendingToCompetition(ParticipateRequest request) {
         if (userIsAuthorizedAndCompetitionIsOpenToAttending(request))
-            attendingDatabase.remove(new AttendingInfo(request.authorizeRequest.userId, request.competitionId));
+            attendingDatabase.remove(new AttendingInfo(request.authorizeRequest.username, request.competitionId));
     }
 
     private boolean userIsAuthorizedAndCompetitionIsOpenToAttending(ParticipateRequest request) {
@@ -40,7 +40,7 @@ public class UserService {
 
     public List<Competition> competitions(AuthorizeRequest request) {
         if (userAuthorizer.isAuthorized(request))
-            return attendingDatabase.competitionsByAttendingUser(request.userId);
+            return attendingDatabase.competitionsByAttendingUser(request.username);
         return new ArrayList<>();
     }
 }

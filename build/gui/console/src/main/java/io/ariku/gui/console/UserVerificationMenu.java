@@ -3,6 +3,7 @@ package io.ariku.gui.console;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
+import io.ariku.verification.UserVerificationService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,10 +13,10 @@ import java.util.List;
  */
 public class UserVerificationMenu {
 
+    public UserVerificationService userVerificationService;
     public VerifySignUpPage verifySignUpPage;
     public SignUpPage signUpPage;
     public LoginPage loginPage;
-    public LogoutPage logoutPage;
     public BaseMenu baseMenu;
 
     public void draw(BasicWindow window) {
@@ -35,7 +36,7 @@ public class UserVerificationMenu {
                 }),
                 new Button("Logout", () -> {
                     System.out.println("Pressed logout");
-                    logoutPage.draw(window);
+                    userVerificationService.logout(UserCache.authorizeRequest());
                 }),
                 new Button("Menu", () -> baseMenu.draw(window))
         );

@@ -8,14 +8,14 @@ import io.ariku.verification.AuthorizeRequest;
 public class UserCache {
 
     public static String username;
-    public static String securityMessage;
+    public static String securityToken;
 
     public static AuthorizeRequest authorizeRequest() {
-        return new AuthorizeRequest(username, securityMessage);
+        return new AuthorizeRequest(username, securityToken);
     }
 
     public static void printToConsole() {
-        System.out.println(String.format("UserCache [username:%s] [securityMessage:%s]", username, securityMessage));
+        System.out.println(String.format("UserCache [username:%s] [securityToken:%s]", username, securityToken));
     }
 
 }

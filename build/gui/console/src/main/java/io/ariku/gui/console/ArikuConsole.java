@@ -21,6 +21,8 @@ import java.io.IOException;
 
 public class ArikuConsole {
 
+    public static final Composer composer = new Composer();
+
     public static void main(String[] args) {
         startConsole(() -> System.out.println("Console started!"));
     }
@@ -41,8 +43,6 @@ public class ArikuConsole {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        Composer composer = new Composer();
 
         BaseMenu baseMenu = new GuiComposer().baseMenu(composer.ownerService, composer.userVerificationService);
 

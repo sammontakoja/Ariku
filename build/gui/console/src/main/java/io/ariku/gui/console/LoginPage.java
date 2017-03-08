@@ -39,7 +39,7 @@ public class LoginPage {
         String securityMessage = userVerificationService.login(new LoginRequest(userId));
 
         if (!securityMessage.isEmpty()) {
-            UserCache.securityMessage = securityMessage;
+            UserCache.securityToken = securityMessage;
             UserCache.username = userId;
             System.out.println("Login OK " + userId);
         }
