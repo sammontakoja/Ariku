@@ -6,6 +6,8 @@ package io.ariku.rest;
 
 import com.google.gson.Gson;
 import io.ariku.composer.Composer;
+import io.ariku.util.data.ArikuSettings;
+import io.ariku.util.data.RestSettings;
 import io.ariku.verification.LoginRequest;
 import io.ariku.verification.SignUpRequest;
 import io.ariku.verification.UserVerification;
@@ -20,6 +22,7 @@ import static spark.Spark.*;
 public class ArikuRest {
     public static Logger logger = LoggerFactory.getLogger(ArikuRest.class);
 
+    private static RestSettings rs = ArikuSettings.restClientWithDefaultUrlConfiguration();
     private final static Composer composer = new Composer();
 
     public static void main(String[] args) {
@@ -31,11 +34,12 @@ public class ArikuRest {
         port(5000);
         Gson gson = new Gson();
 
-        path("/verification", () -> {
+        path(rs.verificationPath(), () -> {
             before((q, a) -> logger.info("Received verification call"));
-            post("/signup", (request, response) -> signUp(request.queryParams("username")));
-            post("/verifysignup", (request, response) -> verifySignUp(request.queryParams("username")));
-            post("/login", (request, response) -> login(request.queryParams("username")));
+            post(rs.signUpPath(), (request, response) -> signUp(request.queryParams("username")));
+            post(rs.verifySignUpPath(), (request, response) -> verifySignUp(request.queryParams("username")));
+            post(rs.loginPath(), (request, response) -> login(request.queryParams("username")));
+            post(rs.logoutPath(), (request, response) -> login(request.queryParams("username")));
         });
 
     }
