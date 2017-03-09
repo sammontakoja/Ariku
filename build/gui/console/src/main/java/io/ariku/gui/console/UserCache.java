@@ -14,6 +14,11 @@ public class UserCache {
         return new AuthorizeRequest(username, securityToken);
     }
 
+    public static void clear() {
+        username = "";
+        securityToken = "";
+    }
+
     public static void printToConsole() {
         System.out.println(String.format("UserCache [username:%s] [securityToken:%s]", username, securityToken));
     }

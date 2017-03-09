@@ -3,7 +3,8 @@ package io.ariku.gui.console;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
-import io.ariku.verification.UserVerificationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,8 +13,9 @@ import java.util.List;
  * @author Ari Aaltonen
  */
 public class UserVerificationMenu {
+    public static Logger logger = LoggerFactory.getLogger(UserVerificationMenu.class);
 
-    public UserVerificationService userVerificationService;
+    public RestClient restClient;
     public VerifySignUpPage verifySignUpPage;
     public SignUpPage signUpPage;
     public LoginPage loginPage;
@@ -23,20 +25,21 @@ public class UserVerificationMenu {
 
         List<Button> buttons = Arrays.asList(
                 new Button("SignUp", () -> {
-                    System.out.println("Pressed SignUp");
+                    logger.debug("Pressed SignUp");
                     signUpPage.draw(window);
                 }),
                 new Button("VerifySignUp", () -> {
-                    System.out.println("Pressed verifySignUp");
+                    logger.debug("Pressed SignUp");
                     verifySignUpPage.draw(window);
                 }),
                 new Button("Login", () -> {
-                    System.out.println("Pressed login");
+                    logger.debug("Pressed login");
                     loginPage.draw(window);
                 }),
                 new Button("Logout", () -> {
-                    System.out.println("Pressed logout");
-                    userVerificationService.logout(UserCache.authorizeRequest());
+                    logger.debug("Pressed logout");
+                    logout();
+
                 }),
                 new Button("Menu", () -> baseMenu.draw(window))
         );
@@ -45,6 +48,18 @@ public class UserVerificationMenu {
         buttons.forEach(button -> button.addTo(panel));
 
         window.setComponent(panel);
+    }
+
+    private void logout() {
+        String username = UserCache.authorizeRequest().username;
+        String securityMessage = UserCache.authorizeRequest().securityMessage;
+        String response = restClient.logoutRequest(username, securityMessage);
+
+        logger.debug("LogoutRequest response '{}' with username:{}", response, username);
+
+        if (response.isEmpty()) {
+            UserCache.clear();
+        }
     }
 
 }

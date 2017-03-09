@@ -13,7 +13,7 @@ public class GuiComposer {
 
         baseMenu.userVerificationMenu = new UserVerificationMenu();
         baseMenu.userVerificationMenu.baseMenu = baseMenu;
-        baseMenu.userVerificationMenu.userVerificationService = userVerificationService;
+        baseMenu.userVerificationMenu.restClient = restClient;
 
         baseMenu.userVerificationMenu.signUpPage = new SignUpPage();
         baseMenu.userVerificationMenu.signUpPage.userVerificationMenu = baseMenu.userVerificationMenu;

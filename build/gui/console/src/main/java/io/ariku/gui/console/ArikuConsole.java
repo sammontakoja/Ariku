@@ -15,7 +15,6 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import io.ariku.composer.Composer;
 import io.ariku.util.data.ArikuSettings;
-import io.ariku.util.data.RestSettings;
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;
 import org.pmw.tinylog.writers.ConsoleWriter;
