@@ -6,14 +6,17 @@ import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
 import io.ariku.verification.SignUpRequest;
 import io.ariku.verification.UserVerificationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Ari Aaltonen
  */
 public class SignUpPage {
+    public static Logger logger = LoggerFactory.getLogger(SignUpPage.class);
 
     public UserVerificationMenu userVerificationMenu;
-    public UserVerificationService userVerificationService;
+    public RestClient restClient;
 
     public void draw(BasicWindow window) {
 
@@ -24,7 +27,8 @@ public class SignUpPage {
 
         Button okButton = new Button("OK", () -> {
             String username = emailAddressText.getText();
-            userVerificationService.signUp(new SignUpRequest(username));
+            String response = restClient.signUpRequest(username);
+            logger.debug("SignUpRequest with username:{} {}", username, response);
         });
         okButton.addTo(panel);
 

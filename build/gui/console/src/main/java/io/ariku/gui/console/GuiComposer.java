@@ -1,6 +1,7 @@
 package io.ariku.gui.console;
 
 import io.ariku.owner.OwnerService;
+import io.ariku.util.data.RestSettings;
 import io.ariku.verification.UserVerificationService;
 
 /**
@@ -8,7 +9,7 @@ import io.ariku.verification.UserVerificationService;
  */
 public class GuiComposer {
 
-    public BaseMenu baseMenu(OwnerService ownerService, UserVerificationService userVerificationService) {
+    public BaseMenu baseMenu(RestClient restClient, OwnerService ownerService, UserVerificationService userVerificationService) {
         BaseMenu baseMenu = new BaseMenu();
 
         baseMenu.userVerificationMenu = new UserVerificationMenu();
@@ -17,7 +18,7 @@ public class GuiComposer {
 
         baseMenu.userVerificationMenu.signUpPage = new SignUpPage();
         baseMenu.userVerificationMenu.signUpPage.userVerificationMenu = baseMenu.userVerificationMenu;
-        baseMenu.userVerificationMenu.signUpPage.userVerificationService = userVerificationService;
+        baseMenu.userVerificationMenu.signUpPage.restClient = restClient;
 
         baseMenu.userVerificationMenu.verifySignUpPage = new VerifySignUpPage();
         baseMenu.userVerificationMenu.verifySignUpPage.userVerificationMenu = baseMenu.userVerificationMenu;
