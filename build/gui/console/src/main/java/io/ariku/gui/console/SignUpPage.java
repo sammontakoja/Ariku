@@ -38,12 +38,4 @@ public class SignUpPage {
         window.setComponent(panel);
     }
 
-    private void signUp(String value) {
-
-        if (value.isEmpty())
-            return;
-
-        ;
-    }
-
 }
