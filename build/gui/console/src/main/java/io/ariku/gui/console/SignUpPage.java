@@ -22,12 +22,11 @@ public class SignUpPage {
 
         Panel panel = new Panel();
 
-        TextBox emailAddressText = new TextBox();
-        emailAddressText.addTo(panel);
+        TextBox username = new TextBox();
+        username.addTo(panel);
 
         Button okButton = new Button("OK", () -> {
-            String username = emailAddressText.getText();
-            String response = restClient.signUpRequest(username);
+            String response = restClient.signUpRequest(username.getText());
             logger.debug("SignUpRequest with username:{} {}", username, response);
         });
         okButton.addTo(panel);
