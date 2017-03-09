@@ -4,50 +4,39 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
-import io.ariku.verification.LoginRequest;
-import io.ariku.verification.UserVerificationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Ari Aaltonen
  */
 public class LoginPage {
+    public static Logger logger = LoggerFactory.getLogger(LoginPage.class);
 
     public UserVerificationMenu userVerificationMenu;
-    public UserVerificationService userVerificationService;
+    public RestClient restClient;
 
     public void draw(BasicWindow window) {
 
         Panel panel = new Panel();
 
-        TextBox emailAddressText = new TextBox();
-        emailAddressText.addTo(panel);
+        TextBox username = new TextBox();
+        username.addTo(panel);
 
-        Button okButton = new Button("Login", () -> login(emailAddressText.getText()));
-        okButton.addTo(panel);
+        panel.addComponent(new Button("Login", () -> {
 
-        Button exitButton = new Button("Exit", () -> userVerificationMenu.draw(window));
-        exitButton.addTo(panel);
+            String securityToken = restClient.loginRequest(username.getText());
+
+            if (!securityToken.isEmpty()) {
+                UserCache.securityToken = securityToken;
+                UserCache.username = username.getText();
+                logger.debug("LoginRequest response '{}' with username:{}", securityToken, username.getText());
+            }
+        }));
+
+        panel.addComponent(new Button("Exit", () -> userVerificationMenu.draw(window)));
 
         window.setComponent(panel);
-    }
-
-    private void login(String userId) {
-
-        if (userId.isEmpty())
-            return;
-
-        String securityMessage = userVerificationService.login(new LoginRequest(userId));
-
-        if (!securityMessage.isEmpty()) {
-            UserCache.securityToken = securityMessage;
-            UserCache.username = userId;
-            System.out.println("Login OK " + userId);
-        }
-
-        else {
-            System.out.println("Login FAIL " + userId);
-        }
-
     }
 
 }

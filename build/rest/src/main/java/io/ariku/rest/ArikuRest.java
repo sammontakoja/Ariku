@@ -76,10 +76,7 @@ public class ArikuRest {
     }
 
     private static String login(String username) {
-        String login = composer.userVerificationService.login(new LoginRequest(username));
-        if (login.isEmpty())
-            return "FAIL";
-        return login;
+        return composer.userVerificationService.login(new LoginRequest(username));
     }
 
     public static void stop() {

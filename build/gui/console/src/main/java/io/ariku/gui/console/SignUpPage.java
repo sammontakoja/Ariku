@@ -25,7 +25,7 @@ public class SignUpPage {
 
         panel.addComponent(new Button("OK", () -> {
             String response = restClient.signUpRequest(username.getText());
-            logger.debug("SignUpRequest with username:{} {}", username, response);
+            logger.debug("SignUpRequest response '{}' with username:{}", response, username.getText());
         }));
 
         panel.addComponent(new Button("Exit", () -> userVerificationMenu.draw(window)));
