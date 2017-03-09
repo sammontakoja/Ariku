@@ -14,13 +14,17 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import io.ariku.composer.Composer;
-import io.ariku.owner.OwnerService;
-import io.ariku.verification.UserVerificationService;
+import io.ariku.util.data.ArikuSettings;
+import io.ariku.util.data.RestSettings;
+import org.pmw.tinylog.Configurator;
+import org.pmw.tinylog.Level;
+import org.pmw.tinylog.writers.ConsoleWriter;
 
 import java.io.IOException;
 
 public class ArikuConsole {
 
+    public static final RestClient restClient = restClientWithDefaultUrlConfiguration();
     public static final Composer composer = new Composer();
 
     public static void main(String[] args) {
@@ -33,6 +37,11 @@ public class ArikuConsole {
 
     public static void startConsole(AfterConsoleStarted afterConsoleStarted) {
 
+        Configurator.defaultConfig()
+                .writer(new ConsoleWriter())
+                .level(Level.DEBUG)
+                .activate();
+
         BasicWindow window = new BasicWindow();
 
         Screen screen;
@@ -44,7 +53,7 @@ public class ArikuConsole {
             throw new RuntimeException(e);
         }
 
-        BaseMenu baseMenu = new GuiComposer().baseMenu(composer.ownerService, composer.userVerificationService);
+        BaseMenu baseMenu = new GuiComposer().baseMenu(restClient, composer.ownerService, composer.userVerificationService);
 
         baseMenu.draw(window);
 
@@ -57,7 +66,11 @@ public class ArikuConsole {
         gui.waitForWindowToClose(window);
     }
 
-
+    private static RestClient restClientWithDefaultUrlConfiguration() {
+        RestClient restClient = new RestClient();
+        restClient.restSettings = ArikuSettings.restClientWithDefaultUrlConfiguration();
+        return restClient;
+    }
 
 }
 
