@@ -21,7 +21,7 @@ public class Util {
     }
 
     public static HttpRequestWithBody logoutRequest(String username, String securityToken) {
-        return Unirest.post(loginUrl()).queryString("username", username).queryString("security_token", securityToken);
+        return Unirest.post(logoutUrl()).queryString("username", username).queryString("security_token", securityToken);
     }
 
     public static String signUpUrl() {

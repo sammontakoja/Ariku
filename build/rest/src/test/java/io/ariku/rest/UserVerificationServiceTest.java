@@ -10,9 +10,6 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static io.ariku.rest.Util.*;
-import static io.ariku.rest.Util.loginUrl;
-import static io.ariku.rest.Util.signUpUrl;
-import static io.ariku.rest.Util.verifySignUpUrl;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -65,6 +62,16 @@ public class UserVerificationServiceTest {
         verifySignUpRequest(username).asString();
         String securityToken = loginRequest(username).asString().getBody();
         assertThat(UUID.fromString(securityToken).toString().length(), is(36));
+    }
+
+    @Test
+    public void log_out_successful_when_using_given_securityToken() throws UnirestException {
+        String username = UUID.randomUUID().toString();
+        signUpRequest(username).asString();
+        verifySignUpRequest(username).asString();
+        String securityToken = loginRequest(username).asString().getBody();
+        String response = logoutRequest(username, securityToken).asString().getBody();
+        assertThat(response, is("OK"));
     }
 
 

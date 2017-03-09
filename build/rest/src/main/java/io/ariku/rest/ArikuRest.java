@@ -8,10 +8,7 @@ import com.google.gson.Gson;
 import io.ariku.composer.Composer;
 import io.ariku.util.data.ArikuSettings;
 import io.ariku.util.data.RestSettings;
-import io.ariku.verification.LoginRequest;
-import io.ariku.verification.SignUpRequest;
-import io.ariku.verification.UserVerification;
-import io.ariku.verification.VerifySignUpRequest;
+import io.ariku.verification.*;
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;
 import org.pmw.tinylog.writers.ConsoleWriter;
@@ -47,7 +44,7 @@ public class ArikuRest {
             post(rs.signUpPath(), (request, response) -> signUp(request.queryParams("username")));
             post(rs.verifySignUpPath(), (request, response) -> verifySignUp(request.queryParams("username")));
             post(rs.loginPath(), (request, response) -> login(request.queryParams("username")));
-            post(rs.logoutPath(), (request, response) -> login(request.queryParams("username")));
+            post(rs.logoutPath(), (request, response) -> logout(request.queryParams("username"), request.queryParams("security_token")));
         });
 
     }
@@ -56,7 +53,6 @@ public class ArikuRest {
         composer.userVerificationService.signUp(new SignUpRequest(username));
 
         Optional<UserVerification> userVerification = composer.userVerificationService.userVerificationDatabase.findByUsername(username);
-
         if (userVerification.isPresent())
             return "OK";
 
@@ -67,7 +63,6 @@ public class ArikuRest {
         composer.userVerificationService.verifySignUp(new VerifySignUpRequest(username));
 
         Optional<UserVerification> userVerification = composer.userVerificationService.userVerificationDatabase.findByUsername(username);
-
         if (userVerification.isPresent())
             if (userVerification.get().isSignedInConfirmed)
                 return "OK";
@@ -77,6 +72,17 @@ public class ArikuRest {
 
     private static String login(String username) {
         return composer.userVerificationService.login(new LoginRequest(username));
+    }
+
+    private static String logout(String username, String securityToken) {
+        composer.userVerificationService.logout(new AuthorizeRequest(username, securityToken));
+
+        Optional<UserVerification> userVerification = composer.userVerificationService.userVerificationDatabase.findByUsername(username);
+        if (userVerification.isPresent())
+            if (userVerification.get().securityMessage.token.isEmpty())
+                return "OK";
+
+        return "FAIL";
     }
 
     public static void stop() {
