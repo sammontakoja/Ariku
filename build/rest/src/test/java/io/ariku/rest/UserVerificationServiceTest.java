@@ -52,7 +52,7 @@ public class UserVerificationServiceTest {
     public void login_fail_when_sign_up_verification_is_not_done() throws UnirestException {
         String username = UUID.randomUUID().toString();
         Util.signUpRequest(username);
-        assertThat(loginRequest(username).asString().getBody(), is("FAIL"));
+        assertThat(loginRequest(username).asString().getBody(), is(""));
     }
 
     @Test
