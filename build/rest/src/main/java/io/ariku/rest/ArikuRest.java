@@ -12,6 +12,9 @@ import io.ariku.verification.LoginRequest;
 import io.ariku.verification.SignUpRequest;
 import io.ariku.verification.UserVerification;
 import io.ariku.verification.VerifySignUpRequest;
+import org.pmw.tinylog.Configurator;
+import org.pmw.tinylog.Level;
+import org.pmw.tinylog.writers.ConsoleWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +33,11 @@ public class ArikuRest {
     }
 
     public static void start() {
+
+        Configurator.defaultConfig()
+                .writer(new ConsoleWriter())
+                .level(Level.INFO)
+                .activate();
 
         port(5000);
         Gson gson = new Gson();
