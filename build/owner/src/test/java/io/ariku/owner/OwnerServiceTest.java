@@ -27,8 +27,10 @@ public class OwnerServiceTest {
     @Test
     public void authorized_user_can_create_new_competition() {
 
+        String userId = UUID.randomUUID().toString();
+
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> true;
+        ownerService.userAuthorizer = authorizeRequest -> userId;
 
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);
 
@@ -37,16 +39,21 @@ public class OwnerServiceTest {
         newCompetitionRequest.competitionType = "Skeet";
         newCompetitionRequest.authorizeRequest = new AuthorizeRequest("username", "token");
 
-        ownerService.createNewCompetition(newCompetitionRequest);
+        String competitionId = UUID.randomUUID().toString();
 
-        verify(ownerService.competitionDatabase).createCompetition(anyString(),anyString(),anyString());
+        when(ownerService.competitionDatabase.createCompetition(anyString(),anyString(),anyString()))
+                .thenReturn(new Competition(competitionId));
+
+        Optional<Competition> newCompetition = ownerService.createNewCompetition(newCompetitionRequest);
+
+        assertThat(newCompetition.isPresent(), is(true));
     }
 
     @Test
     public void non_authorized_user_cannot_create_new_competition() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> false;
+        ownerService.userAuthorizer = authorizeRequest -> "";
 
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);
 
@@ -64,7 +71,7 @@ public class OwnerServiceTest {
     public void authorized_user_can_list_own_competitions() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> true;
+        ownerService.userAuthorizer = authorizeRequest -> "userId";
 
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);
 
@@ -80,7 +87,7 @@ public class OwnerServiceTest {
     public void non_authorized_user_cannot_list_own_competitions() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> false;
+        ownerService.userAuthorizer = authorizeRequest -> "";
 
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);
 
@@ -96,7 +103,7 @@ public class OwnerServiceTest {
     public void authorized_owner_can_add_another_user_to_be_competition_owner() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> true;
+        ownerService.userAuthorizer = authorizeRequest -> "userId";
 
         ownerService.ownerDatabase = mock(OwnerDatabase.class);
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);
@@ -138,7 +145,7 @@ public class OwnerServiceTest {
     public void when_caller_is_different_user_than_owner_then_adding_new_owner_fails() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> true;
+        ownerService.userAuthorizer = authorizeRequest -> "userId";
 
         ownerService.ownerDatabase = mock(OwnerDatabase.class);
 
@@ -160,7 +167,7 @@ public class OwnerServiceTest {
     @Test
     public void non_authorized_owner_cannot_add_another_user_to_be_competition_owner() {
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> false;
+        ownerService.userAuthorizer = authorizeRequest -> "";
 
         ownerService.ownerDatabase = mock(OwnerDatabase.class);
 
@@ -179,7 +186,7 @@ public class OwnerServiceTest {
     public void non_owner_user_cannot_add_another_user_to_be_competition_owner() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> true;
+        ownerService.userAuthorizer = authorizeRequest -> "userId";
 
         ownerService.ownerDatabase = mock(OwnerDatabase.class);
         ownerService.competitionDatabase = mock(CompetitionDatabase.class);

@@ -19,7 +19,7 @@ public class WhenClosingAttendingToCompetitionTest {
     public void non_authorized_owner_cannot_close_attending_to_competition() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> false;
+        ownerService.userAuthorizer = authorizeRequest -> "";
 
         CompetitionStateDatabase competitionStateDatabase = mock(CompetitionStateDatabase.class);
         ownerService.competitionStateDatabase = competitionStateDatabase;
@@ -43,7 +43,7 @@ public class WhenClosingAttendingToCompetitionTest {
     public void authorized_non_owner_user_cannot_close_attending_to_competition() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> true;
+        ownerService.userAuthorizer = authorizeRequest -> "userId";
 
         CompetitionStateDatabase competitionStateDatabase = mock(CompetitionStateDatabase.class);
         ownerService.competitionStateDatabase = competitionStateDatabase;
@@ -64,7 +64,7 @@ public class WhenClosingAttendingToCompetitionTest {
     public void authorized_owner_can_close_attending_to_competition() {
 
         OwnerService ownerService = new OwnerService();
-        ownerService.userAuthorizer = authorizeRequest -> true;
+        ownerService.userAuthorizer = authorizeRequest -> "userId";
 
         CompetitionStateDatabase competitionStateDatabase = mock(CompetitionStateDatabase.class);
         ownerService.competitionStateDatabase = competitionStateDatabase;

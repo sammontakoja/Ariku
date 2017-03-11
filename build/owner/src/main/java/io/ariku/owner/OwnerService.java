@@ -7,6 +7,7 @@ import io.ariku.verification.UserAuthorizer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ari Aaltonen
@@ -19,21 +20,23 @@ public class OwnerService {
     public UserDatabase userDatabase;
     public CompetitionStateDatabase competitionStateDatabase;
 
-    public void createNewCompetition(NewCompetitionRequest request) {
-        if (userAuthorizer.isAuthorized(request.authorizeRequest)) {
-            competitionDatabase.createCompetition(request.authorizeRequest.username, request.competitionName, request.competitionType);
+    public Optional<Competition> createNewCompetition(NewCompetitionRequest request) {
+        String authorizedUserId = userAuthorizer.authorizedUserId(request.authorizeRequest);
+        if (!authorizedUserId.isEmpty()) {
+            Competition competition = competitionDatabase.createCompetition(authorizedUserId, request.competitionName, request.competitionType);
+            return Optional.of(competition);
         }
-
+        return Optional.empty();
     }
 
     public List<Competition> findOwnedCompetitions(AuthorizeRequest request) {
-        if (userAuthorizer.isAuthorized(request))
+        if (!userAuthorizer.authorizedUserId(request).isEmpty())
             return competitionDatabase.competitionsByOwner(request.username);
         return new ArrayList<>();
     }
 
     public void addOwnerRights(AddOwnerRightsRequest request) {
-        if (userAuthorizer.isAuthorized(request.authorizeRequest))
+        if (!userAuthorizer.authorizedUserId(request.authorizeRequest).isEmpty())
             if (request.authorizeRequest.username.equals(request.userIdExistingOwner))
                 competitionDatabase.competitionsByOwner(request.userIdExistingOwner).stream()
                         .filter(ownedCompetition -> ownedCompetition.name.equals(request.competitionName))
@@ -43,25 +46,25 @@ public class OwnerService {
     }
 
     public void openAttending(OwnerCompetitionRequest request) {
-        if (userAuthorizer.isAuthorized(request.authorizeRequest))
+        if (!userAuthorizer.authorizedUserId(request.authorizeRequest).isEmpty())
             if (userIsOwner(request.userId, request.competitionId))
                 competitionStateDatabase.openAttending(request.competitionId);
     }
 
     public void closeAttending(OwnerCompetitionRequest request) {
-        if (userAuthorizer.isAuthorized(request.authorizeRequest))
+        if (!userAuthorizer.authorizedUserId(request.authorizeRequest).isEmpty())
             if (userIsOwner(request.userId, request.competitionId))
                 competitionStateDatabase.closeAttending(request.competitionId);
     }
 
     public void openCompetition(OwnerCompetitionRequest request) {
-        if (userAuthorizer.isAuthorized(request.authorizeRequest))
+        if (!userAuthorizer.authorizedUserId(request.authorizeRequest).isEmpty())
             if (userIsOwner(request.userId, request.competitionId))
                 competitionStateDatabase.openCompetition(request.competitionId);
     }
 
     public void closeCompetition(OwnerCompetitionRequest request) {
-        if (userAuthorizer.isAuthorized(request.authorizeRequest))
+        if (!userAuthorizer.authorizedUserId(request.authorizeRequest).isEmpty())
             if (userIsOwner(request.userId, request.competitionId))
                 competitionStateDatabase.closeCompetition(request.competitionId);
     }
