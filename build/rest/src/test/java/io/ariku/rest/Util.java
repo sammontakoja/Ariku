@@ -25,9 +25,15 @@ public class Util {
     }
 
     public static HttpRequestWithBody newCompetitionRequest(String competitionName, String competitionType, String username, String securityToken) {
-        return Unirest.post(logoutUrl())
+        return Unirest.post(newCompetitionUrl())
                 .queryString("competition_name", competitionName)
                 .queryString("competition_type", competitionType)
+                .queryString("username", username)
+                .queryString("security_token", securityToken);
+    }
+
+    public static HttpRequestWithBody listOwnedCompetitionsRequest(String username, String securityToken) {
+        return Unirest.post(listOfOwnerCompetitionsUrl())
                 .queryString("username", username)
                 .queryString("security_token", securityToken);
     }
@@ -46,6 +52,14 @@ public class Util {
 
     public static String logoutUrl() {
         return "http://localhost:5000/verification/logout";
+    }
+
+    public static String newCompetitionUrl() {
+        return "http://localhost:5000/owner/newcompetition";
+    }
+
+    public static String listOfOwnerCompetitionsUrl() {
+        return "http://localhost:5000/owner/competitions";
     }
 
 }

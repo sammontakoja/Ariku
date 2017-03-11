@@ -28,5 +28,9 @@ public class Owner {
 
         return "FAIL";
     }
+
+    public String listOwnedCompetitions(String competitionName, String competitionType, String username, String securityToken) {
+        return "FAIL";
+    }
     
 }

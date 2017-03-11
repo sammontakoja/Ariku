@@ -7,12 +7,15 @@ package io.ariku.rest;
 import com.google.gson.Gson;
 import io.ariku.composer.Composer;
 import io.ariku.util.data.ArikuSettings;
+import io.ariku.util.data.Competition;
 import io.ariku.util.data.RestSettings;
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;
 import org.pmw.tinylog.writers.ConsoleWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.UUID;
 
 import static spark.Spark.*;
 
@@ -57,6 +60,8 @@ public class ArikuRest {
                 String securityToken = request.queryParams("security_token");
                 return owner.newCompetition(competitionName, competitionType, username, securityToken);
             });
+            // TODO Get proper competitions list response
+            post(rs.competitionListPath(), "application/json", (request, response) -> new Competition(UUID.randomUUID().toString()), new JsonTransformer());
         });
 
     }
