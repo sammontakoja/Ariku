@@ -224,47 +224,49 @@ public class UserVerificationServiceTest {
     }
 
     @Test
-    public void user_is_authorized_when_given_userId_and_security_token_match() {
+    public void authorized_userId_returned_when_given_security_token_match() {
 
         UserVerification userVerification = new UserVerification();
-        userVerification.userId = "a@a.com";
+        userVerification.userId = UUID.randomUUID().toString();
         userVerification.securityMessage.token = UUID.randomUUID().toString();
 
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.findByUserId(anyString())).thenReturn(Optional.of(userVerification));
+        when(userVerificationDatabase.findByUsername(anyString())).thenReturn(Optional.of(userVerification));
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         AuthorizeRequest authorizeRequest = new AuthorizeRequest();
         authorizeRequest.securityMessage = userVerification.securityMessage.token;
-        authorizeRequest.username = userVerification.userId;
+        authorizeRequest.username = UUID.randomUUID().toString();
 
-        boolean userAuthorized = userVerificationService.isAuthorized(authorizeRequest);
+        String authorizedUserId = userVerificationService.authorizedUserId(authorizeRequest);
 
-        assertThat(userAuthorized, is(true));
+        assertThat(authorizedUserId, is(userVerification.userId));
     }
 
     @Test
-    public void user_is_not_authorized_when_given_security_token_do_not_match() {
+    public void authorized_userId_returned_as_empty_when_given_security_token_do_not_match() {
 
         UserVerification userVerification = new UserVerification();
         userVerification.userId = "a@a.com";
         userVerification.securityMessage.token = UUID.randomUUID().toString();
 
+        String username = UUID.randomUUID().toString();
+
         UserVerificationDatabase userVerificationDatabase = mock(UserVerificationDatabase.class);
-        when(userVerificationDatabase.findByUserId(anyString())).thenReturn(Optional.of(userVerification));
+        when(userVerificationDatabase.findByUsername(username)).thenReturn(Optional.of(userVerification));
 
         UserVerificationService userVerificationService = new UserVerificationService();
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         AuthorizeRequest authorizeRequest = new AuthorizeRequest();
-        authorizeRequest.securityMessage = "securityToken";
-        authorizeRequest.username = "username";
+        authorizeRequest.securityMessage = "totallyDifferentSecurityToken";
+        authorizeRequest.username = username;
 
-        boolean userAuthorized = userVerificationService.isAuthorized(authorizeRequest);
+        String authorizedUserId = userVerificationService.authorizedUserId(authorizeRequest);
 
-        assertThat(userAuthorized, is(false));
+        assertThat(authorizedUserId, is(""));
     }
 
     @Test
@@ -280,7 +282,7 @@ public class UserVerificationServiceTest {
         authorizeRequest.securityMessage = "securityToken";
         authorizeRequest.username = "username";
 
-        assertThat(userVerificationService.isAuthorized(authorizeRequest), is(false));
+        assertThat(userVerificationService.authorizedUserId(authorizeRequest), is(""));
     }
 
 }

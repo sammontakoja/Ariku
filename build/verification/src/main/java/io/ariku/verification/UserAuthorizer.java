@@ -5,6 +5,6 @@ package io.ariku.verification;
  */
 public interface UserAuthorizer {
 
-    boolean isAuthorized(AuthorizeRequest authorizeRequest);
+    String authorizedUserId(AuthorizeRequest authorizeRequest);
 
 }

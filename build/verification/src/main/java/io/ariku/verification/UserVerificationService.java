@@ -54,16 +54,14 @@ public class UserVerificationService implements UserAuthorizer {
         }
     }
 
-    public boolean isAuthorized(AuthorizeRequest authorizeRequest) {
-        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUserId(authorizeRequest.username);
+    public String authorizedUserId(AuthorizeRequest authorizeRequest) {
+        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUsername(authorizeRequest.username);
 
-        if (userVerificationOptional.isPresent()) {
-            UserVerification userVerification = userVerificationOptional.get();
-            boolean authorizedCall = userVerification.securityMessage.token.equals(authorizeRequest.securityMessage);
-            System.out.println(authorizeRequest + " authorizedCall => " + authorizedCall);
-            return authorizedCall;
-        }
-        return false;
+        if (userVerificationOptional.isPresent())
+            if (userVerificationOptional.get().securityMessage.token.equals(authorizeRequest.securityMessage))
+                return userVerificationOptional.get().userId;
+
+        return "";
     }
 
     public boolean isUserSignedInConfirmed(String userId) {
