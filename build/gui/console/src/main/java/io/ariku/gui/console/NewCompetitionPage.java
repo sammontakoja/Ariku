@@ -43,9 +43,6 @@ public class NewCompetitionPage {
 
     private boolean createNewCompetition(String name, String type) {
 
-        if (name.isEmpty() || type.isEmpty())
-            return false;
-
         NewCompetitionRequest newCompetitionRequest = new NewCompetitionRequest();
         newCompetitionRequest.competitionName = name;
         newCompetitionRequest.competitionType = type;

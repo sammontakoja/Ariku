@@ -31,7 +31,7 @@ public class UserService {
     }
 
     private boolean userIsAuthorizedAndCompetitionIsOpenToAttending(ParticipateRequest request) {
-        if (userAuthorizer.isAuthorized(request.authorizeRequest)) {
+        if (!userAuthorizer.authorizedUserId(request.authorizeRequest).isEmpty()) {
             Optional<CompetitionState> competitionState = competitionStateDatabase.competitionState(request.competitionId);
             return (competitionState.isPresent() && competitionState.get().attending);
         }
@@ -39,7 +39,7 @@ public class UserService {
     }
 
     public List<Competition> competitions(AuthorizeRequest request) {
-        if (userAuthorizer.isAuthorized(request))
+        if (!userAuthorizer.authorizedUserId(request).isEmpty())
             return attendingDatabase.competitionsByAttendingUser(request.username);
         return new ArrayList<>();
     }

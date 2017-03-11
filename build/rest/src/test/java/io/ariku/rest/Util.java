@@ -24,6 +24,14 @@ public class Util {
         return Unirest.post(logoutUrl()).queryString("username", username).queryString("security_token", securityToken);
     }
 
+    public static HttpRequestWithBody newCompetitionRequest(String competitionName, String competitionType, String username, String securityToken) {
+        return Unirest.post(logoutUrl())
+                .queryString("competition_name", competitionName)
+                .queryString("competition_type", competitionType)
+                .queryString("username", username)
+                .queryString("security_token", securityToken);
+    }
+
     public static String signUpUrl() {
         return "http://localhost:5000/verification/signup";
     }

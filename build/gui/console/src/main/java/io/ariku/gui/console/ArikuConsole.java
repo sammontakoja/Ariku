@@ -52,7 +52,7 @@ public class ArikuConsole {
             throw new RuntimeException(e);
         }
 
-        BaseMenu baseMenu = new GuiComposer().baseMenu(restClient, composer.ownerService, composer.userVerificationService);
+        BaseMenu baseMenu = new GUIComposer().baseMenu(restClient, composer.ownerService, composer.userVerificationService);
 
         baseMenu.draw(window);
 

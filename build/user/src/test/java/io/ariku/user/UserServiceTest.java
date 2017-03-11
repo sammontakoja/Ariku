@@ -32,7 +32,7 @@ public class UserServiceTest {
 
         UserService userService = new UserService();
 
-        userService.userAuthorizer = authorizeRequest -> true;
+        userService.userAuthorizer = authorizeRequest -> "userId";
 
         CompetitionState competitionState = new CompetitionState();
         competitionState.attending = true;
@@ -60,7 +60,7 @@ public class UserServiceTest {
 
         UserService userService = new UserService();
 
-        userService.userAuthorizer = authorizeRequest -> true;
+        userService.userAuthorizer = authorizeRequest -> "userId";
 
         CompetitionState competitionState = new CompetitionState();
         competitionState.attending = false;
@@ -87,7 +87,7 @@ public class UserServiceTest {
         String competitionId = UUID.randomUUID().toString();
 
         UserService userService = new UserService();
-        userService.userAuthorizer = authorizeRequest -> false;
+        userService.userAuthorizer = authorizeRequest -> "";
 
         userService.attendingDatabase = mock(AttendingDatabase.class);
 
@@ -107,7 +107,7 @@ public class UserServiceTest {
         String competitionId = UUID.randomUUID().toString();
 
         UserService userService = new UserService();
-        userService.userAuthorizer = authorizeRequest -> true;
+        userService.userAuthorizer = authorizeRequest -> "userId";
 
         userService.attendingDatabase = mock(AttendingDatabase.class);
 
@@ -134,7 +134,7 @@ public class UserServiceTest {
         String competitionId = UUID.randomUUID().toString();
 
         UserService userService = new UserService();
-        userService.userAuthorizer = authorizeRequest -> true;
+        userService.userAuthorizer = authorizeRequest -> "userId";
 
         userService.attendingDatabase = mock(AttendingDatabase.class);
 
@@ -161,7 +161,7 @@ public class UserServiceTest {
         String competitionId = UUID.randomUUID().toString();
 
         UserService userService = new UserService();
-        userService.userAuthorizer = authorizeRequest -> false;
+        userService.userAuthorizer = authorizeRequest -> "";
 
         userService.attendingDatabase = mock(AttendingDatabase.class);
 
@@ -180,7 +180,7 @@ public class UserServiceTest {
         String userId = UUID.randomUUID().toString();
 
         UserService userService = new UserService();
-        userService.userAuthorizer = authorizeRequest -> true;
+        userService.userAuthorizer = authorizeRequest -> "userId";
 
         userService.attendingDatabase = mock(AttendingDatabase.class);
 
@@ -194,7 +194,7 @@ public class UserServiceTest {
         String userId = UUID.randomUUID().toString();
 
         UserService userService = new UserService();
-        userService.userAuthorizer = authorizeRequest -> false;
+        userService.userAuthorizer = authorizeRequest -> "";
 
         userService.attendingDatabase = mock(AttendingDatabase.class);
 

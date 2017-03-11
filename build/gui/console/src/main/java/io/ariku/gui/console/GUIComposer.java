@@ -6,7 +6,7 @@ import io.ariku.verification.UserVerificationService;
 /**
  * @author Ari Aaltonen
  */
-public class GuiComposer {
+public class GUIComposer {
 
     public BaseMenu baseMenu(RestClient restClient, OwnerService ownerService, UserVerificationService userVerificationService) {
         BaseMenu baseMenu = new BaseMenu();

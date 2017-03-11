@@ -29,7 +29,10 @@ public class ArikuRest {
 
         Composer composer = new Composer();
         Verification verification = new Verification();
-        verification.composer = composer;
+        verification.userVerificationService = composer.userVerificationService;
+
+        Owner owner = new Owner();
+        owner.ownerService = composer.ownerService;
 
         Configurator.defaultConfig()
                 .writer(new ConsoleWriter())
@@ -40,19 +43,20 @@ public class ArikuRest {
         Gson gson = new Gson();
 
         path(rs.verificationPath(), () -> {
-            before((q, a) -> logger.info("Received verification call"));
             post(rs.signUpPath(), (request, response) -> verification.signUp(request.queryParams("username")));
             post(rs.verifySignUpPath(), (request, response) -> verification.verifySignUp(request.queryParams("username")));
             post(rs.loginPath(), (request, response) -> verification.login(request.queryParams("username")));
             post(rs.logoutPath(), (request, response) -> verification.logout(request.queryParams("username"), request.queryParams("security_token")));
         });
 
-        path(rs.verificationPath(), () -> {
-            before((q, a) -> logger.info("Received verification call"));
-            post(rs.signUpPath(), (request, response) -> verification.signUp(request.queryParams("username")));
-            post(rs.verifySignUpPath(), (request, response) -> verification.verifySignUp(request.queryParams("username")));
-            post(rs.loginPath(), (request, response) -> verification.login(request.queryParams("username")));
-            post(rs.logoutPath(), (request, response) -> verification.logout(request.queryParams("username"), request.queryParams("security_token")));
+        path(rs.ownerPath(), () -> {
+            post(rs.competitionNewPath(), (request, response) -> {
+                String competitionName = request.queryParams("competition_name");
+                String competitionType = request.queryParams("competition_type");
+                String username = request.queryParams("username");
+                String securityToken = request.queryParams("security_token");
+                return owner.newCompetition(competitionName, competitionType, username, securityToken);
+            });
         });
 
     }

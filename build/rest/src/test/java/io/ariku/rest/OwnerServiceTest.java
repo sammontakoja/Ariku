@@ -1,6 +1,5 @@
 package io.ariku.rest;
 
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -34,7 +33,29 @@ public class OwnerServiceTest {
         String competitionName = "Helsinki Grand Prix";
         String competitionType = "RockPaperScissors";
 
+        signUpRequest(username).asString();
+        verifySignUpRequest(username).asString();
+        String securityToken = loginRequest(username).asString().getBody();
 
+        String response = newCompetitionRequest(competitionName, competitionType, username, securityToken).asString().getBody();
+
+        assertThat(response, is("OK"));
+    }
+
+    @Test
+    public void create_competition_fail_when_security_token_not_used() throws UnirestException {
+
+        String username = UUID.randomUUID().toString();
+        String competitionName = "Helsinki Grand Prix";
+        String competitionType = "RockPaperScissors";
+
+        signUpRequest(username).asString();
+        verifySignUpRequest(username).asString();
+        loginRequest(username).asString().getBody();
+
+        String response = newCompetitionRequest(competitionName, competitionType, username, "notSecurityToken").asString().getBody();
+
+        assertThat(response, is("FAIL"));
     }
 
 }
