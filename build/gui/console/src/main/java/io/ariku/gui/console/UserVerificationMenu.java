@@ -57,7 +57,7 @@ public class UserVerificationMenu {
 
         logger.debug("LogoutRequest response '{}' with username:{}", response, username);
 
-        if (response.isEmpty()) {
+        if (response.equals("OK")) {
             UserCache.clear();
         }
     }

@@ -14,25 +14,36 @@ public class RestClient {
     public RestSettings restSettings;
 
     public String signUpRequest(String username) {
-        return new HttpCall().response(restSettings.signUpUrl(), username);
+        return new HttpCall().doCall(restSettings.signUpUrl(), username);
     }
 
     public String verifySignUpRequest(String username) {
-        return new HttpCall().response(restSettings.verifySignUpUrl(), username);
+        return new HttpCall().doCall(restSettings.verifySignUpUrl(), username);
     }
 
     public String loginRequest(String username) {
-        return new HttpCall().response(restSettings.loginUrl(), username);
+        return new HttpCall().doCall(restSettings.loginUrl(), username);
     }
 
     public String logoutRequest(String username, String securityToken) {
-        return new HttpCall().response(restSettings.logoutUrl(), username);
+        return new HttpCall().doRestrictedCall(restSettings.logoutUrl(), username, securityToken);
     }
 
     private class HttpCall {
-        String response(String url, String username) {
+        String doCall(String url, String username) {
             try {
                 return Unirest.post(url).queryString("username", username).asString().getBody();
+            } catch (Exception e) {
+                logger.error("Failed to send request to '{}'", url, e);
+                return "FAIL";
+            }
+        }
+        String doRestrictedCall(String url, String username, String securityToken) {
+            try {
+                return Unirest.post(url)
+                        .queryString("username", username)
+                        .queryString("security_token", securityToken)
+                        .asString().getBody();
             } catch (Exception e) {
                 logger.error("Failed to send request to '{}'", url, e);
                 return "FAIL";
