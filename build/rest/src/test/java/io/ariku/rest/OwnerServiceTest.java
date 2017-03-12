@@ -21,14 +21,13 @@ public class OwnerServiceTest {
 
     @BeforeClass
     public static void startArikuRestService() {
-        ArikuRest.start();
+        Util.startServerAndLetClientKnowAboutTCPPort();
     }
 
     @AfterClass
     public static void stopArikuRestService() {
         ArikuRest.stop();
     }
-
     @Test
     public void create_competition_successfully() throws UnirestException {
 

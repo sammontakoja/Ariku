@@ -1,6 +1,5 @@
 package io.ariku.rest;
 
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequestWithBody;
 import org.junit.AfterClass;
@@ -20,7 +19,7 @@ public class UserVerificationServiceTest {
 
     @BeforeClass
     public static void startArikuRestService() {
-        ArikuRest.start();
+        Util.startServerAndLetClientKnowAboutTCPPort();
     }
 
     @AfterClass
@@ -31,7 +30,7 @@ public class UserVerificationServiceTest {
     @Test
     public void sign_up_is_ok() throws UnirestException {
         String username = UUID.randomUUID().toString();
-        HttpRequestWithBody request = Unirest.post(signUpUrl()).queryString("username", username);
+        HttpRequestWithBody request = signUpRequest(username);
         assertThat(request.asString().getBody(), is("OK"));
     }
 

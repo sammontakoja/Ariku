@@ -3,30 +3,51 @@ package io.ariku.rest;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.request.HttpRequest;
 import com.mashape.unirest.request.HttpRequestWithBody;
+import io.ariku.util.data.RestSettings;
+
+import java.io.IOException;
+import java.net.ServerSocket;
 
 /**
  * @author Ari Aaltonen
  */
 public class Util {
 
+    static RestSettings restSettings = new RestSettings();
+
+    public static void startServerAndLetClientKnowAboutTCPPort() {
+        int freePort = freePort();
+        ArikuRest.start(freePort);
+        restSettings.port = new Integer(freePort).toString();
+    }
+
+    private static int freePort() {
+        try (ServerSocket socket = new ServerSocket(0)) {
+            socket.setReuseAddress(true);
+            return socket.getLocalPort();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static HttpRequestWithBody signUpRequest(String username) {
-        return Unirest.post(signUpUrl()).queryString("username", username);
+        return Unirest.post(restSettings.signUpUrl()).queryString("username", username);
     }
 
     public static HttpRequestWithBody verifySignUpRequest(String username) {
-        return Unirest.post(verifySignUpUrl()).queryString("username", username);
+        return Unirest.post(restSettings.verifySignUpUrl()).queryString("username", username);
     }
 
     public static HttpRequestWithBody loginRequest(String username) {
-        return Unirest.post(loginUrl()).queryString("username", username);
+        return Unirest.post(restSettings.loginUrl()).queryString("username", username);
     }
 
     public static HttpRequestWithBody logoutRequest(String username, String securityToken) {
-        return Unirest.post(logoutUrl()).queryString("username", username).queryString("security_token", securityToken);
+        return Unirest.post(restSettings.logoutUrl()).queryString("username", username).queryString("security_token", securityToken);
     }
 
     public static HttpRequestWithBody newCompetitionRequest(String competitionName, String competitionType, String username, String securityToken) {
-        return Unirest.post(newCompetitionUrl())
+        return Unirest.post(restSettings.competitionNewUrl())
                 .queryString("competition_name", competitionName)
                 .queryString("competition_type", competitionType)
                 .queryString("username", username)
@@ -34,33 +55,9 @@ public class Util {
     }
 
     public static HttpRequest listOwnedCompetitionsRequest(String username, String securityToken) {
-        return Unirest.get(listOfOwnerCompetitionsUrl())
+        return Unirest.get(restSettings.competitionListByOwnerUrl())
                 .queryString("username", username)
                 .queryString("security_token", securityToken);
-    }
-
-    public static String signUpUrl() {
-        return "http://localhost:5000/verification/signup";
-    }
-
-    public static String verifySignUpUrl() {
-        return "http://localhost:5000/verification/verifysignup";
-    }
-
-    public static String loginUrl() {
-        return "http://localhost:5000/verification/login";
-    }
-
-    public static String logoutUrl() {
-        return "http://localhost:5000/verification/logout";
-    }
-
-    public static String newCompetitionUrl() {
-        return "http://localhost:5000/owner/newcompetition";
-    }
-
-    public static String listOfOwnerCompetitionsUrl() {
-        return "http://localhost:5000/owner/competitions";
     }
 
 }
