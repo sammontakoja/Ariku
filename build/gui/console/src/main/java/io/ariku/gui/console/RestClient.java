@@ -1,6 +1,7 @@
 package io.ariku.gui.console;
 
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import io.ariku.util.data.RestSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,46 +10,53 @@ import org.slf4j.LoggerFactory;
  * @author Ari Aaltonen
  */
 public class RestClient {
-    public static Logger logger = LoggerFactory.getLogger(RestClient.class);
 
     public RestSettings restSettings;
 
     public String signUpRequest(String username) {
-        return new HttpCall().doCall(restSettings.signUpUrl(), username);
+        return HttpCaller.call(() ->
+                Unirest.post(restSettings.signUpUrl())
+                        .queryString("username", username)
+                        .asString().getBody());
     }
 
     public String verifySignUpRequest(String username) {
-        return new HttpCall().doCall(restSettings.verifySignUpUrl(), username);
+        return HttpCaller.call(() ->
+                Unirest.post(restSettings.verifySignUpUrl())
+                        .queryString("username", username)
+                        .asString().getBody());
     }
 
     public String loginRequest(String username) {
-        return new HttpCall().doCall(restSettings.loginUrl(), username);
+        return HttpCaller.call(() ->
+                Unirest.post(restSettings.loginUrl())
+                        .queryString("username", username)
+                        .asString().getBody());
     }
 
     public String logoutRequest(String username, String securityToken) {
-        return new HttpCall().doRestrictedCall(restSettings.logoutUrl(), username, securityToken);
-    }
-
-    private class HttpCall {
-        String doCall(String url, String username) {
-            try {
-                return Unirest.post(url).queryString("username", username).asString().getBody();
-            } catch (Exception e) {
-                logger.error("Failed to send request to '{}'", url, e);
-                return "FAIL";
-            }
-        }
-        String doRestrictedCall(String url, String username, String securityToken) {
-            try {
-                return Unirest.post(url)
+        return HttpCaller.call(() ->
+                Unirest.post(restSettings.logoutUrl())
                         .queryString("username", username)
                         .queryString("security_token", securityToken)
-                        .asString().getBody();
-            } catch (Exception e) {
-                logger.error("Failed to send request to '{}'", url, e);
-                return "FAIL";
-            }
+                        .asString().getBody());
+    }
+
+}
+
+class HttpCaller {
+    public static Logger logger = LoggerFactory.getLogger(RestClient.class);
+
+    static String call(HttpCall httpCall) {
+        try {
+            return httpCall.doCall();
+        } catch (Exception e) {
+            logger.error("Failed to send request!", e);
+            return "FAIL";
         }
     }
 
+    interface HttpCall {
+        String doCall() throws UnirestException;
+    }
 }
