@@ -21,10 +21,12 @@ public class ArikuRest {
     private static RestSettings rs = ArikuSettings.restClientWithDefaultUrlConfiguration();
 
     public static void main(String[] args) {
-        start();
+        start(5000);
     }
 
-    public static void start() {
+    public static void start(int port) {
+
+        port(port);
 
         Composer composer = new Composer();
         Verification verification = new Verification();
@@ -38,7 +40,7 @@ public class ArikuRest {
                 .level(Level.INFO)
                 .activate();
 
-        port(5000);
+
 
         path(rs.verificationPath(), () -> {
             post(rs.signUpPath(), (request, response) -> verification.signUp(request.queryParams("username")));
