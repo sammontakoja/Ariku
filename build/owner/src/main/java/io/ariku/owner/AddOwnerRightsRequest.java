@@ -8,8 +8,7 @@ import io.ariku.verification.AuthorizeRequest;
 public class AddOwnerRightsRequest {
 
     public String usernameOfNewOwner;
-    public String userIdExistingOwner;
-    public String competitionName;
+    public String competitionId;
     public AuthorizeRequest authorizeRequest;
 
 }

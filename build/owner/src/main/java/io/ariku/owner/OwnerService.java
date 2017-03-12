@@ -37,10 +37,10 @@ public class OwnerService {
     }
 
     public void addOwnerRights(AddOwnerRightsRequest request) {
-        if (!userAuthorizer.authorizedUserId(request.authorizeRequest).isEmpty())
-            if (request.authorizeRequest.username.equals(request.userIdExistingOwner))
-                competitionDatabase.competitionsByOwner(request.userIdExistingOwner).stream()
-                        .filter(ownedCompetition -> ownedCompetition.name.equals(request.competitionName))
+        String authorizedUserId = userAuthorizer.authorizedUserId(request.authorizeRequest);
+        if (!authorizedUserId.isEmpty())
+                competitionDatabase.competitionsByOwner(authorizedUserId).stream()
+                        .filter(ownedCompetition -> ownedCompetition.id.equals(request.competitionId))
                         .findFirst()
                         .ifPresent(ownedAndLookedForCompetition -> userDatabase.findUserByUsername(request.usernameOfNewOwner)
                                 .ifPresent(user -> ownerDatabase.addOwner(new Owner(user.id, ownedAndLookedForCompetition.id))));
