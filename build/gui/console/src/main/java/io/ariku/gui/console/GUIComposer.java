@@ -29,7 +29,7 @@ public class GUIComposer {
 
         baseMenu.ownerMenu = new OwnerMenu();
         baseMenu.ownerMenu.baseMenu = baseMenu;
-        baseMenu.ownerMenu.ownerService = ownerService;
+        baseMenu.ownerMenu.restClient = restClient;
 
         baseMenu.ownerMenu.newOwnerPage = new NewOwnerPage();
         baseMenu.ownerMenu.newOwnerPage.ownerMenu = baseMenu.ownerMenu;
@@ -37,7 +37,7 @@ public class GUIComposer {
 
         baseMenu.ownerMenu.newCompetitionPage = new NewCompetitionPage();
         baseMenu.ownerMenu.newCompetitionPage.ownerMenu = baseMenu.ownerMenu;
-        baseMenu.ownerMenu.newCompetitionPage.ownerService = ownerService;
+        baseMenu.ownerMenu.newCompetitionPage.restClient = restClient;
 
         return baseMenu;
     }

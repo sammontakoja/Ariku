@@ -52,7 +52,7 @@ public class UserVerificationMenu {
 
     private void logout() {
         String username = UserCache.authorizeRequest().username;
-        String response = restClient.logoutRequest(UserCache.authorizeRequest());
+        String response = restClient.logout(UserCache.authorizeRequest());
 
         logger.debug("LogoutRequest response '{}' with username:{}", response, username);
 

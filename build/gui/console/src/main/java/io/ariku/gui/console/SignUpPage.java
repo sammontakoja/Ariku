@@ -24,7 +24,7 @@ public class SignUpPage {
         username.addTo(panel);
 
         panel.addComponent(new Button("OK", () -> {
-            String response = restClient.signUpRequest(username.getText());
+            String response = restClient.signUp(username.getText());
             logger.debug("SignUpRequest response '{}' with username:{}", response, username.getText());
         }));
 

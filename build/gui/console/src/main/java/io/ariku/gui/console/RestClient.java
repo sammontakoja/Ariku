@@ -14,30 +14,48 @@ public class RestClient {
 
     public RestSettings restSettings;
 
-    public String signUpRequest(String username) {
+    public String signUp(String username) {
         return HttpCaller.call(() ->
                 Unirest.post(restSettings.signUpUrl())
                         .queryString("username", username)
                         .asString().getBody());
     }
 
-    public String verifySignUpRequest(String username) {
+    public String verifySignUp(String username) {
         return HttpCaller.call(() ->
                 Unirest.post(restSettings.verifySignUpUrl())
                         .queryString("username", username)
                         .asString().getBody());
     }
 
-    public String loginRequest(String username) {
+    public String login(String username) {
         return HttpCaller.call(() ->
                 Unirest.post(restSettings.loginUrl())
                         .queryString("username", username)
                         .asString().getBody());
     }
 
-    public String logoutRequest(AuthorizeRequest request) {
+    public String logout(AuthorizeRequest request) {
         return HttpCaller.call(() ->
                 Unirest.post(restSettings.logoutUrl())
+                        .queryString("username", request.username)
+                        .queryString("security_token", request.securityToken)
+                        .asString().getBody());
+    }
+
+    public String newCompetition(String competitionName, String competitionType, AuthorizeRequest request) {
+        return HttpCaller.call(() ->
+                Unirest.post(restSettings.competitionNewUrl())
+                        .queryString("competition_name", competitionName)
+                        .queryString("competition_type", competitionType)
+                        .queryString("username", request.username)
+                        .queryString("security_token", request.securityToken)
+                        .asString().getBody());
+    }
+
+    public String ownersCompetitions(AuthorizeRequest request) {
+        return HttpCaller.call(() ->
+                Unirest.get(restSettings.competitionListByOwnerUrl())
                         .queryString("username", request.username)
                         .queryString("security_token", request.securityToken)
                         .asString().getBody());

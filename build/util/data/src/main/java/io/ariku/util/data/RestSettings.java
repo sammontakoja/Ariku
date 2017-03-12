@@ -20,6 +20,12 @@ public class RestSettings {
     public String competitionNewPath() {
         return "/newcompetition";
     }
+    public String competitionNewUrl() {
+        return urlPrefix() + ownerPath() + competitionNewPath();
+    }
+    public String competitionListByOwnerUrl() {
+        return urlPrefix() + ownerPath() + competitionListPath();
+    }
 
     // **** Verification ****
     public String signUpUrl() {

@@ -25,7 +25,7 @@ public class LoginPage {
 
         panel.addComponent(new Button("Login", () -> {
 
-            String securityToken = restClient.loginRequest(username.getText());
+            String securityToken = restClient.login(username.getText());
 
             if (!securityToken.isEmpty()) {
                 UserCache.securityToken = securityToken;

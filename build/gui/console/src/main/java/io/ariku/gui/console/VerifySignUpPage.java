@@ -24,7 +24,7 @@ public class VerifySignUpPage {
         username.addTo(panel);
 
         panel.addComponent(new Button("OK", () -> {
-            String response = restClient.verifySignUpRequest(username.getText());
+            String response = restClient.verifySignUp(username.getText());
             logger.debug("VerifySignUpRequest response '{}' with username:{}", response, username.getText());
         }));
 
