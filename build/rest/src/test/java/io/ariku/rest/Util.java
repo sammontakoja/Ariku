@@ -1,6 +1,7 @@
 package io.ariku.rest;
 
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.request.HttpRequest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 
 /**
@@ -32,8 +33,8 @@ public class Util {
                 .queryString("security_token", securityToken);
     }
 
-    public static HttpRequestWithBody listOwnedCompetitionsRequest(String username, String securityToken) {
-        return Unirest.post(listOfOwnerCompetitionsUrl())
+    public static HttpRequest listOwnedCompetitionsRequest(String username, String securityToken) {
+        return Unirest.get(listOfOwnerCompetitionsUrl())
                 .queryString("username", username)
                 .queryString("security_token", securityToken);
     }

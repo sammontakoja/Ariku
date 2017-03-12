@@ -4,18 +4,14 @@ package io.ariku.rest;
  * @author Ari Aaltonen
  */
 
-import com.google.gson.Gson;
 import io.ariku.composer.Composer;
 import io.ariku.util.data.ArikuSettings;
-import io.ariku.util.data.Competition;
 import io.ariku.util.data.RestSettings;
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;
 import org.pmw.tinylog.writers.ConsoleWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.UUID;
 
 import static spark.Spark.*;
 
@@ -43,7 +39,6 @@ public class ArikuRest {
                 .activate();
 
         port(5000);
-        Gson gson = new Gson();
 
         path(rs.verificationPath(), () -> {
             post(rs.signUpPath(), (request, response) -> verification.signUp(request.queryParams("username")));
@@ -53,6 +48,7 @@ public class ArikuRest {
         });
 
         path(rs.ownerPath(), () -> {
+
             post(rs.competitionNewPath(), (request, response) -> {
                 String competitionName = request.queryParams("competition_name");
                 String competitionType = request.queryParams("competition_type");
@@ -60,8 +56,13 @@ public class ArikuRest {
                 String securityToken = request.queryParams("security_token");
                 return owner.newCompetition(competitionName, competitionType, username, securityToken);
             });
-            // TODO Get proper competitions list response
-            post(rs.competitionListPath(), "application/json", (request, response) -> new Competition(UUID.randomUUID().toString()), new JsonTransformer());
+
+            get(rs.competitionListPath(), "application/json", (request, response) -> {
+                String username = request.queryParams("username");
+                String securityToken = request.queryParams("security_token");
+                logger.debug("Got username:{} securityToken:{}", username, securityToken);
+                return owner.listOwnedCompetitions(username, securityToken);
+            }, new JsonCollectionTransformer());
         });
 
     }

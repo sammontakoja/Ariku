@@ -30,8 +30,9 @@ public class OwnerService {
     }
 
     public List<Competition> findOwnedCompetitions(AuthorizeRequest request) {
-        if (!userAuthorizer.authorizedUserId(request).isEmpty())
-            return competitionDatabase.competitionsByOwner(request.username);
+        String authorizedUserId = userAuthorizer.authorizedUserId(request);
+        if (!authorizedUserId.isEmpty())
+            return competitionDatabase.competitionsByOwner(authorizedUserId);
         return new ArrayList<>();
     }
 

@@ -5,6 +5,7 @@ import io.ariku.owner.OwnerService;
 import io.ariku.util.data.Competition;
 import io.ariku.verification.AuthorizeRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,8 +30,8 @@ public class Owner {
         return "FAIL";
     }
 
-    public String listOwnedCompetitions(String competitionName, String competitionType, String username, String securityToken) {
-        return "FAIL";
+    public List<Competition> listOwnedCompetitions(String username, String securityToken) {
+        return ownerService.findOwnedCompetitions(new AuthorizeRequest(username, securityToken));
     }
     
 }
