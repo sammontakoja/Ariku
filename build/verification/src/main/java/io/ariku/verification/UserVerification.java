@@ -22,7 +22,7 @@ public class UserVerification {
         return "UserVerification{" +
                 "username='" + username + '\'' +
                 ", username='" + userId + '\'' +
-                ", securityMessage=" + securityMessage +
+                ", securityToken=" + securityMessage +
                 ", isSignedInConfirmed=" + isSignedInConfirmed +
                 '}';
     }

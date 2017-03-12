@@ -3,6 +3,7 @@ package io.ariku.gui.console;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import io.ariku.util.data.RestSettings;
+import io.ariku.verification.AuthorizeRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,11 +35,11 @@ public class RestClient {
                         .asString().getBody());
     }
 
-    public String logoutRequest(String username, String securityToken) {
+    public String logoutRequest(AuthorizeRequest request) {
         return HttpCaller.call(() ->
                 Unirest.post(restSettings.logoutUrl())
-                        .queryString("username", username)
-                        .queryString("security_token", securityToken)
+                        .queryString("username", request.username)
+                        .queryString("security_token", request.securityToken)
                         .asString().getBody());
     }
 

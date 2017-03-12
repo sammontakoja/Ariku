@@ -5,11 +5,11 @@ package io.ariku.verification;
  */
 public class AuthorizeRequest {
     public String username;
-    public String securityMessage;
+    public String securityToken;
 
-    public AuthorizeRequest(String username, String securityMessage) {
+    public AuthorizeRequest(String username, String securityToken) {
         this.username = username;
-        this.securityMessage = securityMessage;
+        this.securityToken = securityToken;
     }
 
     public AuthorizeRequest() {
@@ -19,7 +19,7 @@ public class AuthorizeRequest {
     public String toString() {
         return "AuthorizeRequest{" +
                 "username='" + username + '\'' +
-                ", securityMessage='" + securityMessage + '\'' +
+                ", securityToken='" + securityToken + '\'' +
                 '}';
     }
 }

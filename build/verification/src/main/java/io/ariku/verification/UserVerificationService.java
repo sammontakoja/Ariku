@@ -46,7 +46,7 @@ public class UserVerificationService implements UserAuthorizer {
         Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUsername(authorizeRequest.username);
         if (userVerificationOptional.isPresent()) {
             UserVerification userVerification = userVerificationOptional.get();
-            if (userVerification.securityMessage.token.equals(authorizeRequest.securityMessage)) {
+            if (userVerification.securityMessage.token.equals(authorizeRequest.securityToken)) {
                 userVerification.securityMessage.token = "";
                 userVerification.securityMessage.lastSecurityActivity = Instant.now().toString();
                 userVerificationDatabase.updateUserVerification(userVerification);
@@ -58,7 +58,7 @@ public class UserVerificationService implements UserAuthorizer {
         Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUsername(authorizeRequest.username);
 
         if (userVerificationOptional.isPresent())
-            if (userVerificationOptional.get().securityMessage.token.equals(authorizeRequest.securityMessage))
+            if (userVerificationOptional.get().securityMessage.token.equals(authorizeRequest.securityToken))
                 return userVerificationOptional.get().userId;
 
         return "";

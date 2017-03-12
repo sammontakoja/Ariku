@@ -237,7 +237,7 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         AuthorizeRequest authorizeRequest = new AuthorizeRequest();
-        authorizeRequest.securityMessage = userVerification.securityMessage.token;
+        authorizeRequest.securityToken = userVerification.securityMessage.token;
         authorizeRequest.username = UUID.randomUUID().toString();
 
         String authorizedUserId = userVerificationService.authorizedUserId(authorizeRequest);
@@ -261,7 +261,7 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         AuthorizeRequest authorizeRequest = new AuthorizeRequest();
-        authorizeRequest.securityMessage = "totallyDifferentSecurityToken";
+        authorizeRequest.securityToken = "totallyDifferentSecurityToken";
         authorizeRequest.username = username;
 
         String authorizedUserId = userVerificationService.authorizedUserId(authorizeRequest);
@@ -279,7 +279,7 @@ public class UserVerificationServiceTest {
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         AuthorizeRequest authorizeRequest = new AuthorizeRequest();
-        authorizeRequest.securityMessage = "securityToken";
+        authorizeRequest.securityToken = "securityToken";
         authorizeRequest.username = "username";
 
         assertThat(userVerificationService.authorizedUserId(authorizeRequest), is(""));
