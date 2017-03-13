@@ -4,6 +4,7 @@ package io.ariku.rest;
  * @author Ari Aaltonen
  */
 
+import com.google.gson.Gson;
 import io.ariku.composer.Composer;
 import io.ariku.util.data.ArikuSettings;
 import io.ariku.util.data.RestSettings;
@@ -40,7 +41,7 @@ public class ArikuRest {
                 .level(Level.INFO)
                 .activate();
 
-
+        Gson gson = new Gson();
 
         path(rs.verificationPath(), () -> {
             post(rs.signUpPath(), (request, response) -> verification.signUp(request.queryParams("username")));
@@ -62,9 +63,17 @@ public class ArikuRest {
             get(rs.competitionListPath(), "application/json", (request, response) -> {
                 String username = request.queryParams("username");
                 String securityToken = request.queryParams("security_token");
-                logger.debug("Got username:{} securityToken:{}", username, securityToken);
                 return owner.listOwnedCompetitions(username, securityToken);
-            }, new JsonCollectionTransformer());
+            }, o -> gson.toJson(o));
+
+            post(rs.addOwnerPath(), (request, response) -> {
+                String competitionId = request.queryParams("competition_id");
+                String newOwner = request.queryParams("username_new_owner");
+                String existingOwner = request.queryParams("username_existing_owner");
+                String securityToken = request.queryParams("security_token");
+                owner.addOwnerToCompetition(competitionId, newOwner, existingOwner, securityToken);
+                return "OK";
+            });
         });
 
     }

@@ -1,5 +1,8 @@
 package io.ariku.verification;
 
+import io.ariku.util.data.User;
+import io.ariku.util.data.UserDatabase;
+
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -7,8 +10,10 @@ import java.util.UUID;
 /**
  * @author Ari Aaltonen
  */
-public class UserVerificationService implements UserAuthorizer {
+public class UserVerificationService {
 
+    public UserDatabase userDatabase;
+    public UserAuthorizer userAuthorizer;
     public UserVerificationDatabase userVerificationDatabase;
 
     public void signUp(SignUpRequest signUpRequest) {
@@ -17,12 +22,12 @@ public class UserVerificationService implements UserAuthorizer {
     }
 
     public void verifySignUp(VerifySignUpRequest verifySignUpRequest) {
-        Optional<UserVerification> userVerification = userVerificationDatabase.findByUsername(verifySignUpRequest.username);
-
-        userVerification.ifPresent(user -> {
-            user.isSignedInConfirmed = true;
-            userVerificationDatabase.updateUserVerification(user);
-        });
+        userVerificationDatabase.findByUsername(verifySignUpRequest.username)
+                .ifPresent(userVerification -> {
+                    userVerification.isSignedInConfirmed = true;
+                    userVerificationDatabase.updateUserVerification(userVerification);
+                    userDatabase.store(new User(userVerification.username, userVerification.userId));
+                });
     }
 
     public String login(LoginRequest loginRequest) {
@@ -54,7 +59,7 @@ public class UserVerificationService implements UserAuthorizer {
         }
     }
 
-    public String authorizedUserId(AuthorizeRequest authorizeRequest) {
+    public String authorizedUser(AuthorizeRequest authorizeRequest) {
         Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUsername(authorizeRequest.username);
 
         if (userVerificationOptional.isPresent())

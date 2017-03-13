@@ -3,13 +3,9 @@ package io.ariku.database.simple;
 import io.ariku.owner.CompetitionDatabase;
 import io.ariku.owner.Owner;
 import io.ariku.owner.OwnerDatabase;
-import io.ariku.owner.UserDatabase;
 import io.ariku.user.AttendingDatabase;
 import io.ariku.user.AttendingInfo;
-import io.ariku.util.data.Competition;
-import io.ariku.util.data.CompetitionState;
-import io.ariku.util.data.CompetitionStateDatabase;
-import io.ariku.util.data.User;
+import io.ariku.util.data.*;
 import io.ariku.verification.UserVerification;
 import io.ariku.verification.UserVerificationDatabase;
 
@@ -230,5 +226,10 @@ public class SimpleDatabase implements OwnerDatabase, CompetitionDatabase, Compe
         return users.stream()
                 .filter(user -> user.username.equals(username))
                 .findFirst();
+    }
+
+    @Override
+    public void store(User user) {
+        users.add(user);
     }
 }

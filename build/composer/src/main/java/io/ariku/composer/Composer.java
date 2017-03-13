@@ -4,8 +4,9 @@ import io.ariku.database.simple.SimpleDatabase;
 import io.ariku.owner.CompetitionDatabase;
 import io.ariku.owner.OwnerDatabase;
 import io.ariku.owner.OwnerService;
-import io.ariku.owner.UserDatabase;
+import io.ariku.user.UserService;
 import io.ariku.util.data.CompetitionStateDatabase;
+import io.ariku.util.data.UserDatabase;
 import io.ariku.verification.SecurityCleaner;
 import io.ariku.verification.UserVerificationDatabase;
 import io.ariku.verification.UserVerificationService;
@@ -18,6 +19,7 @@ public class Composer {
     // Services
     public final UserVerificationService userVerificationService;
     public final OwnerService ownerService;
+    public final UserService userService;
 
     // Database implementations
     private final UserVerificationDatabase userVerificationDatabase;
@@ -37,6 +39,7 @@ public class Composer {
 
         // Build services using implemented databases
         userVerificationService = new UserVerificationService();
+        userVerificationService.userDatabase = userDatabase;
         userVerificationService.userVerificationDatabase = userVerificationDatabase;
 
         SecurityCleaner securityCleaner = new SecurityCleaner();
@@ -47,8 +50,9 @@ public class Composer {
         ownerService.competitionDatabase = competitionDatabase;
         ownerService.competitionStateDatabase = competitionStateDatabase;
         ownerService.ownerDatabase = ownerDatabase;
-        ownerService.userAuthorizer = userVerificationService;
-        ownerService.userDatabase = userDatabase;
+
+        userService = new UserService();
+        userService.userDatabase = userDatabase;
     }
 
 }

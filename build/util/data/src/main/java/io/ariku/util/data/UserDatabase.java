@@ -1,6 +1,4 @@
-package io.ariku.owner;
-
-import io.ariku.util.data.User;
+package io.ariku.util.data;
 
 import java.util.Optional;
 
@@ -9,4 +7,5 @@ import java.util.Optional;
  */
 public interface UserDatabase {
     Optional<User> findUserByUsername(String usernameOfNewOwner);
+    void store(User user);
 }

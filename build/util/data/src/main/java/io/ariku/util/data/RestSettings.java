@@ -20,8 +20,14 @@ public class RestSettings {
     public String competitionNewPath() {
         return "/newcompetition";
     }
+    public String addOwnerPath() {
+        return "/addowner";
+    }
     public String competitionNewUrl() {
         return urlPrefix() + ownerPath() + competitionNewPath();
+    }
+    public String competitionAddOwnerUrl() {
+        return urlPrefix() + ownerPath() + addOwnerPath();
     }
     public String competitionListByOwnerUrl() {
         return urlPrefix() + ownerPath() + competitionListPath();

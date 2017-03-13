@@ -1,8 +1,6 @@
 package io.ariku.user;
 
-import io.ariku.util.data.Competition;
-import io.ariku.util.data.CompetitionState;
-import io.ariku.util.data.CompetitionStateDatabase;
+import io.ariku.util.data.*;
 import io.ariku.verification.AuthorizeRequest;
 import io.ariku.verification.UserAuthorizer;
 
@@ -15,6 +13,7 @@ import java.util.Optional;
  */
 public class UserService {
 
+    public UserDatabase userDatabase;
     public UserAuthorizer userAuthorizer;
     public AttendingDatabase attendingDatabase;
     public CompetitionStateDatabase competitionStateDatabase;
@@ -22,7 +21,6 @@ public class UserService {
     public void attendToCompetition(ParticipateRequest request) {
         if (userIsAuthorizedAndCompetitionIsOpenToAttending(request))
             attendingDatabase.add(new AttendingInfo(request.authorizeRequest.username, request.competitionId));
-
     }
 
     public void cancelAttendingToCompetition(ParticipateRequest request) {
@@ -31,7 +29,7 @@ public class UserService {
     }
 
     private boolean userIsAuthorizedAndCompetitionIsOpenToAttending(ParticipateRequest request) {
-        if (!userAuthorizer.authorizedUserId(request.authorizeRequest).isEmpty()) {
+        if (!userAuthorizer.authorizedUser(request.authorizeRequest).isEmpty()) {
             Optional<CompetitionState> competitionState = competitionStateDatabase.competitionState(request.competitionId);
             return (competitionState.isPresent() && competitionState.get().attending);
         }
@@ -39,8 +37,12 @@ public class UserService {
     }
 
     public List<Competition> competitions(AuthorizeRequest request) {
-        if (!userAuthorizer.authorizedUserId(request).isEmpty())
+        if (!userAuthorizer.authorizedUser(request).isEmpty())
             return attendingDatabase.competitionsByAttendingUser(request.username);
         return new ArrayList<>();
+    }
+
+    public Optional<User> findUserByUsername(String usernameOfUserA) {
+        return userDatabase.findUserByUsername(usernameOfUserA);
     }
 }
