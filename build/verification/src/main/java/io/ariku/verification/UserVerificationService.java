@@ -59,14 +59,14 @@ public class UserVerificationService {
         }
     }
 
-    public String authorizedUser(AuthorizeRequest authorizeRequest) {
+    public Optional<String> authorizedUser(AuthorizeRequest authorizeRequest) {
         Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUsername(authorizeRequest.username);
 
         if (userVerificationOptional.isPresent())
             if (userVerificationOptional.get().securityMessage.token.equals(authorizeRequest.securityToken))
-                return userVerificationOptional.get().userId;
+                return Optional.of(userVerificationOptional.get().userId);
 
-        return "";
+        return Optional.empty();
     }
 
     public boolean isUserSignedInConfirmed(String userId) {

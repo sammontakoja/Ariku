@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -18,6 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author Ari Aaltonen
  */
+@Ignore("Until composer level modifications and tests are done")
 public class OwnerServiceTest {
 
     @BeforeClass

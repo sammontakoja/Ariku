@@ -10,12 +10,12 @@ public class NewCompetitionRequest {
     public String competitionType;
     public AuthorizeRequest authorizeRequest;
 
-    public NewCompetitionRequest competitionName(String competitionName) {
+    public NewCompetitionRequest name(String competitionName) {
         this.competitionName = competitionName;
         return this;
     }
 
-    public NewCompetitionRequest competitionType(String competitionType) {
+    public NewCompetitionRequest type(String competitionType) {
         this.competitionType = competitionType;
         return this;
     }

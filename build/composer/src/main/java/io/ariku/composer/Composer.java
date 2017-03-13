@@ -46,13 +46,15 @@ public class Composer {
         securityCleaner.userVerificationDatabase = userVerificationDatabase;
         securityCleaner.wipeTokensWhichAreOlderThan(60, 900);
 
+        userService = new UserService();
+        userService.userDatabase = userDatabase;
+
         ownerService = new OwnerService();
         ownerService.competitionDatabase = competitionDatabase;
         ownerService.competitionStateDatabase = competitionStateDatabase;
         ownerService.ownerDatabase = ownerDatabase;
-
-        userService = new UserService();
-        userService.userDatabase = userDatabase;
+        ownerService.userService = userService;
+        ownerService.userVerificationService = userVerificationService;
     }
 
 }

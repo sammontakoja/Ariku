@@ -19,17 +19,19 @@ import static org.junit.Assert.*;
 public class UserLoginTest {
 
     private Composer composer;
-    private String usernameOfUserA;
+    private Commands commands;
+    private String username;
 
     @Before
     public void initializeValues() {
         composer = new Composer();
-        usernameOfUserA = UUID.randomUUID().toString();
+        username = UUID.randomUUID().toString();
+        commands = new Commands(composer);
     }
 
     @Test
     public void userA_fails_to_login_when_signup_is_not_done() {
-        String securityToken = composer.userVerificationService.login(new LoginRequest(usernameOfUserA));
+        String securityToken = composer.userVerificationService.login(new LoginRequest(username));
         assertTrue(securityToken.isEmpty());
     }
 
@@ -43,23 +45,17 @@ public class UserLoginTest {
 
     @Test
     public void after_verify_signup_user_can_found_by_username() {
-        composer.userVerificationService.signUp(new SignUpRequest(usernameOfUserA));
-        composer.userVerificationService.verifySignUp(new VerifySignUpRequest(usernameOfUserA));
-        Optional<User> foundUser = composer.userService.findUserByUsername(usernameOfUserA);
+        composer.userVerificationService.signUp(new SignUpRequest(username));
+        composer.userVerificationService.verifySignUp(new VerifySignUpRequest(username));
+        Optional<User> foundUser = composer.userService.findUserByUsername(username);
         assertTrue(foundUser.isPresent());
-        assertThat(foundUser.get().username, is(usernameOfUserA));
+        assertThat(foundUser.get().username, is(username));
     }
 
     @Test
     public void userA_login_ok_after_signup_and_verifysignup() {
-        String securityToken = loginWithUsername(usernameOfUserA);
+        String securityToken = commands.loginWithUsername(username);
         assertFalse(securityToken.isEmpty());
-    }
-
-    private String loginWithUsername(String username) {
-        composer.userVerificationService.signUp(new SignUpRequest(username));
-        composer.userVerificationService.verifySignUp(new VerifySignUpRequest(username));
-        return composer.userVerificationService.login(new LoginRequest(username));
     }
 
 }
