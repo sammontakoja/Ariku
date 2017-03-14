@@ -12,7 +12,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  */
 public class SecurityCleaner {
 
-    public UserVerificationDatabase userVerificationDatabase;
+    public UserVerificationRepository userVerificationRepository;
 
     public void wipeTokensWhichAreOlderThan(int scanInterval, int grantedNonActiveLoginTimeInSeconds) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -23,16 +23,18 @@ public class SecurityCleaner {
 
         Instant now = Instant.now();
 
-        userVerificationDatabase.userVerifications().stream()
+        userVerificationRepository.list().stream()
                 .filter(userVerification -> lastActivityInSeconds(userVerification, now) > grantedNonActiveLoginTimeInSeconds)
                 .forEach(userVerification -> {
-                    userVerification.securityMessage.token = "";
-                    userVerificationDatabase.updateUserVerification(userVerification);
+                    SecurityMessage securityMessage = new SecurityMessage();
+                    securityMessage.setToken("");
+                    securityMessage.setLastSecurityActivity(Instant.now().toString());
+                    userVerificationRepository.update(userVerification);
                 });
     }
 
     private long lastActivityInSeconds(UserVerification a, Instant now) {
-        return Duration.between(Instant.parse(a.securityMessage.lastSecurityActivity), now).getSeconds();
+        return Duration.between(Instant.parse(a.getSecurityMessage().getLastSecurityActivity()), now).getSeconds();
     }
 
 

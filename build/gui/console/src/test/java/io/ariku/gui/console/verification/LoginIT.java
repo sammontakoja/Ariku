@@ -44,7 +44,7 @@ public class LoginIT {
     @Test
     public void userVerification_is_stored_with_same_security_message_as_is_returned_after_login() throws InterruptedException {
         Optional<UserVerification> userVerification =
-                ArikuConsole.composer.userVerificationService.userVerificationDatabase.findByUsername(username);
+                ArikuConsole.composer.userVerificationService.userVerificationRepository.findByUsername(username);
         assertThat(userVerification.get().securityMessage.token, is(UserCache.securityToken));
     }
 

@@ -34,21 +34,21 @@ public class SignUpIT {
     @Test
     public void userVerification_found() throws InterruptedException {
         Optional<UserVerification> userVerification =
-                ArikuConsole.composer.userVerificationService.userVerificationDatabase.findByUsername(username);
+                ArikuConsole.composer.userVerificationService.userVerificationRepository.findByUsername(username);
         assertTrue(userVerification.isPresent());
     }
 
     @Test
     public void userVerification_contains_valid_username() throws InterruptedException {
         Optional<UserVerification> userVerification =
-                ArikuConsole.composer.userVerificationService.userVerificationDatabase.findByUsername(username);
+                ArikuConsole.composer.userVerificationService.userVerificationRepository.findByUsername(username);
         assertThat(userVerification.get().username, is(username));
     }
 
     @Test
     public void userVerification_sign_in_is_not_confirmed() throws InterruptedException {
         Optional<UserVerification> userVerification =
-                ArikuConsole.composer.userVerificationService.userVerificationDatabase.findByUsername(username);
+                ArikuConsole.composer.userVerificationService.userVerificationRepository.findByUsername(username);
         assertThat(userVerification.get().isSignedInConfirmed, is(false));
     }
 

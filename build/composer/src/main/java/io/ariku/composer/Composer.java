@@ -1,14 +1,14 @@
 package io.ariku.composer;
 
-import io.ariku.database.simple.SimpleDatabase;
-import io.ariku.owner.CompetitionDatabase;
-import io.ariku.owner.OwnerDatabase;
+import io.ariku.database.simple.MemoryRepository;
+import io.ariku.owner.CompetitionRepository;
+import io.ariku.owner.OwnerRecordRepository;
 import io.ariku.owner.OwnerService;
 import io.ariku.user.UserService;
-import io.ariku.util.data.CompetitionStateDatabase;
-import io.ariku.util.data.UserDatabase;
+import io.ariku.util.data.CompetitionStateRepository;
+import io.ariku.util.data.UserRepository;
 import io.ariku.verification.SecurityCleaner;
-import io.ariku.verification.UserVerificationDatabase;
+import io.ariku.verification.UserVerificationRepository;
 import io.ariku.verification.UserVerificationService;
 
 /**
@@ -22,37 +22,37 @@ public class Composer {
     public final UserService userService;
 
     // Database implementations
-    private final UserVerificationDatabase userVerificationDatabase;
-    private final CompetitionDatabase competitionDatabase;
-    private final OwnerDatabase ownerDatabase;
-    private final UserDatabase userDatabase;
-    private final CompetitionStateDatabase competitionStateDatabase;
+    private final UserVerificationRepository userVerificationRepository;
+    private final CompetitionRepository competitionRepository;
+    private final OwnerRecordRepository ownerRecordRepository;
+    private final UserRepository userRepository;
+    private final CompetitionStateRepository competitionStateRepository;
 
     public Composer() {
 
-        SimpleDatabase simpleDatabase = new SimpleDatabase();
-        this.userVerificationDatabase = simpleDatabase;
-        this.competitionDatabase = simpleDatabase;
-        this.ownerDatabase = simpleDatabase;
-        this.userDatabase = simpleDatabase;
-        this.competitionStateDatabase = simpleDatabase;
+        MemoryRepository memoryRepository = new MemoryRepository();
+        this.userVerificationRepository = memoryRepository.userVerificationRepository;
+        this.competitionRepository = memoryRepository.competitionRepository;
+        this.ownerRecordRepository = memoryRepository.ownerRecordRepository;
+        this.userRepository = memoryRepository.userRepository;
+        this.competitionStateRepository = memoryRepository.competitionStateRepository;
 
         // Build services using implemented databases
         userVerificationService = new UserVerificationService();
-        userVerificationService.userDatabase = userDatabase;
-        userVerificationService.userVerificationDatabase = userVerificationDatabase;
+        userVerificationService.userRepository = userRepository;
+        userVerificationService.userVerificationRepository = userVerificationRepository;
 
         SecurityCleaner securityCleaner = new SecurityCleaner();
-        securityCleaner.userVerificationDatabase = userVerificationDatabase;
+        securityCleaner.userVerificationRepository = userVerificationRepository;
         securityCleaner.wipeTokensWhichAreOlderThan(60, 900);
 
         userService = new UserService();
-        userService.userDatabase = userDatabase;
+        userService.userRepository = userRepository;
 
         ownerService = new OwnerService();
-        ownerService.competitionDatabase = competitionDatabase;
-        ownerService.competitionStateDatabase = competitionStateDatabase;
-        ownerService.ownerDatabase = ownerDatabase;
+        ownerService.competitionRepository = competitionRepository;
+        ownerService.competitionStateRepository = competitionStateRepository;
+        ownerService.ownerRecordRepository = ownerRecordRepository;
         ownerService.userService = userService;
         ownerService.userVerificationService = userVerificationService;
     }

@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Ari Aaltonen
  */
 @Ignore("Until composer level modifications and tests are done")
-public class OwnerServiceTest {
+public class OwnerRecordServiceTest {
 
     @BeforeClass
     public static void startArikuRestService() {

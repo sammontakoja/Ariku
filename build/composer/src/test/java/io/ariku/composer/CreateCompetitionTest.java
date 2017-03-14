@@ -6,9 +6,12 @@ import io.ariku.verification.AuthorizeRequest;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -54,6 +57,24 @@ public class CreateCompetitionTest {
                         .authorizeRequest(new AuthorizeRequest(username, validSecurityToken)));
 
         assertFalse(createdCompetition.isPresent());
+    }
+
+    @Test
+    public void after_ok_creating_competition_user_who_created_competition_is_competition_owner() {
+
+        String securityToken = commands.loginWithUsername(username);
+
+        String tooShortName = "1";
+
+        composer.ownerService.createNewCompetition(
+                new NewCompetitionRequest()
+                        .name(tooShortName)
+                        .type("type")
+                        .authorizeRequest(new AuthorizeRequest(username, securityToken)));
+
+        List<Competition> ownedCompetitions = composer.ownerService.findOwnedCompetitions(new AuthorizeRequest(username, securityToken));
+
+        assertThat(ownedCompetitions.size(), is(1));
     }
 
     @Test

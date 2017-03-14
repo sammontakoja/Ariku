@@ -43,7 +43,7 @@ public class LogoutIT {
     @Test
     public void userVerification_is_stored_with_empty_security_message() throws InterruptedException {
         Optional<UserVerification> userVerification =
-                ArikuConsole.composer.userVerificationService.userVerificationDatabase.findByUsername(username);
+                ArikuConsole.composer.userVerificationService.userVerificationRepository.findByUsername(username);
         assertThat(userVerification.get().securityMessage.token, is(""));
     }
 

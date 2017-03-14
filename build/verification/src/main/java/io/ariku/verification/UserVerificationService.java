@@ -1,7 +1,7 @@
 package io.ariku.verification;
 
 import io.ariku.util.data.User;
-import io.ariku.util.data.UserDatabase;
+import io.ariku.util.data.UserRepository;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -12,69 +12,82 @@ import java.util.UUID;
  */
 public class UserVerificationService {
 
-    public UserDatabase userDatabase;
+    public UserRepository userRepository;
     public UserAuthorizer userAuthorizer;
-    public UserVerificationDatabase userVerificationDatabase;
+    public UserVerificationRepository userVerificationRepository;
 
     public void signUp(SignUpRequest signUpRequest) {
-        if (!userVerificationDatabase.findByUsername(signUpRequest.username).isPresent())
-            userVerificationDatabase.createUserVerification(signUpRequest.username);
+        Optional<UserVerification> found = userVerificationRepository.getByUsername(signUpRequest.username);
+        if (!found.isPresent()) {
+            UserVerification userVerification = new UserVerification();
+            userVerification.setUsername(signUpRequest.username);
+            userVerification.setUserId(userVerificationRepository.uniqueUserId());
+            userVerificationRepository.store(userVerification);
+        }
     }
 
     public void verifySignUp(VerifySignUpRequest verifySignUpRequest) {
-        userVerificationDatabase.findByUsername(verifySignUpRequest.username)
-                .ifPresent(userVerification -> {
-                    userVerification.isSignedInConfirmed = true;
-                    userVerificationDatabase.updateUserVerification(userVerification);
-                    userDatabase.store(new User(userVerification.username, userVerification.userId));
-                });
+        Optional<UserVerification> found = userVerificationRepository.getByUsername(verifySignUpRequest.username);
+
+        if (found.isPresent()) {
+            UserVerification userVerification = found.get();
+            userVerification.setSignedInConfirmed(true);
+            userVerificationRepository.update(userVerification);
+
+            User user = new User();
+            user.setUsername(userVerification.getUsername());
+            user.setId(userVerification.getUserId());
+            userRepository.store(user);
+        }
     }
 
     public String login(LoginRequest loginRequest) {
 
-        Optional<UserVerification> userVerificationContent = userVerificationDatabase.findByUsername(loginRequest.username);
+        Optional<UserVerification> userVerificationContent = userVerificationRepository.getByUsername(loginRequest.username);
 
         if (userVerificationContent.isPresent()) {
             UserVerification userVerification = userVerificationContent.get();
-            if (userVerification.isSignedInConfirmed) {
-                String securityMessage = UUID.randomUUID().toString();
-                userVerification.securityMessage.token = securityMessage;
-                userVerification.securityMessage.lastSecurityActivity = Instant.now().toString();
-                userVerificationDatabase.updateUserVerification(userVerification);
-                return securityMessage;
+            if (userVerification.isSignedInConfirmed()) {
+                SecurityMessage securityMessage = new SecurityMessage();
+                securityMessage.setToken(UUID.randomUUID().toString());
+                securityMessage.setLastSecurityActivity(Instant.now().toString());
+                userVerification.setSecurityMessage(securityMessage);
+                userVerificationRepository.update(userVerification);
+                return securityMessage.getToken();
             }
         }
         return "";
     }
 
     public void logout(AuthorizeRequest authorizeRequest) {
-        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUsername(authorizeRequest.username);
+        Optional<UserVerification> userVerificationOptional = userVerificationRepository.getByUsername(authorizeRequest.username);
         if (userVerificationOptional.isPresent()) {
             UserVerification userVerification = userVerificationOptional.get();
-            if (userVerification.securityMessage.token.equals(authorizeRequest.securityToken)) {
-                userVerification.securityMessage.token = "";
-                userVerification.securityMessage.lastSecurityActivity = Instant.now().toString();
-                userVerificationDatabase.updateUserVerification(userVerification);
+            SecurityMessage securityMessage = userVerification.getSecurityMessage();
+            if (securityMessage.getToken().equals(authorizeRequest.securityToken)) {
+                securityMessage.setToken("");
+                securityMessage.setLastSecurityActivity(Instant.now().toString());
+                userVerificationRepository.update(userVerification);
             }
         }
     }
-
-    public Optional<String> authorizedUser(AuthorizeRequest authorizeRequest) {
-        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUsername(authorizeRequest.username);
-
-        if (userVerificationOptional.isPresent())
-            if (userVerificationOptional.get().securityMessage.token.equals(authorizeRequest.securityToken))
-                return Optional.of(userVerificationOptional.get().userId);
-
-        return Optional.empty();
-    }
-
-    public boolean isUserSignedInConfirmed(String userId) {
-        Optional<UserVerification> userVerificationOptional = userVerificationDatabase.findByUserId(userId);
-        if (userVerificationOptional.isPresent()) {
-            return userVerificationOptional.get().isSignedInConfirmed;
-        }
-        return false;
-    }
+//
+//    public Optional<String> authorizedUser(AuthorizeRequest authorizeRequest) {
+//        Optional<UserVerification> userVerificationOptional = userVerificationRepository.(authorizeRequest.username);
+//
+//        if (userVerificationOptional.isPresent())
+//            if (userVerificationOptional.get().securityMessage.token.equals(authorizeRequest.securityToken))
+//                return Optional.of(userVerificationOptional.get().userId);
+//
+//        return Optional.empty();
+//    }
+//
+//    public boolean isUserSignedInConfirmed(String userId) {
+//        Optional<UserVerification> userVerificationOptional = userVerificationRepository.findByUserId(userId);
+//        if (userVerificationOptional.isPresent()) {
+//            return userVerificationOptional.get().isSignedInConfirmed;
+//        }
+//        return false;
+//    }
 
 }

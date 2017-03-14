@@ -5,25 +5,50 @@ package io.ariku.verification;
  */
 public class UserVerification {
 
-    public String username = "";
-    public String userId = "";
-    public SecurityMessage securityMessage = new SecurityMessage();
-    public boolean isSignedInConfirmed;
+    private String username = "";
+    private String userId = "";
+    private SecurityMessage securityMessage = new SecurityMessage();
+    private boolean signedInConfirmed;
 
-    public UserVerification() {
+    public String getUsername() {
+        return username;
     }
 
-    public UserVerification(String username) {
+    public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public SecurityMessage getSecurityMessage() {
+        return securityMessage;
+    }
+
+    public void setSecurityMessage(SecurityMessage securityMessage) {
+        this.securityMessage = securityMessage;
+    }
+
+    public boolean isSignedInConfirmed() {
+        return signedInConfirmed;
+    }
+
+    public void setSignedInConfirmed(boolean signedInConfirmed) {
+        this.signedInConfirmed = signedInConfirmed;
     }
 
     @Override
     public String toString() {
         return "UserVerification{" +
                 "username='" + username + '\'' +
-                ", username='" + userId + '\'' +
-                ", securityToken=" + securityMessage +
-                ", isSignedInConfirmed=" + isSignedInConfirmed +
+                ", userId='" + userId + '\'' +
+                ", securityMessage=" + securityMessage +
+                ", signedInConfirmed=" + signedInConfirmed +
                 '}';
     }
 }

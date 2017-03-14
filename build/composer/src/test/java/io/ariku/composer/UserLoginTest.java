@@ -49,7 +49,7 @@ public class UserLoginTest {
         composer.userVerificationService.verifySignUp(new VerifySignUpRequest(username));
         Optional<User> foundUser = composer.userService.findUserByUsername(username);
         assertTrue(foundUser.isPresent());
-        assertThat(foundUser.get().username, is(username));
+        assertThat(foundUser.get().getUsername(), is(username));
     }
 
     @Test

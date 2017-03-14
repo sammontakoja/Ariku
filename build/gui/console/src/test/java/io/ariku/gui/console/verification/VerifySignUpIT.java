@@ -16,7 +16,6 @@ import java.util.concurrent.Executors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertTrue;
 
 public class VerifySignUpIT {
 
@@ -40,7 +39,7 @@ public class VerifySignUpIT {
     @Test
     public void userVerification_sign_in_is_confirmed() throws InterruptedException {
         Optional<UserVerification> userVerification =
-                ArikuConsole.composer.userVerificationService.userVerificationDatabase.findByUsername(username);
+                ArikuConsole.composer.userVerificationService.userVerificationRepository.findByUsername(username);
         assertThat(userVerification.get().isSignedInConfirmed, is(true));
     }
 

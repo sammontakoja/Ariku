@@ -14,7 +14,7 @@ public class Verification {
     public String signUp(String username) {
         userVerificationService.signUp(new SignUpRequest(username));
 
-        Optional<UserVerification> userVerification = userVerificationService.userVerificationDatabase.findByUsername(username);
+        Optional<UserVerification> userVerification = userVerificationService.userVerificationRepository.findByUsername(username);
         if (userVerification.isPresent())
             return "OK";
 
@@ -24,7 +24,7 @@ public class Verification {
     public String verifySignUp(String username) {
         userVerificationService.verifySignUp(new VerifySignUpRequest(username));
 
-        Optional<UserVerification> userVerification = userVerificationService.userVerificationDatabase.findByUsername(username);
+        Optional<UserVerification> userVerification = userVerificationService.userVerificationRepository.findByUsername(username);
         if (userVerification.isPresent())
             if (userVerification.get().isSignedInConfirmed)
                 return "OK";
@@ -39,7 +39,7 @@ public class Verification {
     public String logout(String username, String securityToken) {
         userVerificationService.logout(new AuthorizeRequest(username, securityToken));
 
-        Optional<UserVerification> userVerification = userVerificationService.userVerificationDatabase.findByUsername(username);
+        Optional<UserVerification> userVerification = userVerificationService.userVerificationRepository.findByUsername(username);
         if (userVerification.isPresent())
             if (userVerification.get().securityMessage.token.isEmpty())
                 return "OK";
