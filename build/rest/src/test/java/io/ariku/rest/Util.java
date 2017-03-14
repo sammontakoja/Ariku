@@ -57,8 +57,8 @@ public class Util {
     public static HttpRequestWithBody addOwnerToCompetition(String competitionId, String existingOwnerUsername, String newOwnerUsername, String securityToken) {
         return Unirest.post(restSettings.competitionAddOwnerUrl())
                 .queryString("competition_id", competitionId)
-                .queryString("username_existing_owner", existingOwnerUsername)
                 .queryString("username_new_owner", newOwnerUsername)
+                .queryString("username", existingOwnerUsername)
                 .queryString("security_token", securityToken);
     }
 

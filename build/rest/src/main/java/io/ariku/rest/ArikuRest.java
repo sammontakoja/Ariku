@@ -30,11 +30,11 @@ public class ArikuRest {
         port(port);
 
         Composer composer = new Composer();
-        Verification verification = new Verification();
-        verification.userVerificationService = composer.userVerificationService;
+        UserVerificationServiceCaller userVerificationServiceCaller = new UserVerificationServiceCaller();
+        userVerificationServiceCaller.userVerificationService = composer.userVerificationService;
 
-        Owner owner = new Owner();
-        owner.ownerService = composer.ownerService;
+        OwnerServiceCaller ownerServiceCaller = new OwnerServiceCaller();
+        ownerServiceCaller.ownerService = composer.ownerService;
 
         Configurator.defaultConfig()
                 .writer(new ConsoleWriter())
@@ -44,39 +44,21 @@ public class ArikuRest {
         Gson gson = new Gson();
 
         path(rs.verificationPath(), () -> {
-            post(rs.signUpPath(), (request, response) -> verification.signUp(request.queryParams("username")));
-            post(rs.verifySignUpPath(), (request, response) -> verification.verifySignUp(request.queryParams("username")));
-            post(rs.loginPath(), (request, response) -> verification.login(request.queryParams("username")));
-            post(rs.logoutPath(), (request, response) -> verification.logout(request.queryParams("username"), request.queryParams("security_token")));
+            post(rs.signUpPath(), userVerificationServiceCaller.signUp());
+            post(rs.verifySignUpPath(), userVerificationServiceCaller.verifySignUp());
+            post(rs.loginPath(), userVerificationServiceCaller.login());
+            post(rs.logoutPath(), userVerificationServiceCaller.logout());
         });
 
         path(rs.ownerPath(), () -> {
-
-            post(rs.competitionNewPath(), (request, response) -> {
-                String competitionName = request.queryParams("competition_name");
-                String competitionType = request.queryParams("competition_type");
-                String username = request.queryParams("username");
-                String securityToken = request.queryParams("security_token");
-                return owner.newCompetition(competitionName, competitionType, username, securityToken);
-            });
-
-            get(rs.competitionListPath(), "application/json", (request, response) -> {
-                String username = request.queryParams("username");
-                String securityToken = request.queryParams("security_token");
-                return owner.listOwnedCompetitions(username, securityToken);
-            }, o -> gson.toJson(o));
-
-            post(rs.addOwnerPath(), (request, response) -> {
-                String competitionId = request.queryParams("competition_id");
-                String newOwner = request.queryParams("username_new_owner");
-                String existingOwner = request.queryParams("username_existing_owner");
-                String securityToken = request.queryParams("security_token");
-                owner.addOwnerToCompetition(competitionId, newOwner, existingOwner, securityToken);
-                return "OK";
-            });
+            post(rs.competitionNewPath(), ownerServiceCaller.createNewCompetition());
+            get(rs.competitionListPath(), "application/json", ownerServiceCaller.ownersCompetitions(), o -> gson.toJson(o));
+            post(rs.addOwnerPath(), ownerServiceCaller.addUserAsCompetitionOwner());
         });
 
-    }
+
+
+}
 
     public static void stop() {
         spark.Spark.stop();

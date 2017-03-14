@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author Ari Aaltonen
  */
-public class UserVerificationServiceTest {
+public class UserLoginTest {
 
     @BeforeClass
     public static void startArikuRestService() {
@@ -39,19 +39,6 @@ public class UserVerificationServiceTest {
         String username = UUID.randomUUID().toString();
         signUpRequest(username).asString();
         assertThat(verifySignUpRequest(username).asString().getBody(), is("OK"));
-    }
-
-    @Test
-    public void verify_sign_up_fail_when_sign_up_is_not_done() throws UnirestException {
-        String username = UUID.randomUUID().toString();
-        assertThat(verifySignUpRequest(username).asString().getBody(), is("FAIL"));
-    }
-
-    @Test
-    public void login_fail_when_sign_up_verification_is_not_done() throws UnirestException {
-        String username = UUID.randomUUID().toString();
-        Util.signUpRequest(username);
-        assertThat(loginRequest(username).asString().getBody(), is(""));
     }
 
     @Test

@@ -19,7 +19,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author Ari Aaltonen
  */
-@Ignore("Until composer level modifications and tests are done")
 public class OwnerRecordServiceTest {
 
     @BeforeClass
@@ -50,24 +49,6 @@ public class OwnerRecordServiceTest {
     }
 
     @Test
-    public void create_competition_fail_when_security_token_not_used() throws UnirestException {
-
-        String username = UUID.randomUUID().toString();
-        String competitionName = "Helsinki Grand Prix";
-        String competitionType = "RockPaperScissors";
-
-        signUpRequest(username).asString();
-
-        verifySignUpRequest(username).asString();
-
-        loginRequest(username).asString().getBody();
-
-        String response = newCompetitionRequest(competitionName, competitionType, username, "notSecurityToken").asString().getBody();
-
-        assertThat(response, is("FAIL"));
-    }
-
-    @Test
     public void created_competition_can_be_found_when_getting_list_of_owned_competition() throws UnirestException {
 
         String username = UUID.randomUUID().toString();
@@ -82,11 +63,18 @@ public class OwnerRecordServiceTest {
 
         newCompetitionRequest(competitionName, competitionType, username, securityToken).asString();
 
-        String response = listOwnedCompetitionsRequest(username, securityToken).asString().getBody();
+        JsonNode response = listOwnedCompetitionsRequest(username, securityToken).asJson().getBody();
 
-        System.out.println(response);
+        System.out.println(response.toString());
 
-        assertThat(response, startsWith("[\"Competition{name='"+competitionName+"', type='"+competitionType+"'"));
+        JSONArray responseArray = response.getArray();
+        assertThat(responseArray.length(), is(1));
+
+        String name = responseArray.getJSONObject(0).getString("name");
+        String type = responseArray.getJSONObject(0).getString("type");
+
+        assertThat(name, is(competitionName));
+        assertThat(type, is(competitionType));
     }
 
     @Test
@@ -140,7 +128,7 @@ public class OwnerRecordServiceTest {
         verifySignUpRequest(usernameOfUserB).asString();
 
         // Add userB also to be owner of competition which userA created
-        addOwnerToCompetition(userACompetitionsId, usernameOfUserA, usernameOfUserB, userASecurityToken);
+        addOwnerToCompetition(userACompetitionsId, usernameOfUserA, usernameOfUserB, userASecurityToken).asString();
 
         // Login with userB and fetch owned competitions
         String userBSecurityToken = loginRequest(usernameOfUserB).asString().getBody();
