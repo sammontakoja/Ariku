@@ -60,4 +60,26 @@ public class OwnerService {
 
         return new ArrayList<>();
     }
+
+    public void addNewOwner(String userNameOfNewOwner, String competitionId, AuthorizeRequest authorizeRequest) {
+
+        String userIdOfAuthorizedUser = userVerificationService.userIdOfAuthorizedUser(authorizeRequest);
+
+        if (userIdOfAuthorizedUser.isEmpty())
+            return;
+
+        boolean userAddingOwnershipIsAlsoOwner = ownerRecordRepository.listByCompetitionId(competitionId).stream()
+                .anyMatch(o -> o.getUserId().equals(userIdOfAuthorizedUser));
+
+        if (!userAddingOwnershipIsAlsoOwner)
+            return;
+
+        userService.findUserByUsername(userNameOfNewOwner).ifPresent(userGoingToBeNewOwner -> {
+            OwnerRecord record = new OwnerRecord();
+            record.setCompetitionId(competitionId);
+            record.setUserId(userGoingToBeNewOwner.getId());
+            ownerRecordRepository.store(record);
+        });
+
+    }
 }
