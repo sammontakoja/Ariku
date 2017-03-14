@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @author Ari Aaltonen
@@ -20,7 +21,7 @@ public class MemoryRepository {
 
     private List<User> users = new ArrayList<>();
     private List<UserVerification> userVerifications = new ArrayList<>();
-    private List<OwnerRecord> competitionOwnerRecords = new ArrayList<>();
+    private List<OwnerRecord> ownerRecords = new ArrayList<>();
     private List<Competition> competitions = new ArrayList<>();
     private List<CompetitionState> competitionStates = new ArrayList<>();
     private List<AttendingInfo> attendingInfos = new ArrayList<>();
@@ -28,7 +29,7 @@ public class MemoryRepository {
     
     public final OwnerRecordRepository ownerRecordRepository = new OwnerRecordRepository() {
         public void store(OwnerRecord ownerRecord) {
-            throw new RuntimeException("not implemented");
+            ownerRecords.add(ownerRecord);
         }
         public Optional<OwnerRecord> get(String owner) {
             throw new RuntimeException("not implemented");
@@ -36,6 +37,17 @@ public class MemoryRepository {
         public List<OwnerRecord> list(OwnerRecord ownerRecord) {
             throw new RuntimeException("not implemented");
         }
+
+        @Override
+        public List<OwnerRecord> listByUserId(String userId) {
+            return ownerRecords.stream().filter(o -> o.getUserId().equals(userId)).collect(Collectors.toList());
+        }
+
+        @Override
+        public List<OwnerRecord> listByCompetitionId(String competitionId) {
+            return ownerRecords.stream().filter(o -> o.getCompetitionId().equals(competitionId)).collect(Collectors.toList());
+        }
+
         public void update(OwnerRecord ownerRecord) {
             throw new RuntimeException("not implemented");
         }
@@ -46,10 +58,10 @@ public class MemoryRepository {
 
     public final CompetitionRepository competitionRepository = new CompetitionRepository() {
         public void store(Competition competition) {
-            throw new RuntimeException("not implemented");
+            competitions.add(competition);
         }
         public Optional<Competition> get(String competitionId) {
-            throw new RuntimeException("not implemented");
+            return competitions.stream().filter(c -> c.id.equals(competitionId)).findFirst();
         }
         public List<Competition> list(Competition competition) {
             throw new RuntimeException("not implemented");
@@ -59,6 +71,13 @@ public class MemoryRepository {
         }
         public void delete(String competitionId) {
             throw new RuntimeException("not implemented");
+        }
+        public String uniqueId() {
+            while(true) {
+                String uniqueUserId = UUID.randomUUID().toString();
+                if (!uniqueIds.contains(uniqueUserId))
+                    return uniqueUserId;
+            }
         }
     };
 

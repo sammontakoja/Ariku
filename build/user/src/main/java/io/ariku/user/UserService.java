@@ -32,7 +32,7 @@ public class UserService {
 //    }
 //
 //    private boolean userIsAuthorizedAndCompetitionIsOpenToAttending(ParticipateRequest request) {
-//        if (!userAuthorizer.authorizedUser(request.authorizeRequest).isEmpty()) {
+//        if (!userAuthorizer.userIdOfAuthorizedUser(request.authorizeRequest).isEmpty()) {
 //            Optional<CompetitionState> competitionState = competitionStateRepository.competitionState(request.competitionId);
 //            return (competitionState.isPresent() && competitionState.get().attending);
 //        }
@@ -40,7 +40,7 @@ public class UserService {
 //    }
 //
 //    public List<Competition> competitions(AuthorizeRequest request) {
-//        if (!userAuthorizer.authorizedUser(request).isEmpty())
+//        if (!userAuthorizer.userIdOfAuthorizedUser(request).isEmpty())
 //            return attendingDatabase.competitionsByAttendingUser(request.username);
 //        return new ArrayList<>();
 //    }

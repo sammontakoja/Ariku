@@ -64,11 +64,9 @@ public class CreateCompetitionTest {
 
         String securityToken = commands.loginWithUsername(username);
 
-        String tooShortName = "1";
-
         composer.ownerService.createNewCompetition(
                 new NewCompetitionRequest()
-                        .name(tooShortName)
+                        .name("name")
                         .type("type")
                         .authorizeRequest(new AuthorizeRequest(username, securityToken)));
 

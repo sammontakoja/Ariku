@@ -48,10 +48,12 @@ public class UserVerificationService {
         if (userVerificationContent.isPresent()) {
             UserVerification userVerification = userVerificationContent.get();
             if (userVerification.isSignedInConfirmed()) {
+
                 SecurityMessage securityMessage = new SecurityMessage();
                 securityMessage.setToken(UUID.randomUUID().toString());
                 securityMessage.setLastSecurityActivity(Instant.now().toString());
                 userVerification.setSecurityMessage(securityMessage);
+
                 userVerificationRepository.update(userVerification);
                 return securityMessage.getToken();
             }
@@ -71,23 +73,15 @@ public class UserVerificationService {
             }
         }
     }
-//
-//    public Optional<String> authorizedUser(AuthorizeRequest authorizeRequest) {
-//        Optional<UserVerification> userVerificationOptional = userVerificationRepository.(authorizeRequest.username);
-//
-//        if (userVerificationOptional.isPresent())
-//            if (userVerificationOptional.get().securityMessage.token.equals(authorizeRequest.securityToken))
-//                return Optional.of(userVerificationOptional.get().userId);
-//
-//        return Optional.empty();
-//    }
-//
-//    public boolean isUserSignedInConfirmed(String userId) {
-//        Optional<UserVerification> userVerificationOptional = userVerificationRepository.findByUserId(userId);
-//        if (userVerificationOptional.isPresent()) {
-//            return userVerificationOptional.get().isSignedInConfirmed;
-//        }
-//        return false;
-//    }
+
+    public String userIdOfAuthorizedUser(AuthorizeRequest authorizeRequest) {
+        Optional<UserVerification> userVerificationOptional = userVerificationRepository.getByUsername(authorizeRequest.username);
+
+        if (userVerificationOptional.isPresent())
+            if (userVerificationOptional.get().getSecurityMessage().getToken().equals(authorizeRequest.securityToken))
+                return userVerificationOptional.get().getUserId();
+
+        return "";
+    }
 
 }

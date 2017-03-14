@@ -14,4 +14,5 @@ public interface CompetitionRepository {
     List<Competition> list(Competition competition);
     void update(Competition competition);
     void delete(String competitionId);
+    String uniqueId();
 }

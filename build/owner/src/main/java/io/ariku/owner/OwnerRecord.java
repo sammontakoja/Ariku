@@ -5,8 +5,8 @@ package io.ariku.owner;
  */
 public class OwnerRecord {
 
-    private String userId;
-    private String competition;
+    private String userId = "";
+    private String competitionId = "";
 
     public String getUserId() {
         return userId;
@@ -16,19 +16,19 @@ public class OwnerRecord {
         this.userId = userId;
     }
 
-    public String getCompetition() {
-        return competition;
+    public String getCompetitionId() {
+        return competitionId;
     }
 
-    public void setCompetition(String competition) {
-        this.competition = competition;
+    public void setCompetitionId(String competitionId) {
+        this.competitionId = competitionId;
     }
 
     @Override
     public String toString() {
         return "OwnerRecord{" +
                 "userId='" + userId + '\'' +
-                ", competition='" + competition + '\'' +
+                ", competitionId='" + competitionId + '\'' +
                 '}';
     }
 }
