@@ -8,9 +8,6 @@ import com.google.gson.Gson;
 import io.ariku.composer.Composer;
 import io.ariku.util.data.ArikuSettings;
 import io.ariku.util.data.RestSettings;
-import org.pmw.tinylog.Configurator;
-import org.pmw.tinylog.Level;
-import org.pmw.tinylog.writers.ConsoleWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,11 +32,6 @@ public class ArikuRest {
 
         OwnerServiceCaller ownerServiceCaller = new OwnerServiceCaller();
         ownerServiceCaller.ownerService = composer.ownerService;
-
-        Configurator.defaultConfig()
-                .writer(new ConsoleWriter())
-                .level(Level.INFO)
-                .activate();
 
         Gson gson = new Gson();
 
