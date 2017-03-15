@@ -4,8 +4,9 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
-import io.ariku.owner.AddOwnerRightsRequest;
 import io.ariku.owner.OwnerService;
+
+import java.util.Optional;
 
 /**
  * @author Ari Aaltonen
@@ -43,18 +44,22 @@ public class NewOwnerPage {
         window.setComponent(panel);
     }
 
-    private boolean addNewOwner(String competitionName, String anotherUsersId) {
+    private boolean addNewOwner(String competitionName, String usernameOfNewOwner) {
 
-        if (competitionName.isEmpty() || anotherUsersId.isEmpty())
+        if (competitionName.isEmpty() || usernameOfNewOwner.isEmpty())
             return false;
 
-        AddOwnerRightsRequest request = new AddOwnerRightsRequest();
-        request.authorizeRequest = UserCache.authorizeRequest();
-        request.competitionId = competitionName;
-        request.usernameOfNewOwner = anotherUsersId;
-        ownerService.addOwnerRights(request);
+        findOwnedCompetitionAndGetItsId(competitionName)
+                .ifPresent(competitionId -> ownerService.addNewOwner(usernameOfNewOwner, competitionId, UserCache.authorizeRequest()));
 
         return true;
+    }
+
+    private Optional<String> findOwnedCompetitionAndGetItsId(String competitionName) {
+        return ownerService.findOwnedCompetitions(UserCache.authorizeRequest()).stream()
+                .filter(c -> c.name.equals(competitionName))
+                .findFirst()
+                .map(competition -> competition.id);
     }
 
 }
