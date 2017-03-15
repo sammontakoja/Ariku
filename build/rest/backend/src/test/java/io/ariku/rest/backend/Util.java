@@ -30,42 +30,6 @@ public class Util {
         }
     }
 
-    public static HttpRequestWithBody signUpRequest(String username) {
-        return Unirest.post(restSettings.signUpUrl()).queryString("username", username);
-    }
 
-    public static HttpRequestWithBody verifySignUpRequest(String username) {
-        return Unirest.post(restSettings.verifySignUpUrl()).queryString("username", username);
-    }
-
-    public static HttpRequestWithBody loginRequest(String username) {
-        return Unirest.post(restSettings.loginUrl()).queryString("username", username);
-    }
-
-    public static HttpRequestWithBody logoutRequest(String username, String securityToken) {
-        return Unirest.post(restSettings.logoutUrl()).queryString("username", username).queryString("security_token", securityToken);
-    }
-
-    public static HttpRequestWithBody newCompetitionRequest(String competitionName, String competitionType, String username, String securityToken) {
-        return Unirest.post(restSettings.competitionNewUrl())
-                .queryString("competition_name", competitionName)
-                .queryString("competition_type", competitionType)
-                .queryString("username", username)
-                .queryString("security_token", securityToken);
-    }
-
-    public static HttpRequestWithBody addOwnerToCompetition(String competitionId, String existingOwnerUsername, String newOwnerUsername, String securityToken) {
-        return Unirest.post(restSettings.competitionAddOwnerUrl())
-                .queryString("competition_id", competitionId)
-                .queryString("username_new_owner", newOwnerUsername)
-                .queryString("username", existingOwnerUsername)
-                .queryString("security_token", securityToken);
-    }
-
-    public static HttpRequest listOwnedCompetitionsRequest(String username, String securityToken) {
-        return Unirest.get(restSettings.competitionListByOwnerUrl())
-                .queryString("username", username)
-                .queryString("security_token", securityToken);
-    }
 
 }
