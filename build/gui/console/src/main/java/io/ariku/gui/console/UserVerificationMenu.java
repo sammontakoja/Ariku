@@ -3,6 +3,7 @@ package io.ariku.gui.console;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
+import io.ariku.rest.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +53,7 @@ public class UserVerificationMenu {
 
     private void logout() {
         String username = UserCache.authorizeRequest().username;
-        String response = restClient.logout(UserCache.authorizeRequest());
+        String response = restClient.logoutRequest(UserCache.authorizeRequest().username, UserCache.authorizeRequest().securityToken).get();
 
         logger.debug("LogoutRequest response '{}' with username:{}", response, username);
 

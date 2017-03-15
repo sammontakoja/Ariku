@@ -1,5 +1,7 @@
 package io.ariku.gui.console;
 
+import io.ariku.rest.client.RestClient;
+
 /**
  * @author Ari Aaltonen
  */

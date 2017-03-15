@@ -13,6 +13,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import io.ariku.rest.client.RestClient;
 import io.ariku.util.data.ArikuSettings;
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;

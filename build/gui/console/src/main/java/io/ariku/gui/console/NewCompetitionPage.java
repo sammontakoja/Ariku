@@ -4,6 +4,10 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
+import com.mashape.unirest.http.JsonNode;
+import io.ariku.rest.client.RestClient;
+
+import java.util.Optional;
 
 /**
  * @author Ari Aaltonen
@@ -24,13 +28,8 @@ public class NewCompetitionPage {
 
         panel.addComponent(new Button("OK", () -> {
 
-            String response = restClient.newCompetition(nameText.getText(), typeText.getText(), UserCache.authorizeRequest());
-
-            if (response.equals("OK")) {
-                System.out.println("Created new competition");
-                nameText.setText("");
-                typeText.setText("");
-            }
+            Optional<JsonNode> response = restClient.newCompetitionRequest(nameText.getText(), typeText.getText(), UserCache.authorizeRequest().username, UserCache.authorizeRequest().securityToken);
+            System.out.println("Created new competition response\n"+response.toString());
         }));
 
         panel.addComponent(new Button("Exit", () -> ownerMenu.draw(window)));

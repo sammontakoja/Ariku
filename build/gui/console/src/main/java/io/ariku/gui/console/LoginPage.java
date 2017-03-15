@@ -4,6 +4,7 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
+import io.ariku.rest.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ public class LoginPage {
 
         panel.addComponent(new Button("Login", () -> {
 
-            String securityToken = restClient.login(username.getText());
+            String securityToken = restClient.loginRequest(username.getText()).get();
 
             if (!securityToken.isEmpty()) {
                 UserCache.securityToken = securityToken;

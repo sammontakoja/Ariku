@@ -4,6 +4,10 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
+import com.mashape.unirest.http.JsonNode;
+import io.ariku.rest.client.RestClient;
+
+import java.util.Optional;
 
 /**
  * @author Ari Aaltonen
@@ -46,7 +50,9 @@ public class NewOwnerPage {
         if (competitionName.isEmpty() || usernameOfNewOwner.isEmpty())
             return false;
 
-        String competitions = restClient.ownersCompetitions(UserCache.authorizeRequest());
+        // TODO Fix Implementation
+        Optional<JsonNode> response = restClient.listOwnedCompetitionsRequest(UserCache.authorizeRequest().username, UserCache.authorizeRequest().securityToken);
+        String competitions = response.toString();
 
         System.out.println("competitions666:"+competitions);
 

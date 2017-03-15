@@ -3,6 +3,7 @@ package io.ariku.gui.console;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
+import io.ariku.rest.client.RestClient;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,7 @@ public class OwnerMenu {
 
         List<Button> buttons = Arrays.asList(
                 new Button("New competition", () -> newCompetitionPage.draw(window)),
-                new Button("Competitions", () -> System.out.println(restClient.ownersCompetitions(UserCache.authorizeRequest()))),
+                new Button("Competitions", () -> System.out.println(restClient.listOwnedCompetitionsRequest(UserCache.authorizeRequest().username, UserCache.authorizeRequest().securityToken))),
                 new Button("New owner", () -> newOwnerPage.draw(window)),
                 new Button("Menu", () -> baseMenu.draw(window))
         );

@@ -4,6 +4,7 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
+import io.ariku.rest.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,7 @@ public class VerifySignUpPage {
         username.addTo(panel);
 
         panel.addComponent(new Button("OK", () -> {
-            String response = restClient.verifySignUp(username.getText());
+            String response = restClient.verifySignUpRequest(username.getText()).get();
             logger.debug("VerifySignUpRequest response '{}' with username:{}", response, username.getText());
         }));
 
