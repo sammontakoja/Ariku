@@ -1,4 +1,4 @@
-package io.ariku.rest;
+package io.ariku.rest.backend;
 
 import io.ariku.util.data.AuthorizeRequest;
 import io.ariku.verification.LoginRequest;

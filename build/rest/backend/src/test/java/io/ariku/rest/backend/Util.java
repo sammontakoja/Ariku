@@ -1,4 +1,4 @@
-package io.ariku.rest;
+package io.ariku.rest.backend;
 
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.request.HttpRequest;

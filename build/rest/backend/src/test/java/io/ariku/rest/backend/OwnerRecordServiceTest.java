@@ -1,4 +1,4 @@
-package io.ariku.rest;
+package io.ariku.rest.backend;
 
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -6,14 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.UUID;
 
-import static io.ariku.rest.Util.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -37,13 +34,13 @@ public class OwnerRecordServiceTest {
         String competitionName = "Helsinki Grand Prix";
         String competitionType = "RockPaperScissors";
 
-        signUpRequest(username).asString();
+        Util.signUpRequest(username).asString();
 
-        verifySignUpRequest(username).asString();
+        Util.verifySignUpRequest(username).asString();
 
-        String securityToken = loginRequest(username).asString().getBody();
+        String securityToken = Util.loginRequest(username).asString().getBody();
 
-        String response = newCompetitionRequest(competitionName, competitionType, username, securityToken).asString().getBody();
+        String response = Util.newCompetitionRequest(competitionName, competitionType, username, securityToken).asString().getBody();
 
         assertThat(response, is("OK"));
     }
@@ -55,15 +52,15 @@ public class OwnerRecordServiceTest {
         String competitionName = "Helsinki Grand Prix";
         String competitionType = "RockPaperScissors";
 
-        signUpRequest(username).asString();
+        Util.signUpRequest(username).asString();
 
-        verifySignUpRequest(username).asString();
+        Util.verifySignUpRequest(username).asString();
 
-        String securityToken = loginRequest(username).asString().getBody();
+        String securityToken = Util.loginRequest(username).asString().getBody();
 
-        newCompetitionRequest(competitionName, competitionType, username, securityToken).asString();
+        Util.newCompetitionRequest(competitionName, competitionType, username, securityToken).asString();
 
-        JsonNode response = listOwnedCompetitionsRequest(username, securityToken).asJson().getBody();
+        JsonNode response = Util.listOwnedCompetitionsRequest(username, securityToken).asJson().getBody();
 
         System.out.println(response.toString());
 
@@ -82,17 +79,17 @@ public class OwnerRecordServiceTest {
 
         String username = UUID.randomUUID().toString();
 
-        signUpRequest(username).asString();
+        Util.signUpRequest(username).asString();
 
-        verifySignUpRequest(username).asString();
+        Util.verifySignUpRequest(username).asString();
 
-        String securityToken = loginRequest(username).asString().getBody();
+        String securityToken = Util.loginRequest(username).asString().getBody();
 
-        newCompetitionRequest("competitionA", "RockPaperScissors", username, securityToken).asString();
-        newCompetitionRequest("competitionB", "RockPaperScissors", username, securityToken).asString();
-        newCompetitionRequest("competitionC", "RockPaperScissors", username, securityToken).asString();
+        Util.newCompetitionRequest("competitionA", "RockPaperScissors", username, securityToken).asString();
+        Util.newCompetitionRequest("competitionB", "RockPaperScissors", username, securityToken).asString();
+        Util.newCompetitionRequest("competitionC", "RockPaperScissors", username, securityToken).asString();
 
-        String response = listOwnedCompetitionsRequest(username, securityToken).asString().getBody();
+        String response = Util.listOwnedCompetitionsRequest(username, securityToken).asString().getBody();
 
         JSONArray competitionList = new JSONArray(response);
         System.out.println(competitionList.toString());
@@ -105,34 +102,34 @@ public class OwnerRecordServiceTest {
 
         // Create userA
         String usernameOfUserA = UUID.randomUUID().toString();
-        signUpRequest(usernameOfUserA).asString();
-        verifySignUpRequest(usernameOfUserA).asString();
+        Util.signUpRequest(usernameOfUserA).asString();
+        Util.verifySignUpRequest(usernameOfUserA).asString();
 
         // Login with userA
-        String userASecurityToken = loginRequest(usernameOfUserA).asString().getBody();
+        String userASecurityToken = Util.loginRequest(usernameOfUserA).asString().getBody();
 
         // Create new competition with userA who became competition owner
         String competitionName = "Helsinki Grand Prix";
         String competitionType = "RockPaperScissors";
-        newCompetitionRequest(competitionName, competitionType, usernameOfUserA, userASecurityToken).asString();
+        Util.newCompetitionRequest(competitionName, competitionType, usernameOfUserA, userASecurityToken).asString();
 
         // Find out created competition's id
-        JsonNode userAOwnedCompetitions = listOwnedCompetitionsRequest(usernameOfUserA, userASecurityToken).asJson().getBody();
+        JsonNode userAOwnedCompetitions = Util.listOwnedCompetitionsRequest(usernameOfUserA, userASecurityToken).asJson().getBody();
         String userACompetitionsId = userAOwnedCompetitions.getArray().getJSONObject(0).getString("id");
 
         System.out.println(userAOwnedCompetitions.toString());
 
         // Create userB
         String usernameOfUserB = UUID.randomUUID().toString();
-        signUpRequest(usernameOfUserB).asString();
-        verifySignUpRequest(usernameOfUserB).asString();
+        Util.signUpRequest(usernameOfUserB).asString();
+        Util.verifySignUpRequest(usernameOfUserB).asString();
 
         // Add userB also to be owner of competition which userA created
-        addOwnerToCompetition(userACompetitionsId, usernameOfUserA, usernameOfUserB, userASecurityToken).asString();
+        Util.addOwnerToCompetition(userACompetitionsId, usernameOfUserA, usernameOfUserB, userASecurityToken).asString();
 
         // Login with userB and fetch owned competitions
-        String userBSecurityToken = loginRequest(usernameOfUserB).asString().getBody();
-        JsonNode userBOwnedCompetitions = listOwnedCompetitionsRequest(usernameOfUserB, userBSecurityToken).asJson().getBody();
+        String userBSecurityToken = Util.loginRequest(usernameOfUserB).asString().getBody();
+        JsonNode userBOwnedCompetitions = Util.listOwnedCompetitionsRequest(usernameOfUserB, userBSecurityToken).asJson().getBody();
 
         System.out.println(userBOwnedCompetitions.toString());
         String userBCompetitionsId = userBOwnedCompetitions.getArray().getJSONObject(0).getString("id");

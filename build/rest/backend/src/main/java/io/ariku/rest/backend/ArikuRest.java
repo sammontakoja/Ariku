@@ -1,4 +1,4 @@
-package io.ariku.rest;
+package io.ariku.rest.backend;
 
 /**
  * @author Ari Aaltonen

@@ -1,4 +1,4 @@
-package io.ariku.rest;
+package io.ariku.rest.backend;
 
 import io.ariku.owner.NewCompetitionRequest;
 import io.ariku.owner.OwnerService;
@@ -8,7 +8,7 @@ import spark.Route;
 
 import java.util.ArrayList;
 
-import static io.ariku.rest.UserVerificationServiceCaller.logger;
+import static io.ariku.rest.backend.UserVerificationServiceCaller.logger;
 
 /**
  * @author Ari Aaltonen
