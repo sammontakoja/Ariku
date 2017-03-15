@@ -2,8 +2,8 @@ package io.ariku.gui.console;
 
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import io.ariku.util.data.AuthorizeRequest;
 import io.ariku.util.data.RestSettings;
-import io.ariku.verification.AuthorizeRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +48,16 @@ public class RestClient {
                 Unirest.post(restSettings.competitionNewUrl())
                         .queryString("competition_name", competitionName)
                         .queryString("competition_type", competitionType)
+                        .queryString("username", request.username)
+                        .queryString("security_token", request.securityToken)
+                        .asString().getBody());
+    }
+
+    public String addCompetitionOwner(String usernameOfNewOwner, String competitionId, AuthorizeRequest request) {
+        return HttpCaller.call(() ->
+                Unirest.post(restSettings.competitionNewUrl())
+//                        .queryString("competition_name", competitionName)
+//                        .queryString("competition_type", competitionType)
                         .queryString("username", request.username)
                         .queryString("security_token", request.securityToken)
                         .asString().getBody());

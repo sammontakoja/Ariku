@@ -1,8 +1,8 @@
 package io.ariku.composer;
 
 import io.ariku.owner.NewCompetitionRequest;
+import io.ariku.util.data.AuthorizeRequest;
 import io.ariku.util.data.Competition;
-import io.ariku.verification.AuthorizeRequest;
 import org.junit.Before;
 import org.junit.Test;
 

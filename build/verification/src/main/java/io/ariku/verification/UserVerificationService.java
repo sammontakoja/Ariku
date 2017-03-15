@@ -1,5 +1,6 @@
 package io.ariku.verification;
 
+import io.ariku.util.data.AuthorizeRequest;
 import io.ariku.util.data.User;
 import io.ariku.util.data.UserRepository;
 

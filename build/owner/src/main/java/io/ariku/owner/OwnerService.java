@@ -1,9 +1,9 @@
 package io.ariku.owner;
 
 import io.ariku.user.UserService;
+import io.ariku.util.data.AuthorizeRequest;
 import io.ariku.util.data.Competition;
 import io.ariku.util.data.CompetitionStateRepository;
-import io.ariku.verification.AuthorizeRequest;
 import io.ariku.verification.UserVerificationService;
 
 import java.util.ArrayList;

@@ -61,9 +61,8 @@
 
     <dependencies>
         <dependency>
-            <!--TODO Will be replaced when all services are ported to use rest interface-->
-            <groupId>io.ariku</groupId>
-            <artifactId>composer</artifactId>
+            <groupId>io.ariku.util</groupId>
+            <artifactId>data</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -71,7 +70,6 @@
             <artifactId>lanterna</artifactId>
             <version>3.0.0-rc1</version>
         </dependency>
-
         <!--Logging-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -88,7 +86,7 @@
             <artifactId>tinylog</artifactId>
             <version>1.2</version>
         </dependency>
-
+        <!--RestClient dependencies (gosh they are so many...)-->
         <dependency>
             <groupId>com.mashape.unirest</groupId>
             <artifactId>unirest-java</artifactId>

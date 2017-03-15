@@ -13,7 +13,6 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import io.ariku.composer.Composer;
 import io.ariku.util.data.ArikuSettings;
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;
@@ -24,7 +23,6 @@ import java.io.IOException;
 public class ArikuConsole {
 
     public static final RestClient restClient = restClientWithDefaultUrlConfiguration();
-    public static final Composer composer = new Composer();
 
     public static void main(String[] args) {
         startConsole(() -> System.out.println("Console started!"));
@@ -52,7 +50,7 @@ public class ArikuConsole {
             throw new RuntimeException(e);
         }
 
-        BaseMenu baseMenu = new GUIComposer().baseMenu(restClient, composer.ownerService, composer.userVerificationService);
+        BaseMenu baseMenu = new GUIComposer().baseMenu(restClient);
 
         baseMenu.draw(window);
 

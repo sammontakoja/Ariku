@@ -1,4 +1,4 @@
-package io.ariku.verification;
+package io.ariku.util.data;
 
 /**
  * @author Ari Aaltonen

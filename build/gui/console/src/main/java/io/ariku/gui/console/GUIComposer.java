@@ -1,14 +1,11 @@
 package io.ariku.gui.console;
 
-import io.ariku.owner.OwnerService;
-import io.ariku.verification.UserVerificationService;
-
 /**
  * @author Ari Aaltonen
  */
 public class GUIComposer {
 
-    public BaseMenu baseMenu(RestClient restClient, OwnerService ownerService, UserVerificationService userVerificationService) {
+    public BaseMenu baseMenu(RestClient restClient) {
         BaseMenu baseMenu = new BaseMenu();
 
         baseMenu.userVerificationMenu = new UserVerificationMenu();
@@ -33,7 +30,7 @@ public class GUIComposer {
 
         baseMenu.ownerMenu.newOwnerPage = new NewOwnerPage();
         baseMenu.ownerMenu.newOwnerPage.ownerMenu = baseMenu.ownerMenu;
-        baseMenu.ownerMenu.newOwnerPage.ownerService = ownerService;
+        baseMenu.ownerMenu.newOwnerPage.restClient = restClient;
 
         baseMenu.ownerMenu.newCompetitionPage = new NewCompetitionPage();
         baseMenu.ownerMenu.newCompetitionPage.ownerMenu = baseMenu.ownerMenu;

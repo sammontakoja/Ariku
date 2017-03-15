@@ -1,6 +1,6 @@
 package io.ariku.owner;
 
-import io.ariku.verification.AuthorizeRequest;
+import io.ariku.util.data.AuthorizeRequest;
 
 /**
  * @author Ari Aaltonen

@@ -2,13 +2,11 @@ package io.ariku.rest;
 
 import io.ariku.owner.NewCompetitionRequest;
 import io.ariku.owner.OwnerService;
+import io.ariku.util.data.AuthorizeRequest;
 import io.ariku.util.data.Competition;
-import io.ariku.verification.AuthorizeRequest;
-import io.ariku.verification.SignUpRequest;
 import spark.Route;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static io.ariku.rest.UserVerificationServiceCaller.logger;
 

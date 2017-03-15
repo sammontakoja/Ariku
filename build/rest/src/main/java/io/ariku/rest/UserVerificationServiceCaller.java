@@ -1,16 +1,13 @@
 package io.ariku.rest;
 
-import io.ariku.verification.*;
+import io.ariku.util.data.AuthorizeRequest;
+import io.ariku.verification.LoginRequest;
+import io.ariku.verification.SignUpRequest;
+import io.ariku.verification.UserVerificationService;
+import io.ariku.verification.VerifySignUpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import spark.Request;
-import spark.Response;
 import spark.Route;
-import spark.route.Routes;
-
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * @author Ari Aaltonen
