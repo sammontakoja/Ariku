@@ -8,7 +8,6 @@ import com.googlecode.lanterna.gui2.Panel;
  * @author Ari Aaltonen
  */
 public class BaseMenu {
-
     UserVerificationMenu userVerificationMenu;
     OwnerMenu ownerMenu;
 
