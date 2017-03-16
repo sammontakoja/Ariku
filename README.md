@@ -1,5 +1,5 @@
 # Ariku ![Build status](https://travis-ci.org/sammontakoja/Ariku.svg?branch=master)
-Ariku is platform for creating different kind of competitions.
+Ariku is a platform for creating different kind of competitions.
 
 ## History
 Finnish shooting clubs run shooting competitions with old program(s) which are full of bugs
