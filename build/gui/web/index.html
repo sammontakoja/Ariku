@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="demo">
+    <h2>Let AJAX change this text</h2>
+    <button type="button" onclick="loadDoc()">Change Content</button>
+</div>
+
+<script language="javascript" type="text/javascript">
+
+    function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            document.getElementById("demo").innerHTML = this.responseText;
+        };
+        xhttp.open("POST", "/verification/signup", true);
+        xhttp.send();
+    }
+
+</script>
+
+</body>
+</html>
