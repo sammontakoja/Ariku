@@ -1,3 +1,10 @@
+# TODO
+- Call user verification rest service from web gui
+- Create html end to end tests for user verification
+- Dockerize nginx and ArikuRest.jar into one image (Later put ArikuRest.jars into own docker images)
+
+# Modules
+
 ## User identification (verification-module)
 
 |Use case | verified to work with modules |
