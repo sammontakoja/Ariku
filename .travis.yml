@@ -3,7 +3,7 @@ sudo: required
 services:
   - docker
 
-script: sudo docker build .
+script: sudo docker build -t ariku/build:1.0 -f DockerBuild .
 
 branches:
   only:
