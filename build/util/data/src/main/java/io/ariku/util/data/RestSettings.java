@@ -5,14 +5,14 @@ package io.ariku.util.data;
  */
 public class RestSettings {
 
-    // Default values
     public String protocol = "http";
     public String host = "localhost";
     public String port = "5000";
+    public String rootPath = "/rest";
 
     // **** owner ****
     public String ownerPath() {
-        return "/owner";
+        return rootPath + "/owner";
     }
     public String competitionListPath() {
         return "/competitions";
@@ -24,33 +24,30 @@ public class RestSettings {
         return "/addowner";
     }
     public String competitionNewUrl() {
-        return urlPrefix() + ownerPath() + competitionNewPath();
+        return serviceUrl() + ownerPath() + competitionNewPath();
     }
     public String competitionAddOwnerUrl() {
-        return urlPrefix() + ownerPath() + addOwnerPath();
+        return serviceUrl() + ownerPath() + addOwnerPath();
     }
     public String competitionListByOwnerUrl() {
-        return urlPrefix() + ownerPath() + competitionListPath();
+        return serviceUrl() + ownerPath() + competitionListPath();
     }
 
     // **** Verification ****
+    public String verificationPath() {
+        return rootPath + "/verification";
+    }
     public String signUpUrl() {
-        return urlPrefix() + verificationPath() + signUpPath();
+        return serviceUrl() + verificationPath() + signUpPath();
     }
     public String verifySignUpUrl() {
-        return urlPrefix() + verificationPath() + verifySignUpPath();
+        return serviceUrl() + verificationPath() + verifySignUpPath();
     }
     public String loginUrl() {
-        return urlPrefix() + verificationPath() + loginPath();
+        return serviceUrl() + verificationPath() + loginPath();
     }
     public String logoutUrl() {
-        return urlPrefix() + verificationPath() + logoutPath();
-    }
-    private String urlPrefix() {
-        return protocol + "://" + host + ":" + port;
-    }
-    public String verificationPath() {
-        return "/verification";
+        return serviceUrl() + verificationPath() + logoutPath();
     }
     public String signUpPath() {
         return "/signup";
@@ -63,5 +60,9 @@ public class RestSettings {
     }
     public String verifySignUpPath() {
         return "/verifysignup";
+    }
+
+    private String serviceUrl() {
+        return protocol + "://" + host + ":" + port;
     }
 }

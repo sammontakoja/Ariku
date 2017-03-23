@@ -52,7 +52,7 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
-location /verification {
+location /rest {
     proxy_pass http://localhost:5000;
 }
 

@@ -18,7 +18,7 @@
         xhttp.onreadystatechange = function() {
             document.getElementById("demo").innerHTML = this.responseText;
         };
-        xhttp.open("POST", "/verification/signup", true);
+        xhttp.open("POST", "/rest/verification/signup", true);
         xhttp.send();
     }
 
