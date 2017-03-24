@@ -17,7 +17,7 @@ public class Util {
 
     public static void startServerAndLetClientKnowAboutTCPPort() {
         int freePort = freePort();
-        ArikuRest.start(freePort);
+        ArikuRest.start("localhost", freePort);
         restSettings.port = new Integer(freePort).toString();
     }
 

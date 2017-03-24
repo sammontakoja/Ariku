@@ -19,11 +19,13 @@ public class ArikuRest {
     private static RestSettings rs = ArikuSettings.restClientWithDefaultUrlConfiguration();
 
     public static void main(String[] args) {
-        start(5000);
+        InputParser inputParser = new InputParser();
+        start(inputParser.getHost(), inputParser.getPort());
     }
 
-    public static void start(int port) {
+    public static void start(String host, int port) {
 
+        ipAddress(host);
         port(port);
 
         Composer composer = new Composer();
