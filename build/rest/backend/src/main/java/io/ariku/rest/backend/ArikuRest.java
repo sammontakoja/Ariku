@@ -20,7 +20,11 @@ public class ArikuRest {
 
     public static void main(String[] args) {
         InputParser inputParser = new InputParser();
-        start(inputParser.getHost(), inputParser.getPort());
+        inputParser.parseContents(args);
+        String host = inputParser.getHost();
+        int port = inputParser.getPort();
+        System.out.println("Starting Ariku Rest service to "+ host +":" + port);
+        start(host, port);
     }
 
     public static void start(String host, int port) {

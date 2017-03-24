@@ -1,7 +1,13 @@
+MAINTAINER sammontakoja (Ari Aaltonen)
+
 FROM maven:3.3.3-jdk-8
-RUN mkdir -p /tmp/ariku/build
+
+# Copy sources to image
 COPY build /tmp/ariku/build
 WORKDIR /tmp/ariku/build
-RUN ["mvn","clean","install","-DskipTests"]
+
+# Compile
+RUN mvn clean install -DskipTests
+
 # Run unit tests
-RUN ["mvn","test"]
+RUN mvn test

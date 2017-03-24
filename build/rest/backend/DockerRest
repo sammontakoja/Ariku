@@ -1,0 +1,9 @@
+FROM anapsix/alpine-java:8_server-jre
+
+MAINTAINER sammontakoja (Ari Aaltonen)
+
+RUN mkdir /ariku
+ADD target/ArikuRest.jar /ariku
+CMD java -jar /ariku/ArikuRest.jar -h arikurest -p 5000
+
+EXPOSE 5000
