@@ -7,6 +7,9 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 
 /**
@@ -15,26 +18,27 @@ import java.io.IOException;
 public class InputParser {
 
     @Option(name = "-h", required = true, usage = "Host dns name or ip-address")
-    private String host = "";
+    private String host = null;
 
     @Option(name = "-p", required = true, usage = "Host port")
     private int port = 5000;
 
-    @Option(name = "-h", help = true)
+    @Option(name = "--help", help = true)
     private boolean help = false;
 
-    public void parseContents(String[] args) throws IOException {
+    public boolean parseContents(String[] args) {
 
         CmdLineParser parser = new CmdLineParser(this);
 
         try {
             parser.parseArgument(args);
 
+            return valuesAreValid();
+
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("java InputParser [options...] arguments...");
             parser.printUsage(System.err);
-            System.err.println();
+            return false;
         }
     }
 
@@ -44,5 +48,14 @@ public class InputParser {
 
     public int getPort() {
         return port;
+    }
+
+    private boolean valuesAreValid() {
+        try {
+            new URL("http://"+host+":"+port).toURI();
+            return true;
+        } catch (MalformedURLException | URISyntaxException e) {
+            return false;
+        }
     }
 }
