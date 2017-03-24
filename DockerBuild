@@ -1,6 +1,6 @@
-MAINTAINER sammontakoja (Ari Aaltonen)
-
 FROM maven:3.3.3-jdk-8
+
+MAINTAINER sammontakoja (Ari Aaltonen)
 
 # Copy sources to image
 COPY build /tmp/ariku/build
