@@ -20,14 +20,17 @@ public class ArikuRest {
 
     public static void main(String[] args) {
         InputParser inputParser = new InputParser();
-        inputParser.parseContents(args);
-        String host = inputParser.getHost();
-        int port = inputParser.getPort();
-        System.out.println("Starting Ariku Rest service to "+ host +":" + port);
-        start(host, port);
+        boolean inputsAreUsable = inputParser.areInputUsable(args);
+
+        if (inputsAreUsable)
+            start(inputParser.getHost(), inputParser.getPort());
+        else
+            start("localhost", 5000);
     }
 
     public static void start(String host, int port) {
+
+        logger.debug("Running Ariku REST service in {}:{}", host, port);
 
         ipAddress(host);
         port(port);
@@ -53,10 +56,7 @@ public class ArikuRest {
             get(rs.competitionListPath(), "application/json", ownerServiceCaller.ownersCompetitions(), o -> gson.toJson(o));
             post(rs.addOwnerPath(), ownerServiceCaller.addUserAsCompetitionOwner());
         });
-
-
-
-}
+    }
 
     public static void stop() {
         spark.Spark.stop();

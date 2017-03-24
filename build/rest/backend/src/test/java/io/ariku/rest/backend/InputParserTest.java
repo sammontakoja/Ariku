@@ -2,8 +2,6 @@ package io.ariku.rest.backend;
 
 import org.junit.Test;
 
-import java.net.URL;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -17,7 +15,7 @@ public class InputParserTest {
         String host = "localhost";
         int port = 6000;
         String[] inputs = {"-h", host, "-p", new Integer(port).toString()};
-        assertTrue(new InputParser().parseContents(inputs));
+        assertTrue(new InputParser().areInputUsable(inputs));
     }
 
     @Test
@@ -26,7 +24,7 @@ public class InputParserTest {
         int port = 6000;
         String[] inputs = {"-h", host, "-p", new Integer(port).toString()};
         InputParser parser = new InputParser();
-        parser.parseContents(inputs);
+        parser.areInputUsable(inputs);
         assertThat(parser.getHost(), is(host));
         assertThat(parser.getPort(), is(port));
     }
@@ -36,7 +34,7 @@ public class InputParserTest {
         String host = "localhost%"; // according to RFC-2396 % char is not valid url char
         int port = 6000;
         String[] inputs = {"-h", host, "-p", new Integer(port).toString()};
-        assertFalse(new InputParser().parseContents(inputs));
+        assertFalse(new InputParser().areInputUsable(inputs));
     }
 
     @Test
@@ -44,7 +42,7 @@ public class InputParserTest {
         String host = "localhost";
         int port = -2000;
         String[] inputs = {"-h", host, "-p", new Integer(port).toString()};
-        assertFalse(new InputParser().parseContents(inputs));
+        assertFalse(new InputParser().areInputUsable(inputs));
     }
 
 
@@ -53,7 +51,7 @@ public class InputParserTest {
         String host = "localhost";
         int port = 2000;
         String[] inputs = {"-h", host, "-pInvalid", new Integer(port).toString()};
-        assertFalse(new InputParser().parseContents(inputs));
+        assertFalse(new InputParser().areInputUsable(inputs));
     }
 
     @Test
@@ -61,7 +59,7 @@ public class InputParserTest {
         String host = "localhost";
         int port = 2000;
         String[] inputs = {"-hInvalid", host, "-p", new Integer(port).toString()};
-        assertFalse(new InputParser().parseContents(inputs));
+        assertFalse(new InputParser().areInputUsable(inputs));
     }
 
 }

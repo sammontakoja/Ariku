@@ -5,6 +5,8 @@ import static org.kohsuke.args4j.ExampleMode.ALL;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -16,6 +18,7 @@ import java.net.URL;
  * @author Ari Aaltonen (sammontakoja)
  */
 public class InputParser {
+    public static Logger logger = LoggerFactory.getLogger(InputParser.class);
 
     @Option(name = "-h", required = true, usage = "Host dns name or ip-address")
     private String host = null;
@@ -26,18 +29,15 @@ public class InputParser {
     @Option(name = "--help", help = true)
     private boolean help = false;
 
-    public boolean parseContents(String[] args) {
+    public boolean areInputUsable(String[] args) {
 
         CmdLineParser parser = new CmdLineParser(this);
-
         try {
             parser.parseArgument(args);
-
             return valuesAreValid();
 
         } catch (CmdLineException e) {
-            System.err.println(e.getMessage());
-            parser.printUsage(System.err);
+            logger.debug(e.getMessage());
             return false;
         }
     }
