@@ -5,7 +5,7 @@ import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
 import com.mashape.unirest.http.JsonNode;
-import io.ariku.rest.client.RestClient;
+import ariku.rest.client.RestClient;
 
 import java.util.Optional;
 

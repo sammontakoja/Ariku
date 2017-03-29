@@ -1,7 +1,7 @@
 package ariku.rest.backend;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import io.ariku.rest.client.RestClient;
+import ariku.rest.client.RestClient;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

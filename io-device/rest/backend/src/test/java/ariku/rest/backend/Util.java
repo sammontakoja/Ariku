@@ -1,6 +1,6 @@
 package ariku.rest.backend;
 
-import io.ariku.util.data.RestSettings;
+import ariku.settings.RestSettings;
 
 import java.io.IOException;
 import java.net.ServerSocket;

@@ -4,6 +4,8 @@ package io.ariku.gui.console;
  * @author Ari Aaltonen
  */
 
+import ariku.rest.client.RestClient;
+import ariku.settings.ArikuSettings;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.DefaultWindowManager;
@@ -13,8 +15,6 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import io.ariku.rest.client.RestClient;
-import io.ariku.util.data.ArikuSettings;
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;
 import org.pmw.tinylog.writers.ConsoleWriter;

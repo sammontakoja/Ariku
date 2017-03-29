@@ -3,7 +3,7 @@ package io.ariku.gui.console;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
-import io.ariku.rest.client.RestClient;
+import ariku.rest.client.RestClient;
 
 import java.util.Arrays;
 import java.util.List;

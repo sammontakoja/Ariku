@@ -15,8 +15,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>ariku</groupId>
-            <artifactId>data</artifactId>
+            <groupId>ariku.io-device</groupId>
+            <artifactId>settings</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <!--Logging-->

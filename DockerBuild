@@ -2,9 +2,16 @@ FROM maven:3.3.3-jdk-8
 
 MAINTAINER sammontakoja (Ari Aaltonen)
 
+RUN mkdir /ariku
+
 # Copy sources to image
-COPY build /tmp/ariku/build
-WORKDIR /tmp/ariku/build
+COPY core /ariku/core
+COPY application /ariku/application
+COPY io-device /ariku/io-device
+COPY test /ariku/test
+COPY pom.xml /ariku/pom.xml
+
+WORKDIR /ariku
 
 # Compile
 RUN mvn clean install -DskipTests

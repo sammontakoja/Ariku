@@ -1,10 +1,10 @@
 package ariku.rest.backend;
 
-import io.ariku.util.data.AuthorizeRequest;
-import io.ariku.verification.LoginRequest;
-import io.ariku.verification.SignUpRequest;
-import io.ariku.verification.UserVerificationService;
-import io.ariku.verification.VerifySignUpRequest;
+import ariku.util.AuthorizeRequest;
+import ariku.verification.LoginRequest;
+import ariku.verification.SignUpRequest;
+import ariku.verification.UserVerificationService;
+import ariku.verification.VerifySignUpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Route;

@@ -4,7 +4,7 @@ import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
-import io.ariku.rest.client.RestClient;
+import ariku.rest.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

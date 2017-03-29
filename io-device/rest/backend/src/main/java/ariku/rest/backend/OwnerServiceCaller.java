@@ -1,9 +1,9 @@
 package ariku.rest.backend;
 
-import io.ariku.owner.NewCompetitionRequest;
-import io.ariku.owner.OwnerService;
-import io.ariku.util.data.AuthorizeRequest;
-import io.ariku.util.data.Competition;
+import ariku.owner.NewCompetitionRequest;
+import ariku.owner.OwnerService;
+import ariku.util.AuthorizeRequest;
+import ariku.util.Competition;
 import spark.Route;
 
 import java.util.ArrayList;

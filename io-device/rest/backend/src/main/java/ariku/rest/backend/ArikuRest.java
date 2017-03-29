@@ -4,10 +4,10 @@ package ariku.rest.backend;
  * @author Ari Aaltonen
  */
 
-import ariku.test.ArikuServices;
+import ariku.CoreServices;
+import ariku.settings.ArikuSettings;
+import ariku.settings.RestSettings;
 import com.google.gson.Gson;
-import io.ariku.util.data.ArikuSettings;
-import io.ariku.util.data.RestSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +38,9 @@ public class ArikuRest {
         ipAddress(host);
         port(port);
 
-        ArikuServices arikuServices = findImplementationFromClassPath();
-        UserVerificationServiceCaller userVerificationServiceCaller = new UserVerificationServiceCaller(arikuServices.userVerificationService());
-        OwnerServiceCaller ownerServiceCaller = new OwnerServiceCaller(arikuServices.ownerService());
+        CoreServices coreServices = findImplementationFromClassPath();
+        UserVerificationServiceCaller userVerificationServiceCaller = new UserVerificationServiceCaller(coreServices.userVerificationService());
+        OwnerServiceCaller ownerServiceCaller = new OwnerServiceCaller(coreServices.ownerService());
 
         Gson gson = new Gson();
 
@@ -58,16 +58,16 @@ public class ArikuRest {
         });
     }
 
-    public static ArikuServices findImplementationFromClassPath() {
+    public static CoreServices findImplementationFromClassPath() {
 
-        Iterator<? extends ArikuServices> arikuServicesIterator = ServiceLoader.load(ArikuServices.class).iterator();
+        Iterator<? extends CoreServices> arikuServicesIterator = ServiceLoader.load(CoreServices.class).iterator();
 
         if (arikuServicesIterator.hasNext()) {
-            ArikuServices found = arikuServicesIterator.next();
-            System.out.println(String.format("Using ArikuServices implementation:'%s'", found.getClass().getName()));
+            CoreServices found = arikuServicesIterator.next();
+            System.out.println(String.format("Using CoreServices implementation:'%s'", found.getClass().getName()));
             return found;
         } else {
-            throw new RuntimeException("Did not find ArikuServices implementation from CLASSPATH");
+            throw new RuntimeException("Did not find CoreServices implementation from CLASSPATH");
         }
     }
 

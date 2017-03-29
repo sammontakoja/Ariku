@@ -1,6 +1,6 @@
 package io.ariku.gui.console;
 
-import io.ariku.util.data.AuthorizeRequest;
+import ariku.util.AuthorizeRequest;
 
 /**
  * @author Ari Aaltonen

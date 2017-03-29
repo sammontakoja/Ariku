@@ -18,22 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>ariku</groupId>
-            <artifactId>data</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ariku</groupId>
-            <artifactId>verification</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ariku</groupId>
-            <artifactId>user</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ariku</groupId>
-            <artifactId>owner</artifactId>
+            <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

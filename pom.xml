@@ -14,7 +14,7 @@
     </properties>
 
     <modules>
-        <module>business-logic</module>
+        <module>core</module>
         <module>test</module>
         <module>io-device</module>
         <module>application</module>

@@ -16,6 +16,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
+        <module>settings</module>
         <module>console</module>
         <module>database</module>
         <module>rest</module>

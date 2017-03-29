@@ -2,7 +2,7 @@ package ariku.rest.backend;
 
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import io.ariku.rest.client.RestClient;
+import ariku.rest.client.RestClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.AfterClass;
