@@ -1,0 +1,14 @@
+FROM nginx:1.11.10-alpine
+
+MAINTAINER sammontakoja (Ari Aaltonen)
+
+RUN mkdir /ariku
+COPY html /ariku/html
+
+# Use custom nginx configuration
+RUN rm /etc/nginx/conf.d/default.conf
+COPY bin/nginx.config /etc/nginx/conf.d/default.conf
+
+# Expose ports
+EXPOSE 80
+EXPOSE 5000

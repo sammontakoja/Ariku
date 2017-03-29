@@ -6,7 +6,7 @@ network=ariku_nw
 sudo docker network create --driver bridge ${network}
 
 # Create REST docker image
-sudo docker build --no-cache -t ariku/rest:1.0 -f build/rest/backend/DockerRest build/rest/backend
+sudo docker build --no-cache -t ariku/rest:1.0 -f DockerRest ..
 
 # Create HTTP server image
-sudo docker build --no-cache -t ariku/html:1.0 -f build/gui/web/DockerHttpServer build/gui/web
+sudo docker build --no-cache -t ariku/html:1.0 -f DockerHttpServer ..
