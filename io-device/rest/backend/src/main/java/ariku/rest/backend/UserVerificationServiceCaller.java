@@ -1,4 +1,4 @@
-package io.ariku.rest.backend;
+package ariku.rest.backend;
 
 import io.ariku.util.data.AuthorizeRequest;
 import io.ariku.verification.LoginRequest;
@@ -15,9 +15,13 @@ import spark.Route;
 public class UserVerificationServiceCaller {
     public static Logger logger = LoggerFactory.getLogger(ArikuRest.class);
 
-    public UserVerificationService userVerificationService;
-    public RequestReader requestReader = new RequestReader();
-    
+    private final UserVerificationService userVerificationService;
+    private final RequestReader requestReader = new RequestReader();
+
+    public UserVerificationServiceCaller(UserVerificationService userVerificationService) {
+        this.userVerificationService = userVerificationService;
+    }
+
     public Route signUp() {
         return (request, response) -> {
             String username = requestReader.username(request);

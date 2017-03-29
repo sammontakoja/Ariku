@@ -1,4 +1,4 @@
-package io.ariku.rest.backend;
+package ariku.rest.backend;
 
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;

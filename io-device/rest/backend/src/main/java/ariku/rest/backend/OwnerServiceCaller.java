@@ -1,4 +1,4 @@
-package io.ariku.rest.backend;
+package ariku.rest.backend;
 
 import io.ariku.owner.NewCompetitionRequest;
 import io.ariku.owner.OwnerService;
@@ -8,15 +8,17 @@ import spark.Route;
 
 import java.util.ArrayList;
 
-import static io.ariku.rest.backend.UserVerificationServiceCaller.logger;
-
 /**
  * @author Ari Aaltonen
  */
 public class OwnerServiceCaller {
 
-    private RequestReader requestReader = new RequestReader();
-    public OwnerService ownerService;
+    private final RequestReader requestReader = new RequestReader();
+    private final OwnerService ownerService;
+
+    public OwnerServiceCaller(OwnerService ownerService) {
+        this.ownerService = ownerService;
+    }
 
     public Route createNewCompetition() {
         return (request, response) -> {
@@ -36,7 +38,7 @@ public class OwnerServiceCaller {
                 ownerService.createNewCompetition(newCompetitionRequest);
                 return "OK";
             } catch (Exception e) {
-                logger.error("Failure with request:{}", request, e);
+                UserVerificationServiceCaller.logger.error("Failure with request:{}", request, e);
                 response.status(500);
                 return "FAIL";
             }
@@ -53,7 +55,7 @@ public class OwnerServiceCaller {
             try {
                 return ownerService.findOwnedCompetitions(authorizeRequest);
             } catch (Exception e) {
-                logger.error("Failure url:{} request:{}", request.url(), request.queryParams(), e);
+                UserVerificationServiceCaller.logger.error("Failure url:{} request:{}", request.url(), request.queryParams(), e);
                 response.status(500);
                 return new ArrayList<Competition>();
             }
@@ -74,7 +76,7 @@ public class OwnerServiceCaller {
                 ownerService.addNewOwner(newOwner, competitionId, authorizeRequest);
                 return "OK";
             } catch (Exception e) {
-                logger.error("Failure url:{} request:{}", request.url(), request.queryParams(), e);
+                UserVerificationServiceCaller.logger.error("Failure url:{} request:{}", request.url(), request.queryParams(), e);
                 response.status(500);
                 return "FAIL";
             }

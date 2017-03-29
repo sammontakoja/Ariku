@@ -1,4 +1,4 @@
-package io.ariku.rest.backend;
+package ariku.rest.backend;
 
 import spark.Request;
 
