@@ -1,6 +1,7 @@
 package ariku.simple;
 
 import ariku.test.ArikuServices;
+import com.google.auto.service.AutoService;
 import io.ariku.database.simple.MemoryRepository;
 import io.ariku.owner.CompetitionRepository;
 import io.ariku.owner.OwnerRecordRepository;
@@ -15,6 +16,7 @@ import io.ariku.verification.UserVerificationService;
 /**
  * @author Ari Aaltonen
  */
+@AutoService(ArikuServices.class)
 public class SimpleArikuServices implements ArikuServices {
 
     // Services

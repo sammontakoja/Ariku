@@ -4,13 +4,15 @@ package ariku.rest.backend;
  * @author Ari Aaltonen
  */
 
-import ariku.simple.SimpleArikuServices;
 import ariku.test.ArikuServices;
 import com.google.gson.Gson;
 import io.ariku.util.data.ArikuSettings;
 import io.ariku.util.data.RestSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
 import static spark.Spark.*;
 
@@ -57,7 +59,16 @@ public class ArikuRest {
     }
 
     public static ArikuServices findImplementationFromClassPath() {
-        return new SimpleArikuServices();
+
+        Iterator<? extends ArikuServices> arikuServicesIterator = ServiceLoader.load(ArikuServices.class).iterator();
+
+        if (arikuServicesIterator.hasNext()) {
+            ArikuServices found = arikuServicesIterator.next();
+            System.out.println(String.format("Using ArikuServices implementation:'%s'", found.getClass().getName()));
+            return found;
+        } else {
+            throw new RuntimeException("Did not find ArikuServices implementation from CLASSPATH");
+        }
     }
 
     public static void stop() {
